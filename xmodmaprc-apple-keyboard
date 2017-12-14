@@ -1,0 +1,6 @@
+!https://wiki.archlinux.org/index.php/Apple_Keyboard
+!	 echo 2 > /sys/module/hid_apple/parameters/fnmode
+!	 echo 1 > /sys/module/hid_apple/parameters/fnmode
+! use: xmodmap $filename
+keycode 94 = masculine ordfeminine NoSymbol NoSymbol backslash
+keycode 49 = less greater

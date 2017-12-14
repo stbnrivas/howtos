@@ -1,0 +1,31 @@
+----------------------------------------
+swap keys at apple keyboard In Fedora 18 / 19 (which uses systemd), you will need to do the following.
+
+	- A list of keycodes can be found at /usr/include/linux/input.h:
+	- get keycode, keymap  with command you can use 'xdev' command
+
+
+
+for change you create two scripts
+
+ ~/.xmodmaprc-apple-keyboard
+
+#keycode X = Key Shift+Key mode_switch+Key mode_switch+Shift+Key AltGr+Key     AltGr+Shift+Key
+keycode 94 = masculine ordfeminine NoSymbol NoSymbol backslash
+keycode 49 = less greater
+remove mod1 = Alt_L
+remove mod4 = Super_L
+clear mod1
+clear mod4
+add mod1 = Super_L
+add mod4 = Alt_L
+
+
+ ~/.xmodmaprc-pc-keyboard
+#keycode X = Key Shift+Key mode_switch+Key mode_switch+Shift+Key AltGr+Key     AltGr+Shift+Key
+keycode 94 = less greater
+keycode 49 = masculine ordfeminine NoSymbol NoSymbol backslash
+remove mod1 = Super_L
+remove mod4 = Alt_L
+add mod1 = Alt_L
+add mod4 = Super_L
