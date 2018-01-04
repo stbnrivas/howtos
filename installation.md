@@ -36,7 +36,11 @@ vi ~/.bashrc
 echo 'HISTSIZE=100000' >> ~/.bashrc
 echo 'HISTFILESIZE=20000' >> ~/.bashrc
 
+
+
 ## packages packages...
+
+dnf groupinstall "Development Tools" redhat-lsb-core
 
 dnf install lsb nmap openssh-client libcrypto git git-cola wget sqlite sqlite-devel sqlite-libs openssl-libs
 
