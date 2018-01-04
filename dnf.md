@@ -5,19 +5,23 @@
 	dnf remove <package>	
 	dnf update
 	
-# list packages installed
+## list packages installed
 
 	dnf list installed | grep <package>
 	
-# add repo | disabled repo
+## add repo | disabled repo
 
 	dnf config-manager --add-repo repository_url
 	dnf config-manager --set-disabled repository…
 
-# show files with path of package installation
+## show files with path of package installation
 
 	dnf repoquery -l <package>
-
+	
+	which $package
+	whereis $package
+	
+	
 # rpm 
 
 ## installation from rpm
