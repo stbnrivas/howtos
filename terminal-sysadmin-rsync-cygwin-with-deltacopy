@@ -1,0 +1,12 @@
+# from gui of deltacopy
+
+http://www.aboutmyip.com/AboutMyXApp/DeltaCopy.jsp
+
+
+# to schedule a job at windows scheduler 
+
+you must create manually a file with
+
+    F:\Apps\DeltaCopy\myDeltaCopy.dcp" to "F:\Apps\DeltaCopy\DeltaC.exe myDeltaCopy.dcp"
+
+after create a job into windows scheduler
