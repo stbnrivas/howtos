@@ -1,6 +1,8 @@
 # raid management device 
 
 
+In particular NEVER NEVER NEVER use "mdadm --create" on an already-existing array unless you are being guided by an expert. It is the single most effective way of turning a simple recovery exercise into a major forensic problem - it may not be quite as effective as "dd if=/dev/random of=/dev/sda", but it's pretty close ... 
+
   fdisk -l
   blkid
   cat /proc/mdstat
@@ -14,6 +16,59 @@
   /usr/share/man/man5/mdadm.conf.5.gz
 
   mdadm --verbose --detail --scan
+
+## dd
+
+use dd to get raw images of disk to work... like
+
+  dd if=/dev/sdOri of=/dev/sdDest status=progress
+  dd if=/dev/sgOri of=/dev/sgDest status=progress
+
+## kpartx 
+
+Create device maps from partition tables, This  tool,  derived from util-linux' partx, reads partition tables on specified device and create device maps over partitions segments detected.  It  is  called from hotplug upon device maps creation and deletion.
+
+To mount all the partitions in a raw disk image:
+
+  kpartx -av disk.img
+
+This will output lines such as:
+
+  loop3p1 : 0 20964762 /dev/loop3 63
+
+## lsblk
+
+check whereis mount with 
+
+  lsblk
+
+## gdisk
+
+gdisk Interactive GUID partition table (GPT) manipulator
+
+## fdisk
+
+fdisk is a dialog-driven program for creation and manipulation of partition tables.  It under‐stands GPT, MBR, Sun, SGI and BSD partition tables.
+
+
+##losetup
+
+set up and control loop devices
+
+
+  dd if=/dev/zero of=~/file.img bs=1MiB count=10
+  losetup --find --show ~/file.img
+  /dev/loop0
+  mkfs -t ext2 /dev/loop0
+  mount /dev/loop0 /mnt
+  ...
+  umount /dev/loop0
+  losetup --detach /dev/loop0
+
+
+
+
+
 
 
 ## mdadm
@@ -96,19 +151,119 @@ names are often names of component devices
 
 
 
+## raid problem
+
+
+mdadm --auto-detect
+
+partx -av /media/storeHD/sas-00.raw
+partx -av /media/storeHD/sas-01.raw
+partx -av /media/storeHD/sas-02.raw
+
+lsblk
+  loop1       7:1    0  68.4G  0 loop 
+  loop2       7:2    0  68.4G  0 loop 
+  loop0       7:0    0  68.4G  0 loop 
+  └─loop0p1 253:0    0  43.4G  0 part 
+
+mdadm --examine /dev/loop0
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  /dev/loop0:
+    MBR Magic : aa55
+  Partition[0] :     90992097 sectors at           63 (type 07)
+  Partition[1] :    195286140 sectors at     90992160 (type 07)
+
+mdadm --examine /dev/loop1
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: No md superblock detected on /dev/loop1.
+
+mdadm --examine /dev/loop2
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: Unknown keyword INACTIVE-ARRAY
+  mdadm: No md superblock detected on /dev/loop2.
+
+
+mdadm --assemble /dev/sdc /dev/loop[012]
+mdadm: Unknown keyword INACTIVE-ARRAY
+mdadm: Unknown keyword INACTIVE-ARRAY
+mdadm: Unknown keyword INACTIVE-ARRAY
+mdadm: Unknown keyword INACTIVE-ARRAY
+mdadm: Unknown keyword INACTIVE-ARRAY
+mdadm: Cannot assemble mbr metadata on /dev/loop0
+mdadm: /dev/loop0 has no superblock - assembly aborted
 
 
 
 
 
+mdadm --assemble --scan
+
+mdadm --assemble /dev/md0 /dev/sda1 /dev/sdb1
+mdadm --assemble /dev/sdb /dev/sd[cd]1
+
+mdadm --create /dev/md0 --chunk=4 --level=0 --raid-devices=2 /dev/sda1 /dev/sdb1
+mdadm --create /dev/md0 --level=5 --raid-devices=3 --spare-devices=0 /dev/sd[bcd]
+
+
+###########################################################
+
+
+another example
+
+kpartx -f -r -a /media/storeHD/sas-00.raw.ori
+kpartx -f -r -a /media/storeHD/sas-01.raw.ori
+kpartx -f -r -a /media/storeHD/sas-02.raw.ori
+
+
+losetup --list
+
+mdadm --detail --scan >> /etc/mdadm.conf
+
+mdadm --assemble --scan --detail --verbose --metadata=[ddf|imsm]
+
+
+
+
+mdadm --examine /dev/loop0 /dev/loop1 /dev/loop2
+mdadm: Unknown keyword INACTIVE-ARRAY
+mdadm: Unknown keyword INACTIVE-ARRAY
+mdadm: Unknown keyword INACTIVE-ARRAY
+mdadm: Unknown keyword INACTIVE-ARRAY
+mdadm: Unknown keyword INACTIVE-ARRAY
+/dev/loop0:
+   MBR Magic : aa55
+Partition[0] :     90992097 sectors at           63 (type 07)
+Partition[1] :    195286140 sectors at     90992160 (type 07)
+mdadm: No md superblock detected on /dev/loop1.
+mdadm: No md superblock detected on /dev/loop2.
+
+
+
+  mdadm --build md-device --chunk=X --level=Y --raid-devices=Z devices
+  mdadm --create /dev/md0 --assume-clean --level=5 --verbose --raid-devices=4 /dev/loop0p1 /dev/loop1p1 /dev/loop2p1 /dev/loop3p
+  mdadm --create /dev/md0 --metadata=ddf --level=5 --raid-devices=3 /dev/loop0p1 /dev/loop1 /dev/loop2
+
+
+  --chunk=256
+  --metadata=ddf
+  --metadata=imsm
 
 
 
 
 
-
-
-
+------------------------------------
 
 ## qnap nas 
 
