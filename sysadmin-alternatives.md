@@ -1,3 +1,8 @@
+# alternatives
+
+alternatives - maintain symbolic links determining default commands
+
+
 # changing java version
 
 	$ alternatives --config java
