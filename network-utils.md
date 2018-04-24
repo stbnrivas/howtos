@@ -21,3 +21,11 @@
 # scan ports of IP
 
 	nmap $IP
+
+# nmap by default scan only ports lower than 1024
+
+	nmap -p 1025-4000 $IP
+
+# quiet scan mode not loggable scan
+
+	nmap -PS20 192.168.1.0/24
