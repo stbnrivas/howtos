@@ -34,8 +34,9 @@ adding an entry at /etc/hosts you can ignore propation time for a migration of s
 # dig
 
 	dig A google.es
-	dig ALL google.es
 	dig NS google.es
 	dig MX google.es
-	dig ALL google.es
+	dig ANY google.es
+	
+	dig -x IP
 
