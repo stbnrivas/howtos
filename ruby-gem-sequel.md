@@ -4,6 +4,27 @@ Sequel includes an IRB console for quick'n'dirty access to databases. You can us
 
   sequel sqlite://test.db # test.db in current directory
 
+## running migrations 
+
+The -m switch requires an argument that should be a path to a directory of migration files:
+
+  sequel -m relative/path/to/migrations postgres://host/database
+  sequel -m /absolute/path/to/migrations postgres://host/database
+
+If you do not provide a -M switch, sequel will migrate to the latest version in the directory. If you provide a -M switch, it should specify an integer version to which to migrate.
+
+Migrate all the way down
+
+  sequel -m db/migrations -M 0 postgres://host/database
+
+Migrate to version 10 (IntegerMigrator style migrations)
+
+  sequel -m db/migrations -M 10 postgres://host/database
+
+Migrate to version 20100510 (TimestampMigrator migrations using YYYYMMDD)
+
+  sequel -m db/migrations -M 20100510 postgres://host/database
+
 if you need use some Model type this into console
 
   class Post < Sequel::Model

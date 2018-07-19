@@ -155,10 +155,64 @@ make install
 
 
 
+# gemset (installation yours gem into project folder )
+
+
+  git clone git://github.com/jf/rbenv-gemset.git $HOME/.rbenv/plugins/rbenv-gemset
+
+
+  rbenv gemset [command] [options]
+  possible commands are:
+    active
+    create [version] [gemset]
+    delete [version] [gemset]
+    file
+    init [gemset]
+    list
+    version
+
+
+## example
+
+  rbenv gemset init [gemset_name]
+  rbenv gemset creater [ruby_version] [gemset_name]
 
 
 
 
 
+# Now let's put all together into a new project
 
 
+  mkdir Developer
+  rbenv version # if there some version installed
+  rbenv install -l # if we want search a version to install
+
+sometime when problem arise better way is update rbenv and plugins
+
+  cd ~/.rbenv/
+  cd ~/.rbenv/plugins/ruby-build; git pull
+  cd ~/.rbenv/plugins/rbenv-gemset; git pull
+
+select your ruby version and install
+
+  rbenv install 2.5.1
+
+set this version locally into folder
+
+  rbenv local 2.5.1
+
+install gems
+
+  gem uninstall -all # from start clean space
+  gem install rails --version=5.1 --no-rdoc --no-ri
+
+create new project
+
+  rails new depot; cd depot
+  rbenv local 2.5.1
+  rbenv gemset create 2.5.1 gemset-rails-5.1
+
+
+  rbenv gemset list
+  rbenv gemset delete [version] [gemset]

@@ -54,6 +54,7 @@
 	gem uninstall <gem> --version '<1.3.4'	remove all versions less than 1.3.4
 	gem cleanup --dryrun					for removing older versions of all installed gems, with preview what gems are going to be removed.
 	
+	gem uninstall --all 					to remove all
 	gem cleanup 							removing older versions
 
 	gem list | cut -d” ” -f1 | xargs gem uninstall -aIx   remove all gem
