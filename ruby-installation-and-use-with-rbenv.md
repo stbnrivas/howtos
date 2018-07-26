@@ -214,5 +214,7 @@ create new project
   rbenv gemset create 2.5.1 gemset-rails-5.1
 
 
+you can manage with this
+
   rbenv gemset list
   rbenv gemset delete [version] [gemset]
