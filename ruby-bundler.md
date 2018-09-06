@@ -46,3 +46,18 @@ bundle gem
 	group :development do
 		gem 'hello'
 	end
+
+# install your gems into verdor folder
+
+
+.bundle/config file
+
+BUNDLE_PATH: vendor/bundle
+BUNDLE_DISABLE_SHARED_GEMS: '1'
+
+
+bundle install --path vendor/bundle
+
+require 'bundler/setup'
+
+
