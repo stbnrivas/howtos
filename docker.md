@@ -44,8 +44,8 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 # CLI and Docker Images vs Docker Containers
 
 ```bash
-$ docker login
-$ docker logout
+	$ docker login
+	$ docker logout
 ```
 
 - docker images is like a class of OOP
@@ -61,8 +61,12 @@ $ docker logout
 - instanciate a docker container from a docker image
 
 ```bash
+	$ docker container run $image:$tag
+		# -p --publish	publish list of ports
+		# -d --detach		run container in background
+		#    --rm 			remove container when exits
+
 	$ docker container run httpd:2.4
-	$ docker container run -p 80:80 httpd:2.4
 	$ docker container run -p 80:80 -p 443:443 httpd:2.4
 	$ docker container run -p 80:80 --detach web-server:1.1
 ```
@@ -87,6 +91,7 @@ $ docker logout
 ```bash
 	$ docker container exec
 	$ docker container exec -it $container_id /bin/bash
+	$ docker exec --interactive --tty aaba69ef37ec  /bin/bash
 ```
 
 - docker has networks for containers
@@ -170,7 +175,9 @@ ADVICE: also you can use --volume -v flag but is better use --mount over --volum
 
 
 
-# Dockerfiles Sintax: building docker images using docker file sintax
+# Dockerfiles Sintax: building docker images using dockerfile sintax
+
+[dockerfile documentation](https://docs.docker.com/engine/reference/builder/)
 
 - workfllow:
 
@@ -188,17 +195,169 @@ write Dockerfile -> build Dockerfile to get Docker Image -> Run Docker Image as 
 - when you finish your Dockerfile
 
 ```bash
-	$ docker image build --tag web-server:1.0 . || $ docker build -t webserver:1.0 .
+	$ docker image build --tag web-server:1.0 . || 
+	OR
+	$ docker build -t webserver:1.0 .
 	$ docker container run -p 80:80 web-server:1.0
+
+	$ docker image rmi
+	$ docker rmi $hash $hash
 ```
 
 sometimes has to build with cache cause conflict because the cache only is invalidate when there are new version of image. For this cases... build with --no-cache flag
 
-
 ## FROM
 
+[search into https://hub.docker.com/explore/](https://hub.docker.com/explore/)
+
+```docker
+FROM debian
+```
+
+## WORKDIR
+
+sets the working directory for any RUN, CMD, ENTRYPOINT, COPY and ADD use absolute paths, you can use env variables too
+
+```docker
+WORKDIR /app
+```
+
+## COPY
+
+source path are relative to Dockerfile and destination does not haver exist
+
+```docker
+COPY source destination
+COPY robots.txt /data/robots.txt
+COPY folder /data/
+```
+
+## ADD
+
+for internet resources like repo
+if resource is local it will be uncompressed for Internet resources unpack or tar gzip it will not uncompressed
+
+```docker
+ADD project.tar.gz
+ADD http://example.com/foobar /
+```
+
+## RUN
+
+```docker
+RUN touch /tmp/test
+```
+
+the commands must be run as dependent commands to build
+
+```docker
+RUN apt-get update && \
+	apt-get install -y \
+		git \
+		curl
+```
 
 
+```docker
+RUN /bin/bash -c "set -o pipefail && wget -0 -https://google.com | wc -l"
+```
+
+## SHELL
+
+change default shell, specified in JSON format the run will use the new shell
+
+```docker
+FROM microsoft/windowsservercore
+SHELL ["powershell","-NoProfile","-Command"]
+```
+
+## CMD
+
+there can only be one CMD instruction, if you have more only last will take effect
+
+```docker
+CMD ["executable","param1","param2"] (exec form, this is the preferred form)
+CMD ["param1","param2"] (as default parameters to ENTRYPOINT)
+CMD command param1 param2 (shell form)
+```
+
+## ENTRYPOINT
+
+An ENTRYPOINT allows you to configure a container that will run as an executable.
+
+```docker
+ENTRYPOINT ["executable", "param1", "param2"] (exec form, preferred)
+ENTRYPOINT command param1 param2 (shell form)
+```
+
+```docker
+ENTRYPOINT ["echo"]
+CMD "hello world"
+```
+## EXPOSE
+
+EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime. You can specify whether the port listens on TCP or UDP, and the default is TCP if the protocol is not specified.
+
+```docker
+EXPOSE 80/tcp
+EXPOSE 80/udp
+```
+
+
+## ENV
+
+environment variables, you can set into another file and when build image use the --env-file=file flag
+
+```docker
+ENV var1 value1
+ENV var2=value2
+```
+
+and you can use variable substitution like bash
+
+$var										value					""
+${var}									value					""
+${var:+default}					value				default
+${var:-default}					default				""
+
+```docker
+ENV MIRROR=http://downloadsoftware.com/ \
+	VERSION=9.0.0
+RUN curl -SL $MIRROR/version/$VERSION.bin
+```
+
+## ARG
+
+works like ENV but only can set one variable and only is available during the build
+
+```docker
+ARG environment=test
+COPY ${environment}.conf /app/app.conf
+```
+
+```bash
+$ docker build -t demo --build-argument environment=production -f Dockerfile
+	-t --tag		tag your image
+```
+
+
+## HEALTHCHECK
+
+return 0 on success or 1 on fail
+
+```docker
+HEALTHCHECK [options] CMD check_command
+```
+
+```docker
+HEALTHCHECK --interval=15s CMD /usr/bin/curl -Sf \
+	http://localhost || exit 1
+```
+## dockerfiles examples to ruby containers
+
+```docker
+RUN touch ~/.gemrc && echo "gem: --no-document"
+```
 
 
 
