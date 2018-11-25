@@ -20,6 +20,14 @@ $ service docker start
 $ service docker stop
 ```
 
+
+```bash
+echo 'alias docker="sudo /usr/bin/docker"' >> ~/.bashrc
+```
+add user to use sudo. with visudo
+
+
+
 - have you this installation problem ?
 
 docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.26/containers/create: dial unix /var/run/docker.sock: connect: permission denied.
@@ -151,6 +159,15 @@ ADVICE: also you can use --volume -v flag but is better use --mount over --volum
 	$ docker run -d -p 80:80 --name my-web -v /my-files:/usr/local/apache2/htdocs web-server:1.1
 ```
 
+creacion de volumenes
+
+```bash
+	$ docker volume create
+	$ docker volume inspect
+	$ docker volume ls
+	$ docker volume prune
+	$ docker volume rm
+```
 
 
 
