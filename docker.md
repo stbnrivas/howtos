@@ -248,7 +248,7 @@ sometimes has to build with cache cause conflict because the cache only is inval
 
 [search into https://hub.docker.com/explore/](https://hub.docker.com/explore/)
 
-```docker
+```Dockerfile
 FROM debian
 ```
 
@@ -256,7 +256,7 @@ FROM debian
 
 sets the working directory for any RUN, CMD, ENTRYPOINT, COPY and ADD use absolute paths, you can use env variables too
 
-```docker
+```Dockerfile
 WORKDIR /app
 ```
 
@@ -264,7 +264,7 @@ WORKDIR /app
 
 source path are relative to Dockerfile and destination does not haver exist
 
-```docker
+```Dockerfile
 COPY source destination
 COPY robots.txt /data/robots.txt
 COPY folder /data/
@@ -275,20 +275,20 @@ COPY folder /data/
 for internet resources like repo
 if resource is local it will be uncompressed for Internet resources unpack or tar gzip it will not uncompressed
 
-```docker
+```Dockerfile
 ADD project.tar.gz
 ADD http://example.com/foobar /
 ```
 
 ## RUN
 
-```docker
+```Dockerfile
 RUN touch /tmp/test
 ```
 
 the commands must be run as dependent commands to build
 
-```docker
+```Dockerfile
 RUN apt-get update && \
 	apt-get install -y \
 		git \
@@ -296,7 +296,7 @@ RUN apt-get update && \
 ```
 
 
-```docker
+```Dockerfile
 RUN /bin/bash -c "set -o pipefail && wget -0 -https://google.com | wc -l"
 ```
 
@@ -304,7 +304,7 @@ RUN /bin/bash -c "set -o pipefail && wget -0 -https://google.com | wc -l"
 
 change default shell, specified in JSON format the run will use the new shell
 
-```docker
+```Dockerfile
 FROM microsoft/windowsservercore
 SHELL ["powershell","-NoProfile","-Command"]
 ```
@@ -313,7 +313,7 @@ SHELL ["powershell","-NoProfile","-Command"]
 
 there can only be one CMD instruction, if you have more only last will take effect
 
-```docker
+```Dockerfile
 CMD ["executable","param1","param2"] (exec form, this is the preferred form)
 CMD ["param1","param2"] (as default parameters to ENTRYPOINT)
 CMD command param1 param2 (shell form)
@@ -323,12 +323,12 @@ CMD command param1 param2 (shell form)
 
 An ENTRYPOINT allows you to configure a container that will run as an executable.
 
-```docker
+```Dockerfile
 ENTRYPOINT ["executable", "param1", "param2"] (exec form, preferred)
 ENTRYPOINT command param1 param2 (shell form)
 ```
 
-```docker
+```Dockerfile
 ENTRYPOINT ["echo"]
 CMD "hello world"
 ```
@@ -336,7 +336,7 @@ CMD "hello world"
 
 EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime. You can specify whether the port listens on TCP or UDP, and the default is TCP if the protocol is not specified.
 
-```docker
+```Dockerfile
 EXPOSE 80/tcp
 EXPOSE 80/udp
 ```
@@ -346,7 +346,7 @@ EXPOSE 80/udp
 
 environment variables, you can set into another file and when build image use the --env-file=file flag
 
-```docker
+```Dockerfile
 ENV var1 value1
 ENV var2=value2
 ```
@@ -358,7 +358,7 @@ ${var}							value					""
 ${var:+default}					value				default
 ${var:-default}					default					""
 
-```docker
+```Dockerfile
 ENV MIRROR=http://downloadsoftware.com/ \
 	VERSION=9.0.0
 RUN curl -SL $MIRROR/version/$VERSION.bin
@@ -368,7 +368,7 @@ RUN curl -SL $MIRROR/version/$VERSION.bin
 
 works like ENV but only can set one variable and only is available during the build
 
-```docker
+```Dockerfile
 ARG environment=test
 COPY ${environment}.conf /app/app.conf
 ```
@@ -383,17 +383,17 @@ $ docker build -t demo --build-argument environment=production -f Dockerfile
 
 return 0 on success or 1 on fail
 
-```docker
+```Dockerfile
 HEALTHCHECK [options] CMD check_command
 ```
 
-```docker
+```Dockerfile
 HEALTHCHECK --interval=15s CMD /usr/bin/curl -Sf \
 	http://localhost || exit 1
 ```
 ## dockerfiles examples to ruby containers
 
-```docker
+```Dockerfile
 RUN touch ~/.gemrc && echo "gem: --no-document"
 ```
 
