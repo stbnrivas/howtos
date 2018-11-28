@@ -34,11 +34,22 @@ below command create a json config file
 	}
 	```
 
+new packages installation using install
+
+```bash
+npm install [--production]
+```
+
+
+npm install takes 3 exclusive, optional flags which save or update the package version in your main package.json:
 when there is a package.json into folder you can install dependences with 
 
-	```bash
-	npm install [--production]
-	```
+```bash
+npm install [--production]
+	# -S, --save: Package will appear in your dependencies.
+	# -D, --save-dev: Package will appear in your devDependencies.
+	# -O, --save-optional: Package will appear in your optionalDependencies.
+```
 
 
 ## searchin for package
