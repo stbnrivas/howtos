@@ -20,13 +20,10 @@ $ service docker start
 $ service docker stop
 ```
 
-
 ```bash
 echo 'alias docker="sudo /usr/bin/docker"' >> ~/.bashrc
 ```
 add user to use sudo. with visudo
-
-
 
 - have you this installation problem ?
 
@@ -35,12 +32,6 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 ```bash
 	sudo usermod -a -G docker $USER
 ```
-
-
-
-
-
-
 
 
 
@@ -65,12 +56,11 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 	$ docker pull mariadb
 	$ docker history repo/tag
 ```
-
 - instanciate a docker container from a docker image
 
 ```bash
 	$ docker container run $image:$tag
-		# -p --publish	publish list of ports
+		# -p --publish		publish list of ports
 		# -d --detach		run container in background
 		#    --rm 			remove container when exits
 
@@ -91,8 +81,9 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 		-t --tty 			allocate a pseudo-TTY
 		-i --interactive	keep STDIN open
 		-d --detach			run a container in background
+	
 		-p --publish-list	container ports exposed
- ```
+```
 
 - docker command lets us run commands against a running container.
 
@@ -108,15 +99,15 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 	$ docker network ls
 	$ sudo ifconfig docker0
 
-	docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
-        inet 172.17.0.1  netmask 255.255.0.0  broadcast 0.0.0.0
+	# docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+    #    inet 172.17.0.1  netmask 255.255.0.0  broadcast 0.0.0.0
 ```
 
 - check docker container status
 
 ```bash
 	$ docker attach $CONTAINER_ID
-	$ docker top $CONTAINER_ID		show top
+	$ docker top $CONTAINER_ID
 	$ docker logs $CONTAINER_ID
 ```
 
@@ -132,7 +123,7 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 ```bash
 	$ docker pause $CONTAINER_ID
 	$ docker commit $CONTAINER_ID
-		=> return $NEW_IMAGE_ID for this container status
+	# 	=> return $NEW_IMAGE_ID for this container status
 	$ docker tag $NEW_IMAGE_ID repo/newimagename
 	$ docker restart $CONTAINER_ID
 
@@ -180,14 +171,44 @@ creacion de volumenes
 
 
 
+- docker container stop
+
+```bash
+	docker pause $CONTAINER_ID
+	docker stop $CONTAINER_ID
+```
+
+- create new image from docker container running
+
+```bash
+	$ docker pause $CONTAINER_ID
+	$ docker commit $CONTAINER_ID
+		=> return $NEW_IMAGE_ID for this container status
+	$ docker tag $NEW_IMAGE_ID repo/newimagename
+	$ docker restart $CONTAINER_ID
+	
+	$ docker inspect $CONTAINER_ID	
+```
+
+- docker containers don't persist any data if you need persistence need use docker volumes. there are two approaches involved copying a file into a container. copying into container
+
+```bash
+	$ docker container cp page.html elegant_noether:/usr/local/apache2/htdocs/
+```
+
+But as soon as the container is modified and stopped, all of those changes disappear. Is better to create a connection between files on our local computer (host) and the filesystem in the container. mounting a docker volume
 
 
+```bash
+	$ docker container run  --rm -it --mount type=bind, source=/tmp/data, destination=/data debian stretch
+```
+ADVICE: also you can use --volume -v flag but is better use --mount over --volume because is consistent with docker swarm
 
-
-
-
-
-
+```bash
+	$ docker container run --rm -it -v path_out_container:path_into_container
+	$ docker container run --rm -it -v /tm/data:/data debian:stretch
+	$ docker run -d -p 80:80 --name my-web -v /my-files:/usr/local/apache2/htdocs web-server:1.1
+```
 
 
 
@@ -227,7 +248,7 @@ sometimes has to build with cache cause conflict because the cache only is inval
 
 [search into https://hub.docker.com/explore/](https://hub.docker.com/explore/)
 
-```docker
+```Dockerfile
 FROM debian
 ```
 
@@ -235,7 +256,7 @@ FROM debian
 
 sets the working directory for any RUN, CMD, ENTRYPOINT, COPY and ADD use absolute paths, you can use env variables too
 
-```docker
+```Dockerfile
 WORKDIR /app
 ```
 
@@ -243,7 +264,7 @@ WORKDIR /app
 
 source path are relative to Dockerfile and destination does not haver exist
 
-```docker
+```Dockerfile
 COPY source destination
 COPY robots.txt /data/robots.txt
 COPY folder /data/
@@ -254,20 +275,20 @@ COPY folder /data/
 for internet resources like repo
 if resource is local it will be uncompressed for Internet resources unpack or tar gzip it will not uncompressed
 
-```docker
+```Dockerfile
 ADD project.tar.gz
 ADD http://example.com/foobar /
 ```
 
 ## RUN
 
-```docker
+```Dockerfile
 RUN touch /tmp/test
 ```
 
 the commands must be run as dependent commands to build
 
-```docker
+```Dockerfile
 RUN apt-get update && \
 	apt-get install -y \
 		git \
@@ -275,7 +296,7 @@ RUN apt-get update && \
 ```
 
 
-```docker
+```Dockerfile
 RUN /bin/bash -c "set -o pipefail && wget -0 -https://google.com | wc -l"
 ```
 
@@ -283,7 +304,7 @@ RUN /bin/bash -c "set -o pipefail && wget -0 -https://google.com | wc -l"
 
 change default shell, specified in JSON format the run will use the new shell
 
-```docker
+```Dockerfile
 FROM microsoft/windowsservercore
 SHELL ["powershell","-NoProfile","-Command"]
 ```
@@ -292,7 +313,7 @@ SHELL ["powershell","-NoProfile","-Command"]
 
 there can only be one CMD instruction, if you have more only last will take effect
 
-```docker
+```Dockerfile
 CMD ["executable","param1","param2"] (exec form, this is the preferred form)
 CMD ["param1","param2"] (as default parameters to ENTRYPOINT)
 CMD command param1 param2 (shell form)
@@ -302,12 +323,12 @@ CMD command param1 param2 (shell form)
 
 An ENTRYPOINT allows you to configure a container that will run as an executable.
 
-```docker
+```Dockerfile
 ENTRYPOINT ["executable", "param1", "param2"] (exec form, preferred)
 ENTRYPOINT command param1 param2 (shell form)
 ```
 
-```docker
+```Dockerfile
 ENTRYPOINT ["echo"]
 CMD "hello world"
 ```
@@ -315,7 +336,7 @@ CMD "hello world"
 
 EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime. You can specify whether the port listens on TCP or UDP, and the default is TCP if the protocol is not specified.
 
-```docker
+```Dockerfile
 EXPOSE 80/tcp
 EXPOSE 80/udp
 ```
@@ -325,19 +346,19 @@ EXPOSE 80/udp
 
 environment variables, you can set into another file and when build image use the --env-file=file flag
 
-```docker
+```Dockerfile
 ENV var1 value1
 ENV var2=value2
 ```
 
 and you can use variable substitution like bash
 
-$var										value					""
-${var}									value					""
+$var							value					""
+${var}							value					""
 ${var:+default}					value				default
-${var:-default}					default				""
+${var:-default}					default					""
 
-```docker
+```Dockerfile
 ENV MIRROR=http://downloadsoftware.com/ \
 	VERSION=9.0.0
 RUN curl -SL $MIRROR/version/$VERSION.bin
@@ -347,7 +368,7 @@ RUN curl -SL $MIRROR/version/$VERSION.bin
 
 works like ENV but only can set one variable and only is available during the build
 
-```docker
+```Dockerfile
 ARG environment=test
 COPY ${environment}.conf /app/app.conf
 ```
@@ -362,17 +383,17 @@ $ docker build -t demo --build-argument environment=production -f Dockerfile
 
 return 0 on success or 1 on fail
 
-```docker
+```Dockerfile
 HEALTHCHECK [options] CMD check_command
 ```
 
-```docker
+```Dockerfile
 HEALTHCHECK --interval=15s CMD /usr/bin/curl -Sf \
 	http://localhost || exit 1
 ```
 ## dockerfiles examples to ruby containers
 
-```docker
+```Dockerfile
 RUN touch ~/.gemrc && echo "gem: --no-document"
 ```
 
