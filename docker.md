@@ -82,7 +82,7 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 		-i --interactive	keep STDIN open
 		-d --detach			run a container in background
 	
-		-p --publish-list	container ports exposed
+		-p --publish		container ports exposed
 ```
 
 - docker command lets us run commands against a running container.
@@ -138,9 +138,9 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 
 But as soon as the container is modified and stopped, all of those changes disappear. Is better to create a connection between files on our local computer (host) and the filesystem in the container. mounting a docker volume
 
-
 ```bash
-	$ docker container run  --rm -it --mount type=bind, source=/tmp/data, destination=/data debian stretch
+	$ docker container run  --rm -it --mount type=bind, source=/tmp/data, destination=/data debian:stretch
+	$ docker container run  --rm -it --mount type=bind, source=/tmp/data, target=/data debian:stretch
 ```
 ADVICE: also you can use --volume -v flag but is better use --mount over --volume because is consistent with docker swarm
 

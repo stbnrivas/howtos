@@ -26,7 +26,7 @@ loders work with source files while plugins can works with task injection of env
 
 ```bash
 npm install --global webpack webpack-cli
-npm install --save-dev webpack webpack-cli
+npm install --save-dev webpack webpack-cli 
 ```
 
 ```bash
@@ -49,7 +49,7 @@ webpack --version
 webpack --mode development --entry ./src/js/app.js --output ./src/js/app.bundle.js
 ```
 
-```js
+```javascript
 // src/js/app.js
 var _ = require("underscore")
 _.each([1, 2, 3], alert);
@@ -79,6 +79,12 @@ console.log("it works")
 ## webpack using webpack.config.js
 
 ```bash
+mkdir webpack-project && cd webpack-project
+mkdir -p src/js src/css src/scss src/images
+touch src/js/app.js src/scss/app.scss src/index.htm
+nmp init -y
+echo "node_modules" >> .gitignore
+nmp install --save-dev webpack webpack-cli # because was added to package.json
 webpack init
 ```
 
