@@ -1,4 +1,4 @@
 # rubocop 
 
-	rubucop 
+	rubocop 
 	rubocop --auto-gen-config
