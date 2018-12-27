@@ -69,7 +69,23 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 	$ docker container run -p 80:80 --detach web-server:1.1
 ```
 
-- docker container is like instace of this class
+- removing images
+
+```bash
+# List only your build images
+docker images
+# List all images
+docker images --all
+# Delete single image
+docker image rmi $IMAGE_ID
+# Delete all containers
+docker rm $(docker ps -a -q)
+# Delete all images
+docker rmi $(docker images -q)
+```
+
+
+- docker container is like instance of this class
 
 ```bash
 	$ docker container ls || docker ps
@@ -130,6 +146,17 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 	$ docker inspect $CONTAINER_ID
 ```
 
+- removing containers
+
+```bash
+	$ docker container ls --all
+	$ docker container rm $CONTAINER_ID
+	# or kill all
+	$ docker stop $(docker ps -a -q)
+	$ docker rm $(docker ps -a -q)
+```
+
+
 - docker containers don't persist any data if you need persistence need use docker volumes. there are two approaches involved copying a file into a container. copying into container
 
 ```bash
@@ -149,6 +176,10 @@ ADVICE: also you can use --volume -v flag but is better use --mount over --volum
 	$ docker container run --rm -it -v /tm/data:/data debian:stretch
 	$ docker run -d -p 80:80 --name my-web -v /my-files:/usr/local/apache2/htdocs web-server:1.1
 ```
+
+
+
+
 
 creacion de volumenes
 
