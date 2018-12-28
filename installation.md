@@ -33,14 +33,13 @@ service <option> | --status-all | [ service_name [ command | --full-restart ] ]
 
 vi ~/.bashrc
 
-echo 'HISTSIZE=100000' >> ~/.bashrc
-echo 'HISTFILESIZE=20000' >> ~/.bashrc
+echo 'HISTSIZE=100000' >> ~/.bashrc && echo 'HISTFILESIZE=20000' >> ~/.bashrc
 
 
 
 ## packages packages...
 
-dnf groupinstall "Development Tools" redhat-lsb-core
+dnf groupinstall "Development Tools"
 
 dnf install lsb nmap openssh-client libcrypto git git-cola wget sqlite sqlite-devel sqlite-libs openssl-libs
 
@@ -48,7 +47,7 @@ dnf install lsb nmap openssh-client libcrypto git git-cola wget sqlite sqlite-de
 dnf install gstreamer-plugins-bad gstreamer-plugins-ugly libaacs sox sox-plugins-* faad2 faad2-libs
 lame lame-libs lame-devel libmad libmad-devel ffmpeg-devel ffmpeg
 
-dnf install ffmpeg ffmpeg-devel ffmpegp-libs ffmpeg2theora
+dnf install ffmpeg ffmpeg-devel ffmpegp-libs ffmpeg2theora youtube-dl
 
 dnf install git git-cola cmake make gcc gcc-c++ perl python3 bash zlib-devel flex bison m4 coreutils autoconf automake libtool ncurses-devel wget bc doxygen graphviz upx pkg-config
 
@@ -59,8 +58,9 @@ gnome-terminal-nautilus transmission samba gvfs-samba gnome-font-viewer hamster-
 
 dnf install libreoffice libreoffice-langpack-en hunspell-en aspell-en
 
-dnf install  ruby ruby-devel ruby-irb ruby-libs rubygems
+dnf install ruby ruby-devel ruby-irb ruby-libs rubygems
 
+dnf install -y gtypist meld
 
 ### search rpm
 

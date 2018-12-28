@@ -10,8 +10,14 @@ dnf install sqlite3-devel ruby-sqlite3 libsqlite3x-devel libsqlite3x
 
 dnf install -y libxml2 libxml2-devel libxslt libxslt-devel 
 
-dnf install nokogiri
+dnf install -y nokogiri
 
+dnf install -y openssl-devel readline-devel
+
+## PROBLEM IN FEDORA 29
+
+MAY BE YOU MUST REPLACE ALL CONFIG AT ~/.bash_profile to ~/.bashrc
+because  you can't do  source ~/.bash_profile into ~/.bashrc or terminal won't start
 
 ## rbenv install
 
@@ -21,12 +27,18 @@ dnf install nokogiri
 
   type rbenv
 
-## rbenv plugin The ruby-build plugin provides an rbenv uninstall command to automate the removal process.
+## rbenv plugin: The ruby-build plugin provides an rbenv install uninstall command 
 
 git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
 
 ## for rbenv rehash automatically after install or any command 
+
+- Option 1: rbenv plugin
+
+git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+
+- Option 2: rbenv rehash with adding ~/.bash_profile
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="/home/stbn/.rbenv/shims:${PATH}"
@@ -49,13 +61,12 @@ rbenv() {
 }
 
 
-## rbenv plugin rbenv-gemset is an extension for the rbenv ruby version manager that allows you to use "gemsets", sandboxed collections of gems. This lets you have multiple collections of gems installed in different sandboxes, and specify
+## rbenv plugin: rbenv-gemset is an extension for the rbenv ruby version manager that allows you to use "gemsets", sandboxed collections of gems. This lets you have multiple collections of gems installed in different sandboxes, and specify
 
 git clone git://github.com/jf/rbenv-gemset.git $HOME/.rbenv/plugins/rbenv-gemset
 
-## rbenv plugins rehash
 
-git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+
 
 
 
