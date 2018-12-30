@@ -432,5 +432,26 @@ RUN touch ~/.gemrc && echo "gem: --no-document"
 
 # Docker compose
 
+- use a yml file to build services
+- docker set a network automatically to containers can connect between each other
+- into container you can refer to another using the name given into yml file like an host alias
+
+
+## docker-compose CLI
+
+```bash
+docker-compose build
+docker-compose up
+# or
+docker-compose up --build
+docker-compose up --daemon
+#
+docker-compose down
+```
+
+
+
+
+
 
 # Docker orchestration
