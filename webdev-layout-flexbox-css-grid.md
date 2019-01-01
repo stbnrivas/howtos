@@ -24,8 +24,6 @@ main axis, cross axis
         display:flex;
         flex-direction:<row|row-reverse|column|column-reverse>;
         flex-wrap:<nowrap|wrap|wrap-reverse|initial|inherit>;
-
-	flex-flow: flex-direction flex-wrap
         
         justify-content: <flex-start|flex-end|center|space-between|space-around|initial|inherit>;
 	align-items: <flex-start|flex-end|center|baseline|stretch>; 
@@ -78,6 +76,28 @@ While flexbox is a one dimensional model, it is possible to cause our flex items
 The css grid layout, was designed as a two-dimensional layout model which controls columns and rows together.
 
 
+## grid container
+
+```css
+    .container {
+        display:grid|inline-grid;
+        grid-auto-flow: row|column|row dense|column dense;
+        grid-template-columns: 100px 20em 5vw 20% 1fr repeat(2,1fr) ;
+        grid-template-rows: repeat(4,fit-antent)
+        grid-column-gap:1vw;
+        grid-column-gap:1vw;
+
+        justify-items: center|start|end|stretch;
+        align-items:
+
+        justify-content:
+        align-content:center|start|end
+
+    }
+
+```
+## grid items
+
     grid-template-columns
     grid-template-rows
     grid-template-areas
@@ -112,25 +132,36 @@ css functions
         grid-template-columns:<length> <percentage> <flex> <max-content> <min-content> <minmax(min, max)>
         grid-template-rows:<length> <percentage> <flex> <max-content> <min-content> <minmax(min, max)>
 	        
-        grid-template-columns:<px px px|fr fr fr>
-        grid-template-columns: 20px repeat(6, 1fr) 20px;
         
+        grid-template-columns: 20px repeat(6, 1fr) 20px | repeat(4,fit-antent);
+        
+        grid-template-rows: 
+
+        grid-column-gap:1vw;
+        grid-column-gap:1vw;
+
         grid-auto-rows: minmax(100px, auto)
         grid-gap:
+
+
+        grid-auto-flow: row|column|row dense|column dense;
+
+
+        justify-items: center|start|end|stretch;
+        align-items:
+
+        justify-content:
+        align-content:center|start|end
     }
 
         .grid-item{
-            grid-column: <grid-column-start> / <grid-column-end>
-            grid-row: <integer> / <integer>
+            grid-column:
+            grid-row:
 
-	    grid-area: <grid-row-start>/<grid-column-start>/<grid-row-end>/<grid-column-end>
-
-            grid-column-start: integer <span integer>
+            grid-column-start:
             grid-column-end:
             grid-row-start:
             grid-row-end:
-
-	    order: <integer>
         }
 
 

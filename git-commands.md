@@ -69,7 +69,8 @@ source /usr/share/doc/git-1.7.4.4/contrib/completion/git-completion.bash
   git reset --hard HEAD 
 
 # remove untracked files from the working tree
-
+  
+  git clean -n # to show what will be removed
   git clean -f # to remove untracked files
   git clean -d # to remove untracked directories
   
