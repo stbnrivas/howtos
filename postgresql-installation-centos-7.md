@@ -1,11 +1,80 @@
+# fedora intallation to use with rails
+
+## install packages
+dnf install postgresql-server postgresql-contrib 
+dnf install pgadmin3
+
+systemctl enable postgresql
+systemctl start postgresql
+postgresql-setup initdb
+
+
+initdb /usr/local/var/postgres -E utf8
+initdb -D $HOME/pg-data/ -E utf8
+
+postgres -D $HOME/tuts/pg-data
+or
+pg_ctl -D $HOME/tuts/pg-data -l logfile start
+
+export PGDATA=/Users/tuts/pg-data
+postgres
+
+postgresql-setup initdb tuts
+
+su - root
+su - postgres
+psql 
+\password postgres
+\q
+
+
+
+
+createuser developer -P
+createdb --owner=developer tuts
+
+vi /var/lib/pgsql/data/pg_hba.conf
+replace ident to md5
+
+$ psql -h localhost -U developer tuts
+
+
+\h [COMMAND]	help about command
+\h delete
+
+
+\?  		list all commands
+\conninfo	info about connection
+\c [DBNAME]	connect to database
+\l		list all databases
+\d
+\dt 		list all tables current schema
+\e
+export EDITOR="subl -w"
+\q 		quit
+
+psql
+CREATE DATABASE database_name;
+CREATE USER my_username WITH PASSWORD 'my_password';
+GRANT ALL PRIVILEGES ON DATABASE "database_name" to my_username;
+ALTER USER postgres with encrypted password 'your_password';
+
+
+drop database [databaseName]
 
 
 # postgresql installation
 
-## install packages
-dnf install postgresql-server postgresql-contrib
-postgresql-setup initdb
 
+
+
+
+
+## installation at fedora to development
+
+dnf install postgresql postgresql-server postgresql-contrib libpqxx-devel
+postgresql-setup --initdb --unit postgresql
+services start postgresql
 
 ## change configuration
 
