@@ -24,8 +24,12 @@ main axis, cross axis
         display:flex;
         flex-direction:<row|row-reverse|column|column-reverse>;
         flex-wrap:<nowrap|wrap|wrap-reverse|initial|inherit>;
+
+	flex-flow: flex-direction flex-wrap
         
-        justify-content: <flex-start|flex-end|center|space-between|space-around|initial|inherit;>;
+        justify-content: <flex-start|flex-end|center|space-between|space-around|initial|inherit>;
+	align-items: <flex-start|flex-end|center|baseline|stretch>; 
+	align-content: <flex-start|flex-end|center|baseline|stretch>; 
     }
 
 
@@ -37,6 +41,8 @@ main axis, cross axis
             align-items: <strech|flex-start|center|flex-end|flex-end|baseline>
             align-content: <stretch|center|flex-start|flex-end|space-between|space-around|initial|inherit;>;
             align-self: <stretch|flex-start|center|flex-end|baseline>
+	
+	    order:<integer>
         }
 
         <flex-grow> a positive number that determines how much extra spacde this flex item should get relative to its siblings
@@ -103,7 +109,9 @@ css functions
     .wrapper{
         display:<grid|inline-grid>;
 
-        
+        grid-template-columns:<length> <percentage> <flex> <max-content> <min-content> <minmax(min, max)>
+        grid-template-rows:<length> <percentage> <flex> <max-content> <min-content> <minmax(min, max)>
+	        
         grid-template-columns:<px px px|fr fr fr>
         grid-template-columns: 20px repeat(6, 1fr) 20px;
         
@@ -112,13 +120,17 @@ css functions
     }
 
         .grid-item{
-            grid-column:
-            grid-row:
+            grid-column: <grid-column-start> / <grid-column-end>
+            grid-row: <integer> / <integer>
 
-            grid-column-start:
+	    grid-area: <grid-row-start>/<grid-column-start>/<grid-row-end>/<grid-column-end>
+
+            grid-column-start: integer <span integer>
             grid-column-end:
             grid-row-start:
             grid-row-end:
+
+	    order: <integer>
         }
 
 
