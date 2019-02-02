@@ -233,7 +233,9 @@ rbenv gemset list
 rbenv gemset delete [version] [gemset]
 ```
 
+rbenv-doctor
 
+curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
 
 
 

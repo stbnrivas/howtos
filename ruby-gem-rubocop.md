@@ -1,4 +1,11 @@
 # rubocop 
+A ruby static code analysis tool aimed to enforce the Ruby community style guide
 
-	rubocop 
-	rubocop --auto-gen-config
+```bash
+rubocop 
+rubocop --auto-gen-config
+```
+
+
+
+
