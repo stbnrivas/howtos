@@ -61,13 +61,17 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 
 ```bash
 	$ docker container run $image:$tag
-		# -p --publish		publish list of ports
-		# -d --detach		run container in background
-		#    --rm 			remove container when exits
+		# -p --publish			publish list of ports
+		# -d --detach			run container in background
+		#    --rm 				remove container when exits
+		# -e --env				pass environment variable
+		#    --env-file list    Read in a file of environment variables
 
 	$ docker container run httpd:2.4
 	$ docker container run -p 80:80 -p 443:443 httpd:2.4
 	$ docker container run -p 80:80 --detach web-server:1.1
+
+	# you can check ss -tunpl
 ```
 
 - removing images
@@ -98,8 +102,11 @@ docker rmi $(docker images -q)
 		-t --tty 			allocate a pseudo-TTY
 		-i --interactive	keep STDIN open
 		-d --detach			run a container in background
-	
+
 		-p --publish		container ports exposed
+			 --name $name
+
+			 --link 			some-postgres:postgres
 ```
 
 - docker command lets us run commands against a running container.
@@ -218,8 +225,8 @@ creacion de volumenes
 		=> return $NEW_IMAGE_ID for this container status
 	$ docker tag $NEW_IMAGE_ID repo/newimagename
 	$ docker restart $CONTAINER_ID
-	
-	$ docker inspect $CONTAINER_ID	
+
+	$ docker inspect $CONTAINER_ID
 ```
 
 - docker containers don't persist any data if you need persistence need use docker volumes. there are two approaches involved copying a file into a container. copying into container
@@ -265,7 +272,7 @@ write Dockerfile -> build Dockerfile to get Docker Image -> Run Docker Image as 
 - when you finish your Dockerfile
 
 ```bash
-	$ docker image build --tag web-server:1.0 . || 
+	$ docker image build --tag web-server:1.0 . ||
 	OR
 	$ docker build -t webserver:1.0 .
 	$ docker container run -p 80:80 web-server:1.0
