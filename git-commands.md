@@ -323,6 +323,14 @@ once tag is removed that commit is not longe listed in the repo
   git request-pull origin/master
   
 
+  This branch is X commits behind $USER:master
+
+
+git remote add upstream git://github.com/ORIGINAL-DEV-USERNAME/REPO-YOU-FORKED-FROM.git
+git fetch upstream
+
+git pull upstream master
+git push origin master
 
 
 
