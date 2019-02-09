@@ -157,9 +157,10 @@ git log --pretty=full
 ```
 
 ```bash
+git log --grep $string
 git log <since>..<until>
 git log --stat
-
+git log --author=stbnrivas
 git show # show changes
 ```
 
