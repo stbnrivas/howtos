@@ -49,8 +49,8 @@ now you can: add file, modify file, delete file, rename file, move file location
 * show diff 
 
 ```bash  
-git diff    # diff between current status last commit
-git diff --cached #
+git diff    # diff between current status and last commit
+git diff --cached # between add to stage and last commit
 git diff --staged #
 ```
 
@@ -153,7 +153,10 @@ git log
 ```bash
 git log --graph
 git log --pretty=oneline
+git log --oneline
 git log --pretty=full
+git log -4 
+git log --date=short
 ```
 
 ```bash
@@ -289,6 +292,8 @@ git log
 git push <remote> <branch> --force
 git push -f <remote> <branch>
 
+# or
+git reset --soft HEAD~1
 
 # get another remote branch to local
 git fetch origin [remote-branch]:[new-local-branch]
@@ -346,6 +351,11 @@ git hist --all
 
 once tag is removed that commit is not longe listed in the repo
 
+```bash
+git reset --soft
+git reset --mixed
+git reset --hard
+```
 
 
 # contribution 
@@ -360,7 +370,8 @@ git push <remote> <branch_some_feature>
 git request-pull origin/master
 ```
 
-This branch is X commits behind $USER:master
+keep a fork up to date 
+error: This branch is X commits behind $USER:master
 
 ```bash
 git remote add upstream git://github.com/ORIGINAL-DEV-USERNAME/REPO-YOU-FORKED-FROM.git
