@@ -17,6 +17,8 @@ a[0] # => 0
 a[100] # => nil
 a[-1] # => 5
 a[-2] # => 4
+a[-6] # => 0
+a[-7] # => nil
 a.at(0) # => 0
 a.at(-1) # => 5
 a.fecth(100)  #=> IndexError: index 100 outside of array bounds: -6...6
@@ -35,14 +37,18 @@ a.drop(1) # => [1,2,3,4,5]
 a.drop(45) # => []
 ```
 
+```ruby
+[ "a", nil, "b", nil, "c", nil ].compact #=> [ "a", "b", "c" ]
+```
 
 
 ```ruby
 a = [0,1,2]
-a.length 
-a.count
-a.size
-a.empty?
+a.length # => 3
+a.count # => 3
+a.count { |x| x%2 == 0 } # 2
+a.size # => 3
+a.empty? # => false
 ```
 
 
@@ -56,10 +62,13 @@ a.include? 4 # => false
 ```ruby
 a = [] 
 a.push(0) # [0]
-a << 1 # [0,1]
-a.insert(0,-1) # [-1,0,1]
-a.insert(0,-3,-2,-1) # => [-3, -2, -1, -1, 0, 1]
-a.unshift(-4) # => [-4, -3, -2, -1, -1, 0, 1]
+a.push(1) # [0,1]
+a << 2 # [0,1,2]
+a.insert(0,-1) # [-1,0,1,2]
+a.insert(0,-3,-2) # => [-3, -2, -1, 0, 1, 2]
+a.unshift(-4) # => [-4, -3, -2, -1, -1, 0, 1, 2]
+a.shift # => -4 
+puts s # => [-3, -2, -1, -1, 0, 1, 2]
 
 a = [ 1, 2 ]
 a << "c" << "d" << [ 3, 4 ] # #=>  [ 1, 2, "c", "d", [ 3, 4 ] ]
@@ -67,7 +76,8 @@ a << "c" << "d" << [ 3, 4 ] # #=>  [ 1, 2, "c", "d", [ 3, 4 ] ]
 
 
 ```ruby
-a = [0,1,2,3,4]
+a = [0,1,2,3]
+a.push 4 # => [0,1,2,3,4]
 a.pop # => 4
 a # [0,1,2,3]
 a.shift # => 0
@@ -116,12 +126,12 @@ a.reject!{|e| e%2==0} # => [1,3,5,7]
 
 ```ruby
 # bsearch {|x| block } → elem
-ary = [0, 4, 7, 10, 12]
-ary.bsearch {|x| x >= 4 } #=> 4
+a = [0, 4, 7, 10, 12]
+a.bsearch {|x| x >= 4 } #=> 4
 
 # bsearch_index {|x| block } → int or nil
-ary = [0, 4, 7, 10, 12]
-ary.bsearch_index {|x| x >= 4 } #=> 1
+a = [0, 4, 7, 10, 12]
+a.bsearch_index {|x| x >= 4 } #=> 1
 
 a = [ "a", "b", "b", "b", "c" ]
 a.index("b")             #=> 1
@@ -136,8 +146,8 @@ a.rindex("b")            #=> 3
 
 
 ```ruby
-a = [[1, 2, 3], [4, 5, 6, [7, 8]], 9, 10]
-a.flatten # => a = [[1, 2, 3], [4, 5, 6, [7, 8]], 9, 10]
+a = [[1, 2], 3, [4, 5, 6, [7, 8]], 9, 10]
+a.flatten # => a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 a.flatten!
 
 [ "a", "b", "c" ].join        #=> "abc"
@@ -145,4 +155,29 @@ a.flatten!
 
 a.min
 a.max
+```
+
+
+
+```ruby
+a = [1,2,3,4,5,6]
+a.keep_if{|item| item%2==0} # => [2, 4, 6]
+```
+
+
+```ruby
+a=[1,2,3]
+a.permutation.to_a  #=> [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+a.permutation(1).to_a  #=> [[1],[2],[3]]
+```
+
+
+```ruby
+a = [ "a", "b", "c", "d" ]
+a.rotate         #=> ["b", "c", "d", "a"]
+```
+
+
+```bash
+[1,2,3,4,5].select { |num|  num.even?  }   #=> [2, 4]
 ```

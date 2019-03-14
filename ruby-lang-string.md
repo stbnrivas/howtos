@@ -1,6 +1,7 @@
 # String.new
 
 new(str="", capacity: size) → new_str
+s = String.new("", capacity: 200) → new_str
 
 The optional capacity keyword argument specifies the size of the internal buffer. This may improve performance, when the string will be concatenated many times (causing many realloc calls).
 
@@ -27,7 +28,6 @@ a.upcase!
 
 ```ruby
 a.empty?
-a.count
 a.size
 a.length
 ```
@@ -36,6 +36,8 @@ a.length
 ```ruby
 s = "aabbcc"
 s.delete("a") # => "bbcc"
+s2 = "hello world with vocals"
+s2.delete("aeiou") # => "hll wrld wth vcls"
 ```
 
 ```ruby
@@ -46,6 +48,8 @@ s.each_char{|c| print c, " "} # a a b b c c d d
 "hello\nworld".each_line {|s| p s}
 # "hello\n"
 # "world"
+a = "abcde"
+a.chars.map{|x| x.upcase}
 ```
 
 
@@ -70,17 +74,19 @@ s.each_char{|c| print c, " "} # a a b b c c d d
 
 
 ```ruby
-"hello".ljust(4)    # => "hello    "
-"    hello    ".lstrip()    # => "hello    "
-s = "    hello    "
-s.lstrip!()    # => "hello    "
+"   hello   ".strip # => "hello"
+"   hello world   ".strip # => "hello world"
 
-"  hello  ".rstrip   #=> "  hello"
-"  hello  ".rstrip!  #=> "  hello"
+"   hello   ".lstrip # => "hello   "
+"   hello   ".rstrip # => "   hello"
 
-"hello".rjust(4)
-"hello".rjust(20)  #=> "               hello"
-"hello".rjust(20," ")  #=> "               hello"
+"hello".ljust(5)    # => "hello"
+"hello".ljust(6)    # => "hello "
+"hello".ljust(10)    # => "hello     "
+
+"hello".rjust(5)  #=> "hello     "
+"hello".rjust(6," ")  #=> " hello"
+"hello".rjust(10)  # => "     hello"
 ```
 
 
@@ -91,21 +97,27 @@ s.lstrip!()    # => "hello    "
 
 
 ```ruby
-s = "this is a string"
-s.slice!(2)        #=> "i"
-s.slice!(3..6)     #=> " is "
-s = "this is a string"
-
-s.split(' ')
-
-s = "thes es o streng"
-s.tr("e","i") # => "this is o string"
-s.tr("eo","ia") # => "this is a string"
-s.tr!
+s = "part1;part2"
+s.split("part1;part2")
+# => ["part1","part2"]
 ```
 
 
 ```ruby
-a = "abcde"
-a.chars.map{|x|puts x}
+s = "this is a string"
+s.slice!(0)        #=> "t"
+s.slice!(1)        #=> "h"
+s.slice!(2)        #=> "i"
+s.slice!(3..6)     #=> " is "
+s = "this is a string"
+
+s = "part1;part2"
+s.tr("a","o") # => "port1;port2"
+s.tr("","") # => "this is a string"
+s = "replacing all vocals for"
+s.tr("aeiou","_") # => "r_pl_c_ng _ll v_c_ls f_r"
+rna = "CATAATG"
+rna.tr("AG","_X") # => "C_T__TX"
+s.tr!
 ```
+
