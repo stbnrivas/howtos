@@ -26,10 +26,17 @@ main axis, cross axis
         flex-wrap:<nowrap|wrap|wrap-reverse|initial|inherit>;
         
         justify-content: <flex-start|flex-end|center|space-between|space-around|initial|inherit>;
-	align-items: <flex-start|flex-end|center|baseline|stretch>; 
-	align-content: <flex-start|flex-end|center|baseline|stretch>; 
+        align-items: <flex-start|flex-end|center|baseline|stretch>;
+        align-content: <flex-start|flex-end|center|baseline|stretch>; 
     }
 
+
+when flex-direction is set to row => main axis (X), secondary axis (Y)
+* justify-content work with main axis
+* align-content work with secondary axis
+when flex-direction is set to column => main axis (Y), secondary axis (X)
+* justify-content work with main axis
+* align-content work with secondary axis
 
 ## flexbox items
 
@@ -40,13 +47,14 @@ main axis, cross axis
             align-content: <stretch|center|flex-start|flex-end|space-between|space-around|initial|inherit;>;
             align-self: <stretch|flex-start|center|flex-end|baseline>
 	
-	    order:<integer>
+            order:<integer>
         }
 
         <flex-grow> a positive number that determines how much extra spacde this flex item should get relative to its siblings
         <flex-shrink> a positive number is just a number and it only has meaning when compared to its sibling flex-shrink values
         <flex-basics> if flex-direction on flexbox-container is row or row-reverse it governs the width of item
                       if flex-direction on flexbox-container is column or colum-reverse it governs the height of item
+
 
 ## multiline flex container
 
