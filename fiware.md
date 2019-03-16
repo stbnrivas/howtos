@@ -8,8 +8,27 @@ The Context Broker in turn is surrounded by a suite of additional platform compo
 
 All interactions between applications or platform components and the Context Broker take place using the FIWARE NGSI RESTful API – a simple, yet powerful open standard.
 
-
 Usage of the Orion Context Broker is sufficient for an application to qualify as “Powered by FIWARE”.
+
+
+## Requirements concepts
++iot
++smart cities
++context
++
+
+
+Fiware Interoperability Mechanism in synchronicity-iot.eu
+
++Context Management API: access to real time context [link](https://synchronicityiot.docs.apiary.io/reference/context-management-api)
++Shared data models: guidelines and cataloge of common data models in differents verticals [link](https://gitlab.com/synchronicity-iot/synchronicity-data-models)
++Marketplace API: it expose functionalites such catalog management, ordering management [link](https://synchronicityiot.docs.apiary.io/#reference/marketplace-api)
++Security API: API to register and authenticate user and apps to access Synchronicity enabled services [link](https://synchronicityiot.docs.apiary.io/#reference/security-api)
++Data Storage API:  allow to access to historical data and open data of reference zones [link](https://synchronicityiot.docs.apiary.io/#reference/data-storage-api-historical)
+
+(see more at)[https://synchronicity-iot.eu/tech/]
+
+
 
 ## getting started
 
@@ -24,7 +43,7 @@ docker-compose -p fiware up
 curl -X GET 'http://localhost:1026/version'
 ```
 
- so lets add some context data into the system by creating two new entities 
+ so lets add some context data into the system by creating two new entities
 
 ```bash
 curl -X GET 'http://localhost:1026/v2/entities'
@@ -43,7 +62,7 @@ curl -iX POST \
 	  		"streetAddress": "Bornholmer  Straße 65",
 	  		"addressRegion": "Berlin",
 	  		"addressLocality": "Prenzlauer Berg",
-	  		"postalCode": "10439"  			
+	  		"postalCode": "10439"
   		}
   	},
   	"location": {
@@ -125,7 +144,6 @@ entities:
 *inventary-item (item de inventario)
 
 
-
 we are going to create the shelf
 
 ```bash
@@ -200,7 +218,7 @@ curl -iX POST \
 
 ```
 
-create products 
+create products
 
 ```bash
 curl -iX POST \
@@ -369,9 +387,591 @@ curl -X GET \
   'http://localhost:1026/v2/entities/?q=refProduct==urn:ngsi-ld:Product:001&options=values&attrs=refStore&type=InventoryItem'
 ```
 
-data integrity, context data relationships should only be maintined between entities that exist 
+data integrity, context data relationships should only be maintined between entities that exist
 
 ```bash
 curl -X GET \
   'http://localhost:1026/v2/entities/?q=refStore==urn:ngsi-ld:Store:001&options=count&attrs=type'
+```
+
+
+
+## entity crud operations
+
+create a new data entity
+
+```bash
+curl -iX POST \
+  --url 'http://localhost:1026/v2/entities' \
+  --header 'Content-Type: application/json' \
+  --data '
+  {
+    "id":"urn:ngsi-ld:Product:010",
+    "type":"Product",
+    "name":{"type":"Text", "value":"Lemonade"},
+    "size":{"type":"Text", "value": "S"},
+    "price":{"type":"Integer", "value": 99}
+  }'
+
+# to check
+curl -X GET 'http://localhost:1026/v2/entities?type=Product'
+curl -X GET 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:010'
+# if dont specify type product you will have poor performance i think
+curl -X GET 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:010?type=Product'
+```
+
+create a new attribute
+
+```bash
+curl -iX POST \
+  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:010/attrs' \
+  --header 'Content-Type: application/json' \
+  --data '
+  {
+    "specialOffer":{"value":true}
+  }'
+# check if it worked
+curl -iX  GET 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:010'
+# another product don't have special offer attributte
+curl -iX  GET 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:004'
+```
+
+multiple creation of data entities or attributtes
+
+```bash
+curl -iX POST \
+  --url 'http://localhost:1026/v2/op/update' \
+  --header 'Content-Type: application/json' \
+  --data '
+  {
+    "actionType": "append_strict",
+    "entities":[
+      {
+        "id":"urn:ngsi-ld:Product:011",
+        "type":"Product",
+        "name":{"type":"Text","value":"Brandy"},
+        "size":{"type":"Text","value":"M"},
+        "price":{"type":"Integer","value":1199}
+      },
+      {
+        "id":"urn:ngsi-ld:Product:012",
+        "type":"Product",
+        "name":{"type":"Text","value":"Port"},
+        "size":{"type":"Text","value":"M"},
+        "price":{"type":"Integer","value":1099}
+      },
+      {
+        "id":"urn:ngsi-ld:Product:001",
+        "type":"Product",
+        "offerPrice":{"type":"Integer", "value":89}
+      }
+    ]
+  }'
+
+# the request will fail if any attributte already exist in then context, you can use "actiontype":"append"
+
+curl -X GET 'http://localhost:1026/v2/entities?type=Product'
+
+curl -iX POST \
+  --url 'http://localhost:1026/v2/op/update' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "actionType":"append",
+    "entities":[
+      {
+        "id":"urn:ngsi-ld:Product:001",
+        "type":"Product",
+        "name": {"type":"Text", "value":"Brandy"},
+        "size": {"type":"Text", "value": "M"},
+        "price": {"type":"Integer", "value": 199}
+      },
+      {
+        "id":"urn:ngsi-ld:Product:012", "type":"Product",
+        "name":{"type":"Text", "value":"Port"},
+        "size":{"type":"Text", "value": "M"},
+        "price":{"type":"Integer", "value": 1099}
+      }
+    ]
+  }'
+
+curl -iX GET 'http://localhost:1026/v2/entities?type=Product'
+```
+
+read a single attribute from a data entity
+
+```bash
+curl -X GET \
+  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs/name/value'
+# "Brandy"
+
+curl -X GET \
+  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs/size/value'
+# "M"
+```
+
+read a multiple attribute from a data entity
+
+
+```bash
+curl -X GET \
+  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001?type=Product&options=keyValues&attrs=name,price'
+
+curl -X GET \
+  --url 'http://localhost:1026/v2/entities?type=Product'
+```
+
+list data entity by ID
+
+```bash
+curl -X GET \
+  --url 'http://localhost:1026/v2/entities/?type=Product&options=count&attrs=id'
+```
+
+update single / multiple attributes
+
+```bash
+# single attributte 
+curl -iX PUT \
+  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs/price/value' \
+  --header 'Content-Type: text/plain' \
+  --data 91
+
+curl -iX GET 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001'
+
+# multiple attributes into single data entity
+curl -iX POST \
+  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs' \
+  --header 'Content-Type: application/json' \
+  --data '
+  {
+    "price": {"type":"Integer", "value": 42},
+    "name": {"type":"Text", "value": "Brandy Solera" }
+  }'
+
+# update multiples attrs into multiple data-entity
+
+curl -iX POST \
+  --header 'Content-Type: application/json' \
+  --url 'http://localhost:1026/v2/op/update' \
+  --data '
+  {
+    "actionType":"update",
+    "entities": [
+      {
+        "id": "urn:ngsi-ld:Product:001",
+        "type":"Product",
+        "price":{"type":"Integer","value":200}
+      },
+      {
+        "id": "urn:ngsi-ld:Product:003",
+        "type":"Product",
+        "price":{"type":"Integer","value":100},
+        "size":{"type":"Text","value":"XL"}
+      }
+    ]
+  }'
+
+curl -X GET 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001'
+curl -X GET 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:003'
+
+
+# create and overwrite
+curl -iX POST \
+  --url 'http://localhost:1026/v2/op/update' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "actionType":"append",
+  "entities":[
+      {
+        "id":"urn:ngsi-ld:Product:001", "type":"Product",
+        "price":{"type":"Integer", "value": 1199}
+      },
+      {
+        "id":"urn:ngsi-ld:Product:002", "type":"Product",
+        "price":{"type":"Integer", "value": 1199},
+        "specialOffer": {"type":"Boolean", "value":  true}
+      }
+  ]
+}'
+
+# replace full, only remains new attributes bitwise remove if it dont be
+curl -iX POST \
+  --url 'http://localhost:1026/v2/op/update' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "actionType":"replace",
+  "entities":[
+      {
+        "id":"urn:ngsi-ld:Product:001", "type":"Product",
+        "price":{"type":"Integer", "value": 1199}
+      }
+  ]
+}'
+curl -X GET 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001'
+```
+
+
+## delete operations
+
+```bash
+# delete single entity
+curl -iX DELETE \
+  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:010'
+
+# delete muliple entities
+curl -iX POST \
+  --url 'http://localhost:1026/v2/op/update' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "actionType":"delete",
+  "entities":[
+      {
+        "id":"urn:ngsi-ld:Product:001", "type":"Product"
+      },
+      {
+        "id":"urn:ngsi-ld:Product:002", "type":"Product"
+      }
+  ]
+}'
+
+# delete attrs of single entity
+curl -iX DELETE \
+  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs/specialOffer'
+
+# delete multiple attr on single entity
+curl -iX POST \
+  --url 'http://localhost:1026/v2/op/update' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "actionType":"delete",
+  "entities":[
+    {
+      "id":"urn:ngsi-ld:Product:003", "type":"Product",
+      "price":{},
+      "name": {}
+    }
+  ]
+}'
+# If any attribute does not exist in the context, the result will be an error response.
+```
+
+
+find existing data relationships to delete in cascade
+
+```bash
+curl -X GET \
+  --url 'http://localhost:1026/v2/entities/?q=refProduct==urn:ngsi-ld:Product:001&options=count&attrs=type'
+
+# if result has element you must delete before, to delete safely
+```
+
+
+
+
+## context data and context providers
+
+"Knowledge is of two kinds. We know a subject ourselves, or we know where we can find information upon it."
+
+— Samuel Johnson (Boswell's Life of Johnson)
+
+
+things like The current temperature at the store location, The current relative humidity at the store, location, Recent social media tweets regarding the store. This information is always changing, and if it were statically held in a database, the data would always be out-of-date
+
+The FIWARE platform makes the gathering and presentation of real-time context data transparent, since whenever an NGSI request is made to the Orion Context Broker it will always return the latest context by combining the data held within its database along with real-time data readings from any registered external context providers.
+
+
+MAYBE A Bike-in can be a context provider to decide if port is free or busy, how time remain...
+
+
+```bash
+# to check content provider status
+curl -X GET 'http://localhost:3000/health/content-provider-service'
+
+# example
+curl -X GET 'http://localhost:3000/health/content-provider-twitter'
+curl -X GET 'http://localhost:3000/health/content-provider-temperature'
+
+
+# Retrieving a single attribute value
+curl -iX POST \
+  'http://localhost:3000/proxy/static/temperature/queryContext' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "entities": [
+        {
+            "type": "Store",
+            "isPattern": "false",
+            "id": "urn:ngsi-ld:Store:001"
+        }
+    ],
+    "attributes": [
+        "temperature"
+    ]
+}'
+
+# Retrieving multiple attribute values
+curl -iX POST \
+  'http://localhost:3000/proxy/v1/random/weatherConditions/queryContext' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "entities": [
+        {
+            "type": "Store",
+            "isPattern": "false",
+            "id": "urn:ngsi-ld:Store:001"
+        }
+    ],
+    "attributes": [
+        "temperature",
+        "relativeHumidity"
+    ]
+}'
+```
+
+
+Registering a new Context Provider
+
+```bash
+curl -iX POST \
+  --header 'Content-Type: application/json' \
+  --url 'http://localhost:1026/v2/registrations' \
+  --data '{
+  "description": "Random Weather Conditions",
+  "dataProvided": {
+    "entities": [
+      {
+        "id": "urn:ngsi-ld:Store:001",
+        "type": "Store"
+      }
+    ],
+    "attrs": [
+      "relativeHumidity"
+    ]
+  },
+  "provider": {
+    "http": {
+      "url": "http://context-provider:3000/proxy/v1/random/weatherConditions"
+    },
+     "legacyForwarding": true
+  }
+}'
+
+# after registered you can get context information from enpoint
+curl -X GET 'http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001/attrs/relativeHumidity/value'
+
+# delete registration
+curl -iX DELETE 'http://localhost:1026/v2/registrations/5ad5b9435c28633f0ae90671'
+```
+
+
+
+to show registration context provider for an entity
+
+```bash
+curl -X GET 'http://localhost:1026/v2/registrations/entity-id'
+
+curl -X GET 'http://localhost:1026/v2/registrations'
+```
+
+
+
+## accessing the context data
+
+![arquitecture of ](https://camo.githubusercontent.com/c7be2eaa7475203633283d600ded5903331ef810/68747470733a2f2f6669776172652e6769746875622e696f2f7475746f7269616c732e416363657373696e672d436f6e746578742f696d672f6172636869746563747572652e706e67)
+
+
+NGSI v2 npm library, there is not ruby library NGSI v2 but ... you can use
+
+
+maybe do a ruby a gem with implementation of NGSI v2 using nokogir??
++ngsi-v2
++ngsi-v2-cli
+
+
+example that show how to an node app, show items that store has to sell accessing to the API and show on frontend website
+
+```bash
+curl -X GET 'http://localhost:1026/v2/entities/' \
+  --data 'type=Product' \
+  --data 'options=keyValues'
+curl -X GET 'http://localhost:1026/v2/entities' \
+  --data 'q=refStore==urn:ngsi-ld:Store:001' \
+  --data 'type=InventoryItem' \
+  --data 'options=keyValues'
+```
+
+, and what happpens when one of this is selled "updating context"
+
+```bash
+curl -X GET 'http://localhost:1026/v2/entities/urn:ngsi-ld:InventoryItem:001/attrs/shelfCount/value'
+curl -iX PATCH \
+  --header 'Content-Type: application/json' \
+  'http://localhost:1026/v2/entities/urn:ngsi-ld:InventoryItem:006/attrs' \
+  --data '
+  {
+    "shelfCount": { "type": "Integer", "value": "13" }
+  }'
+```
+
+
+
+### context subscription (NGSI Subscripte/Notify)
+
+    "Don't call us, we'll call you"
+    — Dorothy Kilgallen (The Voice Of Broadway)
+
+Orion Context Broker offers also an asynchronous notification mechanism - applications can subscribe to changes of context information so that they can be informed when something happens.
+
+
+![arquitecture](https://fiware.github.io/tutorials.Subscriptions/img/architecture.png)
+
+```bash
+curl -iX POST 'http://localhost:1026/v2/subscriptions'
+  --header 'Content-Type: application/json'
+  --data '
+  {
+    "description":"Notify me of all product price changes",
+    "subject": {
+      "entities": [{"idPattern":".*","type":"Product"}],
+      "condition": {"attrs": ["price"]}
+    },
+    "notification": {
+      "http:" {"url":"http://tutorial:3000/subscription/price-change"}
+    }
+  }'
+```
+
+and when the condition will be true ngsi will send at http://tutorial:3000/subscription/price-change
+
+```json
+{
+  "subscriptionId":"5aeb0b...",
+  "data": [
+      {
+        "id":"urn:ngsi-ld:Product:001",
+        "type": "Product",
+        "name": {"type":"Text","value":"Beer","metadata":{} },
+        "price": {"type":"Integer","value":99,"metadata":{} },
+        "size": {"type": "Text","value":"S","metadata":{} }
+      },
+      {
+        "id":"urn:ngsi-ld:Product:002",
+        "type": "Product",
+        "name": {"type":"Text","value":"Red Wine","metadata":{} },
+        "price": {"type":"Integer","value":100,"metadata":{} },
+        "size": {"type": "Text","value":"L","metadata":{} }
+      }
+  ]
+}
+```
+
+
+reducing the payload for every request using one of two ways, two cannot be used simultaneously
+
++attrs (return specific attrs)
++exceptAttrs (return all except especified)
+
+```bash
+# not tested
+curl -iX POST 'http://localhost:1026/v2/subscriptions' \
+  --header 'Content-Type: application/json' \
+  --data '
+  {
+    "description":"Notify me of all product price changes",
+    "subject": {
+      "entities": [{"idPattern":".*","type":"Product"}],
+      "condition": {"attrs": ["price"]}
+    },
+    "notification": {
+      "http:" {"url":"http://tutorial:3000/subscription/price-change"},
+      "attrs": ["price"]
+    }
+  }'
+
+curl -iX POST 'http://localhost:1026/v2/subscriptions' \
+  --header 'Content-Type: application/json' \
+  --data '
+  {
+    "description":"Notify me of all product price changes",
+    "subject": {
+      "entities": [{"idPattern":".*","type":"Product"}],
+      "condition": {"attrs": ["price"]}
+    },
+    "notification": {
+      "http:" {"url":"http://tutorial:3000/subscription/price-change"},
+      "exceptAttrs": ["size"]
+    }
+  }'
+```
+
+
+reducing scope of subscription example, if prize is change at specific product
+
+
+```bash
+# subscription for notification at Store 001
+curl -iX 'http://localhost:1026/v2/subscriptions' \
+  --header 'Content-Type: application/json' \
+  --data '
+  {
+    "description": "Notify me of low stock in Store 001",
+    "subject": {
+      "entities": [{"idPattern"}: ".*", "type": "InventoryItem"],
+      "condition": { "attrs": ["shelfCount"], "expression": {"q":"shelfCount<10;refStore==urn:ngsi-ld:Store:001"} }
+    },
+    "notification": {
+      "http:" {"url":"http://tutorieal:3000/subscription/low-stock-store001"},
+      "attrsFormat":"keyValues"
+    }
+  }'
+
+# subscription for notification at Store 002
+curl -iX 'http://localhost:1026/v2/subscriptions' \
+  --header 'Content-Type: application/json' \
+  --data '{
+      "description": "Notify me of low stock in Store 002",
+      "subject": {
+        "entities": [{"idPattern": ".*","type": "InventoryItem"}],
+        "condition": {"attrs":["shelfCount"],"expression": {"q": "shelfCount<10;refStore==urn:ngsi-ld:Store:002"} }
+      },
+      "notification": {
+        "http": {"url": "http://tutorial:3000/subscription/low-stock-store002"},
+        "attrsFormat" : "keyValues"
+      }
+  }'
+```
+
+
+CRUD operation over subscriptions
+
++create see above
+
++read
+
+```bash
+# list all
+curl -X GET --url 'http://localhost:1026/v2/subscriptions'
+# read specific
+curl -X GET --url 'http://localhost:1026/v2/subscriptions/5aead3361587e1918de90aba'
+```
+
++delete a subscription
+
+```bash
+curl -X DELETE --url 'http://localhost:1026/v2/subscriptions/5ae079b86e4f353c5163c939'
+```
+
++update
+
+```bash
+curl -iX PATCH 'http://localhost:1026/v2/subscriptions/5ae07c7e6e4f353c5163c93e' \
+  --header 'content-type: application/json' \
+  --data '{
+    "status": "active",
+    "notification": {
+        "http": {
+            "url": "http://tutorial:3000/notify/price-change"
+        }
+    }
+}'
 ```
