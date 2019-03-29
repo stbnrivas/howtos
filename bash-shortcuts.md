@@ -12,6 +12,12 @@ CTRL-R  reverse search
 CTRL-SHIFT-V  paste text from the clipboard
 CTRL-Y
 
+CTRL-X CTRL-E
+
+## edit last command in default editor (vi)
+
+fc
+
 ## move previous directory
 cd /../../folder1
 cd -
@@ -29,21 +35,25 @@ while ! ./run.sh do sleep 1; done
 pv access.log | gzip > access.log.gz
 
 
-# direct schedule events
+## direct schedule events
 echo wget https://example.com/test | at 2:00 PM
 
 
-# display at output as a table
+## display at output as a table
 cat /etc/passwd | column -t
 
 
-# copy with another name
+## copy with another name
 	sample.txt
 cp /home/sample.txt{,-old} 
 	sample.txt
 	sample.txt-old
 
 
-# rename files with 
+## rename files with 
 rename -v jpg jpeg ./*
 
+
+## multiple creation
+mkdir -p folder/{f1,f2,f3}/
+mkdir -p folder{01..10}

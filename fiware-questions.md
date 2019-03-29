@@ -17,6 +17,34 @@ https://github.com/FIWAREZone/references
 
 ## General
 
++geojson
+
+in tutorial use 
+
+"location":{
+        "type":"geo:json", "value":{ "type":"Point","coordinates":[13.3986112, 52.554699]}
+      },
+
+but geojson is 
+
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.515625,
+          39.90973623453719
+        ]
+      }
+    }
+  ]
+}
+
+
 +Do you have any way to populate fiware installation?
 
 +There is some way of populate an installation of Fiware?
@@ -29,7 +57,23 @@ https://github.com/FIWAREZone/references
 
 +There is some forum or way to know another companies who are working with Fiware, to share experiences?
 
+
+is Sinchronicity an fiware with more things
+
 ## Tecnical
+
+ssl para el context broker
+
+pagination in the APi
+
+
+fiware no esta o no pensado para que el cliente sea directamente el movil? osea yo tengo mi propia instalacion de fiware y deseo que un movil esté suscrito sobre un entity, como sabe fiware la notificacion, deberia haber una middleware para por ejemplo las notificaciones push
+
+APNS use JSON Web Token (JWT) specification, letting you pass statements and metadata, called claims, to APNs, along with each push notification. For details, refer to the specification at ,Middle machine
+
+
+
+O puede el content broker enviar directamente al APNS (apple push notification server) o GCM (Google Cloud Messaging)
 
 
 ¿Hay alguna manera de hacer una peticion de un campo simple especificando cuales quieres?
@@ -49,5 +93,109 @@ swagger-codegen generate \
 ```
 
 npm i ngsi_v2
+
+
+v1 vs v2 API
+
+
+
+question about documentation: 
+
+https://fiware-tutorials.readthedocs.io/en/latest/iot-agent/index.html
+
+registering bell
+registering lamp
+
+
+
+
+fiware ready vs powered by Fiware
+
+fiware marketplace
+
+
+metadata for nested attibuttes ...
+
+
+can reseller for another company your own datas
+
+
+
+freeboard as dashboardo backend and more search into fiware marketplace
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+change postman variables
+
+user            usr_greencities_19
+pass            greencities$19
+subservice      /greencities
+service         fiware_zone
+apikey          0ecbdff5261544548420228c5091acc3
+
+
+zv7af1acs7ceub9xcg51ms8ne
+
+
+
+
+mgmt-int.iotplatform.telefonica.com
+
+
+get apikey from 
+
+  https://mgmt-int.iotplatform.telefonica.com/
+
+
+fiwarezoneiot
+
+
+mqttbox
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

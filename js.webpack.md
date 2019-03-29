@@ -2,7 +2,7 @@
 
 webpack is a bundler for js script images css typescript ... webpack is an advance from gulp or trunt because, webpack can do task like gulp and group like minifyjs but can handle js dependences 
 
-webpac is a bundler of js dependences minifying and join all project to one or multiples js files by default webpack doesn't build css from sass, or minify html, instead build sass file and convert to js that is executed without mention css or sass file without link tag into header of html document
+webpack is a bundler of js dependences minifying and join all project to one or multiples js files by default webpack doesn't build css from sass, or minify html, instead build sass file and convert to js that is executed without mention css or sass file without link tag into header of html document
 
 
 ## concepts
@@ -123,7 +123,7 @@ webpack --watch
 
 ### with css loader that inject styles into js
 
-´´´bash
+```bash
 npm install --global style-loader css-loader
 ´´´
 
@@ -147,9 +147,9 @@ module.exports = {
 
 ### with sass loader that compile scss -> css and inject styles into js
 
-´´´bash
+```bash
 npm install --global style-loader css-loader sass-loader
-´´´
+```
 
 ```javascript
 const path = require('path')
@@ -168,3 +168,64 @@ module.exports = {
     }
 }
 ```
+
+
+### babel transpilacion
+
+```bash
+npm install --save-dev babel-loader babel-core babel-preset-env
+touch .babelrc
+```
+
+file .babelrc
+```json
+{
+  "presets": [
+  "env"
+  ]
+}
+```
+
+```bash
+webpack --mode production --module-bind js=babel-loader
+```
+
+
+### webpack dev server
+
+```bash
+npm install --save-dev webpack-dev-server
+
+webpack-dev-server --mode development --open
+``` 
+
+
+### interesting plugins
+
+
+```bash
+# clean dist folder each new build
+npm install --save-dev clean-webpack-plugin
+
+npm install --save-dev css-loader     # css files
+npm install --save-dev style-loader   # styles inline
+npm install --save-dev mini-css-extract-plugin   # extract css and set in css fil
+npm install --save-dev node-sass sass-loader  # 
+npm install --save-dev postcss-loader   # 
+
+npm install --save-dev file-loader resolve-url-loader  # 
+
+npm install --save-dev image-webpack-loader   # 
+
+
+npm install --save-dev html-loader html-webpack-plugin  # 
+
+
+npm install --save-dev postcss-loader autoprefixer  # 
+
+npm install --save-dev   # 
+
+
+
+
+``` 

@@ -27,7 +27,8 @@ configure as herokuapp
 
 your project must to have a file with name Procfile with this content for ruby on rails
 
-```
+```bash
+#Procfile
 web: bundle exec puma -C config/puma.rb
 ```
 
@@ -69,7 +70,12 @@ heroku run bash
 heroku run rails console
 ```
 
+## heroku deploy a subfolder
 
+```bash
+dnf install git-subtree
+git subtree push --prefix src heroku master
+```
 
 
 ## heroku addons: sendgrid (verifyed account)

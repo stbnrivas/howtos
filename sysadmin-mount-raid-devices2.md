@@ -1,24 +1,21 @@
+## mounting a qnap static simple volume
 
 
+before check the partitions of the device 
 
--------------------------------------------------------------------                            
-## mounting a qnap simple volume
--------------------------------------------------------------------
-
-
-before to plugin the disk or with al md stopped
-
-
+```bash
 ls /dev/sdc
-sdc   sdc1  sdc2  sdc3  sdc4  sdc5 
+# sdc   sdc1  sdc2  sdc3  sdc4  sdc5 
+```
 
 
 let's try with linear 
-
-mdadm [mode] <raiddevice> [options] <component-devices>
-
-mdadm --assemble /dev/md0 --level=linear /dev/sdc3
-
+```bash
+# sintax: mdadm [mode] <raiddevice> [options] <component-devices>
+mdadm \
+	--assemble /dev/md0 \
+	--level=linear /dev/sdc3
+```
 	option --level not valid in assemble mode
 
 
@@ -90,6 +87,6 @@ lrwxrwxrwx. 1 root root 7 Mar 28 21:09 /dev/vg288/lv545 -> ../dm-0
 $ sudo mount /dev/vg288/lv2 ./hdwork
 $ cd hdwork/
 $ ls
-aquota.user  lost+found  syncthing-folder  torrenst  torrents  work
+aquota.user  lost+found  syncthing-folder  mypreciousfolder  work
 
 

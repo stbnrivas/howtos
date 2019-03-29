@@ -15,7 +15,8 @@
 
 ```bash
 $ dnf install docker-ce
-$ sysctlenable docker
+$ systemctl enable docker
+
 $ service docker start
 $ service docker stop
 ```
@@ -93,20 +94,26 @@ docker rmi $(docker images -q)
 - docker container is like instance of this class
 
 ```bash
-	$ docker container ls || docker ps
-	$ docker stop $CONTAINER_ID
-	exit container it won\'t deleted
-	$ docker rm $CONTAINER_ID
-	$ docker container run || docker run
+docker container ls
+docker ps
 
-		-t --tty 			allocate a pseudo-TTY
-		-i --interactive	keep STDIN open
-		-d --detach			run a container in background
+docker run
+docker container run
+	-t --tty 			allocate a pseudo-TTY
+	-i --interactive	keep STDIN open
+	-d --detach			run a container in background
 
-		-p --publish		container ports exposed
-			 --name $name
+	-p --publish		container ports exposed
+		--name $name
 
-			 --link 			some-postgres:postgres
+		--link 			some-postgres:postgres
+docker container run -it -p 3000:3000 --name $container_name  $image_name:$image_tag
+
+
+docker stop $CONTAINER_ID
+# exit container it won\'t deleted
+docker rm $CONTAINER_ID
+docker rm $CONTAINER_NAME
 ```
 
 - docker command lets us run commands against a running container.
@@ -281,7 +288,7 @@ write Dockerfile -> build Dockerfile to get Docker Image -> Run Docker Image as 
 	$ docker rmi $hash $hash
 ```
 
-sometimes has to build with cache cause conflict because the cache only is invalidate when there are new version of image. For this cases... build with --no-cache flag
+sometimes has to build with cache cause conflict because the cache only is invalidate when there are new version of image. For this cases... build with --no-cache flag to force fully build
 
 ## FROM
 
@@ -334,6 +341,7 @@ RUN apt-get update && \
 		curl
 ```
 
+sometimes there a problem  using RUN because pipe, then use this way
 
 ```Dockerfile
 RUN /bin/bash -c "set -o pipefail && wget -0 -https://google.com | wc -l"
@@ -455,11 +463,87 @@ docker-compose up --build
 docker-compose up --daemon
 #
 docker-compose down
+
+docker-compose ps
+
+
+docker-compose up -d --force-recreate web
+
+docker-compose -p project-name up
+```
+
+
+```bash
+docker-compose run --rm database psql -U postgres -h database
+docker-compose run --rm web bin/rails db:create
+
+```
+
+
+```bash
+docker-compose exec web \
+	bin/rails generate scaffold User first_name:string last_name:string
+docker-compose exec web \
+	bin/rails db:migrate
+```
+
+```bash
+docker exec -it <container name> /bin/bash
+docker-compose exec web /bin/bash
+```
+
+
+All Docker networks (except for the legacy bridge network) have built-in Domain
+Name System (DNS) name resolution. That means that we can communicate
+with other containers running on the same network by name
+
+ docker-compose run --rm redis redis-cli -h redis
+	-h redis is connect to the host named redis
+
+
+
+# Docker Volumes
+
+Part of the philosophy of using Docker is that we should treat containers as
+ephemeral, we should persist our data creating volume which are decoupled from the life cycle of container. 
+
+```bash
+docker volume --help
+docker volume create
+docker volume ls
+docker volume rm
+
+docker volume prune
 ```
 
 
 
 
+```bash
+docker-compose compose stop database
+docker-compose rm -f database
+```
+
+
+```yml
+version: '42'
+	- services:
+		web:
+		database:
+			image: postgres
+			volumes:
+				- db_data:/var/lib/postgresql/data
+```
+
+```bash
+docker-compose up -d database
+docker-compose exec web bin/rails db:create db:migrate
+```
+
+
+in linux the data will be placed
+
+/var/lib/docker/volumes/$folder_name_app'\_'$$volume_name/\_data
 
 
 # Docker orchestration

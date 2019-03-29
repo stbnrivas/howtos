@@ -29,6 +29,7 @@
 	gem search -r <gem>						remote search for gems
 
 	gem list <gem> --remote --all			search all versions of gems
+	gem search --remote --all | grep "^rails"
 
 
 ## installation 

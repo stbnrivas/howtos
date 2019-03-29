@@ -10,6 +10,15 @@ String.new.methods
 String.new.methods - String.new.class.superclass.methods
 ```
 
+```ruby
+class Example
+    attr_reader :name
+private
+    attr_reader :nickname
+end
+```
+
+
 
 
 ```ruby
