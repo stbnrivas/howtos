@@ -110,6 +110,8 @@ registering lamp
 
 
 fiware ready vs powered by Fiware
++ fiware ready (it is a iot device who is ready to work with context broker)
++ powered by fiware is when your platform use context broker
 
 fiware marketplace
 
