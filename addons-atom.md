@@ -11,6 +11,7 @@ edit -> preferences:
 * language-docker
 * trailing-spaces
 * emmet
+* language-procfile
 
 
 * markdown-preview
