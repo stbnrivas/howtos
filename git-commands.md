@@ -152,7 +152,6 @@ git log
 
 ```bash
 git log --graph
-git log --pretty=oneline
 git log --oneline
 git log --pretty=full
 git log -4 
@@ -352,9 +351,14 @@ git hist --all
 once tag is removed that commit is not longe listed in the repo
 
 ```bash
-git reset --soft
-git reset --mixed
-git reset --hard
+# undo last commit the changes of last commit changes persist as stage
+git reset --soft HEAD^
+
+# undo last commit the changes of last commit are unstage
+git reset --mixed HEAD^
+
+# undo last commit the changes of lasta commit are lost completely
+git reset --hard HEAD^
 ```
 
 
