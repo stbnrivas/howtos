@@ -28,17 +28,27 @@ configure as herokuapp
 your project must to have a file with name Procfile with this content for ruby on rails
 
 ```bash
-#Procfile
+# Procfile for rails
 web: bundle exec puma -C config/puma.rb
+
+#Procfile for rack app
+web: bundle exec puma config.ru -p $PORT
 ```
 
 ```bash
 heroku login
 heroku create
+#Creating app... done, ⬢ 
+
+heroku git:remote -a frozen-cove-93893
+
+
 git push heroku
 heroku run rake db:migrate
 heroku open
 ```
+
+
 
 ## utils in heroku
 
@@ -69,6 +79,19 @@ heroku config:set RAILS_ENV='production'
 heroku run bash
 heroku run rails console
 ```
+
+## heroku exec (ssh tunneling)
+
+```bash
+heroku ps:exec
+```
+
+## connection to database
+
+```bash
+heroku psql
+```
+
 
 ## heroku deploy a subfolder
 
@@ -108,3 +131,5 @@ https://devcenter.heroku.com/articles/dyno-sleeping
 
 === web (Free): bundle exec puma -C config/puma.rb (1)
 web.1: up 2019/01/31 10:30:14 +0100 (~ 13m ago)
+
+
