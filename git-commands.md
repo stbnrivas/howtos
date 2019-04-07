@@ -397,6 +397,12 @@ git push origin master
   git pull origin master
 ```
 
+if a repos has multiples git submodules to download all
+
+```bash
+git clone $repo --recurse-submodules
+```
+
 
 # working with Github
 
