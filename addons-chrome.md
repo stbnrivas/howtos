@@ -2,3 +2,4 @@
 
 * http://wappalyzer.com/
 * react devtools
+* + LiveReload Offered by: livereload.com (chrome)
