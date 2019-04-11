@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+ARGV.each do |url|
+  puts URI.decode(url)
+end
+
