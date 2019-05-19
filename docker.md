@@ -61,18 +61,18 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 - instanciate a docker container from a docker image
 
 ```bash
-	$ docker container run $image:$tag
-		# -p --publish			publish list of ports
-		# -d --detach			run container in background
-		#    --rm 				remove container when exits
-		# -e --env				pass environment variable
-		#    --env-file list    Read in a file of environment variables
+$ docker container run $image:$tag
+	# -p --publish			publish list of ports
+	# -d --detach			run container in background
+	#    --rm 				remove container when exits
+	# -e --env				pass environment variable
+	#    --env-file list    Read in a file of environment variables
 
-	$ docker container run httpd:2.4
-	$ docker container run -p 80:80 -p 443:443 httpd:2.4
-	$ docker container run -p 80:80 --detach web-server:1.1
+$ docker container run httpd:2.4
+$ docker container run -p 80:80 -p 443:443 httpd:2.4
+$ docker container run -p 80:80 --detach web-server:1.1
 
-	# you can check ss -tunpl
+# you can check ss -tunpl
 ```
 
 - removing images
