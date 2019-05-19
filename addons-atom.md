@@ -12,7 +12,7 @@ edit -> preferences:
 * trailing-spaces
 * emmet
 * language-procfile
-
+* atom-beautify
 
 * markdown-preview
 * geojson-preview
