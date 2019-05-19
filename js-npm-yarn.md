@@ -16,6 +16,7 @@ initialization
 ```bash
 npm init
 npm init --yes
+echo "node_modules" > .gitignore
 ```
 
 below command create a json config file	
@@ -40,7 +41,7 @@ new packages installation using install
 
 
 npm install takes exclusive, optional flags which save or update the package version in your main package.json:
-when there is a package.json into folder you can install dependences with 
+when there is a package.json into folder you can install dependences with and by default dependences will be added
 
 ```bash
 npm install 
@@ -56,12 +57,13 @@ npm install
 ```
 
 
-## searchin for package
+## searching for package
 
 ```bash
 # search
 npm search $module-name
 # installation 
+npm install -y
 npm install --save $module-name
 npm install $module-name		// equivalent --save
 npm install --save-dev			// save dependence like as development dependence
@@ -77,6 +79,8 @@ npm uninstall $module-name
 npm uninstall -g $module-name // uninstall from global
 # update
 npm update webpack
+# audit
+npm audit
 ```
 
 ## seeing dependences tree
