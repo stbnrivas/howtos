@@ -177,7 +177,7 @@ SELECT * FROM items WHERE ((price - 100) < avg(price))
 # Limit/Offset
 limit 30 rows
 
-  dataset.limit(30
+  dataset.limit(30)
 
 limit 30 rows offset 10
 

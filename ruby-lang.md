@@ -8,15 +8,15 @@ MEAN_OF_LIFE = "42"
 
 ```ruby
 puts "hello world"
-puts "hello 
+puts "hello
 world"
 print "hello"," world"
 p "hello world"
 ```
 
 ```ruby
-name = gets 
-name = gets.chomp 
+name = gets
+name = gets.chomp
 ```
 
 
@@ -43,7 +43,7 @@ x = y || z
 # equivalent to
 if y
     x = y
-else 
+else
     x = z
 
 ```
@@ -60,4 +60,30 @@ use control flow to things like
 
 ```ruby
 p = Post.find_by_name('awesome post') and p.publish!
+```
+
+
+# ruby equality
+
+```ruby
+ x = 1
+x==1 # => true
+x==1.0 #=> true
+x=='1' #=> false
+x=="1" #=> false
+
+x.eql? 1 #=> true
+x.eql? 1.0 #=> false
+x.eql? "1" #=> false
+```
+
+
+```ruby
+s = 'hello world'
+s == 'hello world' #=> true
+s == "hello world" #=> true
+s.eql? 'hello world' #=> true
+s.equal? 'hello world' #=> false this is testing object identity
+s.object_id
+'hello world'.object_id
 ```
