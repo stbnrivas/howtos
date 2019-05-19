@@ -374,7 +374,7 @@ git push <remote> <branch_some_feature>
 git request-pull origin/master
 ```
 
-keep a fork up to date 
+How to keep your fork up to date with its origin
 error: This branch is X commits behind $USER:master
 
 ```bash
@@ -384,6 +384,17 @@ git fetch upstream
 git pull upstream master
 git push origin master
 ```
+
+```bash
+git remote add upstream git://gitlab.com/ORIGINAL-DEV-USERNAME/REPO-YOU-FORKED-FROM.git
+git fetch upstream
+
+git pull upstream master
+git push origin master
+```
+
+and for gitlab
+
 
 
 
