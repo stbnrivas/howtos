@@ -12,6 +12,15 @@ git config --global core.pager 'less'
 updatedb
 locate git-completion.bash
 source /usr/share/doc/git-1.7.4.4/contrib/completion/git-completion.bash
+
+# set diff tool and merge tool meld
+git config --global diff.tool meld
+git config --global difftool.meld.path "/usr/bin/meld"
+git config --global difftool.prompt false
+
+git config --global merge.tool meld
+git config --global mergetool.meld.path "/usr/bin/meld"
+git config --global mergetool.prompt false
 ```
 
 
@@ -28,7 +37,6 @@ source /usr/share/doc/git-1.7.4.4/contrib/completion/git-completion.bash
 
 
 
-
 # inicialization repository
 
 ```bash
@@ -40,8 +48,20 @@ git clone --bare $repo $repo.git
 ```
 
 
-now you can: add file, modify file, delete file, rename file, move file location
+now you can: ignore file, add file, modify file, delete file, rename file, move file location
 
+# ignore file
+
+git has a .gitignore file to specify
+
+# forcing ignore files which are .gitignore and it on track files
+
+```bash
+# If you wanna stop tracking changes to a file that's already tracked in the repository like .env .secrets
+git update-index --assume-unchanged <file>
+# If you wanna start tracking changes again
+git update-index --no-assume-unchanged <file>
+```
 
 
 # working at the repo
@@ -210,6 +230,14 @@ git merge hotfixgit
 git branch -d hotfix
 ```
 
+* how see conflicts after merge operation
+
+```bash
+git diff --name-only --diff-filter=U
+```
+
+
+
 * if there is problem at merge
 ```bash
 git status
@@ -257,15 +285,24 @@ git rebase hotfix  # apply all changes of hotfix branch to a master
 # remote and locals repos 
 
 ```bash
+# downoad  all remote branches
+git fetch --all
+git checkout <remote-branch>
+
+# download only one branch
+git fetch origin <remote-branch>
+git checkout <remote-branch>
+
 # download all changes without do merge
 git fetch <remote> <branch>
-git merge <remote> <branch>
 
 # download all changes and merge into local repo
 git pull <remote> <branch> 
+git merge <remote> <branch>
 
 # Set a new remote
 git remote add origin https://github.com/user/repo.git
+
 # Verify new remote
 git remote -v
   origin  https://github.com/user/repo.git (fetch)
