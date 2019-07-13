@@ -4,7 +4,11 @@ material icon theme
 VS live share
 bracket pair colorized
 
+peacock
 
+# options
+
+- View -> Toggle Render Whitespace
 
 # react 
 vscode-styled-jsx
