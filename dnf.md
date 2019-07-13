@@ -25,10 +25,18 @@
 # rpm 
 
 ## installation from rpm
-rpm -ihv --force <packagename>
+	
+	rpm -ihv --force <packagename>
 
 ## use following syntax to list the files for already INSTALLED package:
-rpm -ql package-name
+	
+	rpm -ql package-name
 
 ## use following syntax to list the files for RPM package:
-rpm -qlp package.rpm
+	
+	rpm -qlp package.rpm
+
+## search package name 
+
+	rpm -qa | grep -i mysql
+	rpm -e $package

@@ -36,8 +36,19 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 ```
 
 
+# Docker Custom
 
+customization who cares
 
+```bash
+touch ~/.docker/config.json
+```
+
+```json
+{
+  "psFormat": "table {{.ID}}\\t{{.Names}}\\t{{.Image}}\\t{{.RunningFor}}\\t{{.Status}}\\t{{.Ports}}"
+}
+```
 
 
 
@@ -122,6 +133,7 @@ docker rm $CONTAINER_NAME
 	$ docker container exec
 	$ docker container exec -it $container_id /bin/bash
 	$ docker exec --interactive --tty aaba69ef37ec  /bin/bash
+	$ docker exec -u 0 -ti $container_id /bin/bash
 ```
 
 - docker has networks for containers
@@ -445,6 +457,23 @@ RUN touch ~/.gemrc && echo "gem: --no-document"
 ```
 
 
+## INSPECTION OF DOCKER IMAGE WITHOUT HIS DOCKERFILE
+
+```bash
+docker images
+
+# repo-name   	tag      IMAGE_ID    CREATED   		  SIZE
+# debian		latest   309dasf03    1 day ago			170Mb
+
+docker image history  $IMAGE_ID
+```
+
+
+
+
+
+
+
 
 # Docker compose
 
@@ -477,6 +506,8 @@ docker-compose -p project-name up
 docker-compose run --rm database psql -U postgres -h database
 docker-compose run --rm web bin/rails db:create
 
+
+docker-compose -p sc-local --file sc-local up
 ```
 
 

@@ -20,6 +20,8 @@ docker run -it --rm -p 6379:6379 --name=redis-token-keeper redis
 # or without remove automatically
 docker run -it -p 6379:6379 --name=redis-token-keeper redis
 
+docker run -it -p 6379:6379 --name sc-redis redis:5.0.5
+
 ```
 
 - with docker _with_ a password
@@ -110,7 +112,7 @@ ZRANGE tutorials 0 10 WITHSCORES
 
 
 ```
-DEL $keyname
+DE L$keyname
 EXISTS $keyname
 EXPIRE $keyname $seconds
 KEYS $keyname

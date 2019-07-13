@@ -308,3 +308,28 @@ curl http://google.com
 # </BODY></HTML>
 curl -L http://google.com
 ```
+
+# with response status code 
+
+```bash
+curl -I http://google.com
+# HTTP/1.1 301 Moved Permanently
+# Location: http://www.google.com/
+# Content-Type: text/html; charset=UTF-8
+# Date: Thu, 11 Jul 2019 07:34:52 GMT
+# Expires: Sat, 10 Aug 2019 07:34:52 GMT
+# Cache-Control: public, max-age=2592000
+# Server: gws
+# Content-Length: 219
+# X-XSS-Protection: 0
+# X-Frame-Options: SAMEORIGIN
+curl -IL http://google.com
+```
+
+# saving response to file
+
+
+```bash
+curl -o http://google.com
+curl --output http://google.com
+```

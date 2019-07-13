@@ -4,6 +4,7 @@
 ruby need some package dependences to install natively some extensions because it need recompile
 
 ```bash
+# fedora
 dnf groupinstall "Development Tools"
 
 dnf install libsq3.x86_64
@@ -11,6 +12,17 @@ dnf install sqlite3-devel ruby-sqlite3 libsqlite3x-devel libsqlite3x
 dnf install -y libxml2 libxml2-devel libxslt libxslt-devel
 dnf install -y nokogiri
 dnf install -y openssl-devel readline-devel
+
+dnf install -y mysql-devel community-mysql community-mysql-libs
+
+```
+
+```bash
+# debian
+sudo apt update
+
+sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev sqlite3 libsqlite3-dev
+
 ```
 
 ## PROBLEM IN FEDORA 29
@@ -255,4 +267,24 @@ rbenv rehash
 
 make
 make install
+```
+
+
+
+
+
+
+
+# issues
+
+
+```text
+Downloading activerecord-3.2.14 revealed dependencies not in the API or the lockfile (activesupport (= 3.2.14),
+activemodel (= 3.2.14), arel (~> 3.0.2), tzinfo (~> 0.3.29)).
+Either installing with `--full-index` or running `bundle update activerecord` should fix the problem.
+```
+
+```bash
+bundle install --full-index
+bundle update
 ```
