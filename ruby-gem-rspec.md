@@ -362,3 +362,63 @@ me:
 ```
 
 - factories as factory_bot is stored spec/factories, don't automatically loaded
+
+
+
+
+## hooks in rspec
+
+before suite
+before all 
+before each
+
+after each
+after all
+after suite
+
+
+## exceptions
+
+
+raise_error
+
+```ruby
+describe Object, "#non_existent_message" do
+  it "should raise" do
+    expect{Object.non_existent_message}.to raise_error(NameError)
+  end
+end
+
+#deliberate failure
+describe Object, "#public_instance_methods" do
+  it "should raise" do
+    expect{Object.public_instance_methods}.to raise_error(NameError)
+  end
+end
+
+
+describe Object, "#public_instance_methods" do
+  it "should not raise" do
+    expect{Object.public_instance_methods}.to_not raise_error(NameError)
+  end
+end
+
+#deliberate failure
+describe Object, "#non_existent_message" do
+  it "should not raise" do
+    expect{Object.non_existent_message}.to_not raise_error(NameError)
+  end
+end
+```
+
+Never use raise_error without specifying the Error you expect. a simple typo would make the test above green. The block will catch the Spec:: exception and the test will be happy.
+
+```bash
+expect { do_a_lot_of_complicated_stuff }.to raise_error
+```
+
+Be sure to always have custom errors in your models and raise them in a manner that lets you know what went wrong.
+
+```bash
+expect { execute_payment! }.to raise_error(PayPal::PaymentFailed, "Payment with payment failed")
+```

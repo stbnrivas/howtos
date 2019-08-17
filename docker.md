@@ -118,6 +118,7 @@ docker container run
 		--name $name
 
 		--link 			some-postgres:postgres
+		--network=bridge
 docker container run -it -p 3000:3000 --name $container_name  $image_name:$image_tag
 
 
@@ -199,9 +200,10 @@ But as soon as the container is modified and stopped, all of those changes disap
 ADVICE: also you can use --volume -v flag but is better use --mount over --volume because is consistent with docker swarm
 
 ```bash
-	$ docker container run --rm -it -v path_out_container:path_into_container
-	$ docker container run --rm -it -v /tm/data:/data debian:stretch
-	$ docker run -d -p 80:80 --name my-web -v /my-files:/usr/local/apache2/htdocs web-server:1.1
+docker container run --rm -it -v path_out_container:path_into_container
+docker container run --rm -it -v /home/stbn/Developer/deleteme/:/app ruby:2.6.3
+docker container run --rm -it -v /tm/data:/data debian:stretch
+docker run -d -p 80:80 --name my-web -v /my-files:/usr/local/apache2/htdocs web-server:1.1
 ```
 
 

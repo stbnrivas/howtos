@@ -1,6 +1,16 @@
 # mysql client
 
-    mysql -u root -p
+```bash
+mysql \
+-h db_host \
+--host db_host \
+-P db_port \
+--port db_port \
+-u db_user \
+--user db_user \
+-p db_pass\
+--password db_pass \
+```
 
 example for bitnami 
 
@@ -33,6 +43,10 @@ example for bitnami
     mysql -u root -p 
     create user developer identified by '$pass' 
     grant all privileges on *.* to developer@"%"  identified by "password";
+    grant all privileges on *.* to dev@"%"  identified by "dev";
+
+    GRANT ALL PRIVILEGES ON pverde.* TO 'dev'@'*';
+
     grant all privileges on *.* to mysql@"%"  identified by "";
     GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '[password]'
     flush privileges;

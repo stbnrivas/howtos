@@ -1,12 +1,12 @@
 # how to docker an new rails app
 
-notes: 
+notes:
 if you use windows or cannot install rails into OS host, you can use rails into container
 I have noted some problems with the routes in terminal emulator, maybe better use PowerShell
 
 
 
-1. Structure creation 
+1. Structure creation
 
 ```bash
 mkdir -p railsApp railsApp/src
@@ -29,11 +29,11 @@ at railsApp/src
 FROM ruby:2.5.1
 LABEL MAINTAINER @stbnrivas
 RUN \
-  apt-get update && apt-get install -y \ 
-  build-essential \ 
+  apt-get update && apt-get install -y \
+  build-essential \
   libpq-dev \
   nodejs
-RUN mkdir -p /app 
+RUN mkdir -p /app
 WORKDIR /app
 RUN gem install bundler && \
   gem install rails -v 5.2.2
@@ -241,7 +241,7 @@ docker exec --interactive --tty ac711deb75b3 psql -h postgres -U postgres
 
 by default at ./src/config/database.yml name is app_development
 
-TODO: open pgsql 
+TODO: open pgsql
 
 ```sql
 -- Database: app_development
@@ -249,7 +249,7 @@ TODO: open pgsql
 -- DROP DATABASE app_development;
 
 CREATE DATABASE app_development
-    WITH 
+    WITH
     OWNER = postgres
     ENCODING = 'UTF8'
     LC_COLLATE = 'en_US.utf8'

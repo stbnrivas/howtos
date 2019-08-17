@@ -37,24 +37,47 @@ web: bundle exec puma config.ru -p $PORT
 
 ```bash
 heroku login
+
+# for not exiting heroku app
 heroku create
-#Creating app... done, ⬢ 
+#Creating app... done, ⬢
 
+# for existing heroku app
 heroku git:remote -a frozen-cove-93893
-
 
 git push heroku
 heroku run rake db:migrate
 heroku open
 ```
 
-special deployment stuff
+- multiples deployment with single code
+
+```base
+heroku create
+heroku git:remote -a app
+heroku remote rename heroku heroku-staging
+git push heroku-staging master
+```
+
+- deploy a branch not master
 
 ```bash
 # for deploy not master branch to do:
 `git push heroku testbranch:master`
 # for deploy a subfolder to do:
 `git subtree push --prefix $folder heroku master`
+```
+
+- deploy a single sub folder in your proyect
+
+```bash
+heroku create app_front --remote remote-frontend
+heroku create app_back  --remote remote-backend
+
+ls
+# frontend backend
+git subtree push --prefix frontend remote-frontend master
+git subtree push --prefix backend  remote-backend master
 ```
 
 
@@ -68,9 +91,14 @@ heroku git:clone -a $app_name
 
 ## utils in heroku
 
+Log history limits
+
+Logplex is designed for collating and routing log messages, not for storage. It retains the most recent 1,500 lines of your consolidated logs, which expire after 1 week.
+
 ```bash
 cd herokuapp
 heroku logs --tail
+heroku logs -n 200
 heroku ps
 ```
 

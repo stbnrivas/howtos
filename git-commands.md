@@ -45,6 +45,9 @@ git init --bare $repo.git
 
 git clone <url>
 git clone --bare $repo $repo.git
+
+
+git pull --allow-unrelated-histories
 ```
 
 
@@ -66,17 +69,25 @@ git update-index --no-assume-unchanged <file>
 
 # working at the repo
 
-* show diff 
+* show diff
 
-```bash  
+```bash
 git diff    # diff between current status and last commit
+git diff --ignore-space-at-eol
 git diff --cached # between add to stage and last commit
 git diff --staged #
+
+# show files changes
+git diff --name-status
+git diff $file
+# show diferences between branches
+git diff mybranch master > file.diff
+git diff mybranch master -- specific-file-to-see-diff.ext
 ```
 
 * store changes into stage
 
-```bash  
+```bash
 git add -A # stages All
 git add --all
 
@@ -93,17 +104,17 @@ git rm --cached <file>
 * reset the working directory and stage to last commit, but unstaged all changes keeping untracked files
 
 ```bash
-  git reset --hard HEAD 
+  git reset --hard HEAD
 ```
 
 * remove untracked files from the working tree
 
-```bash  
+```bash
 git clean -n # to show what will be removed
 git clean -f # to remove untracked files
 git clean -d # to remove untracked directories
 
-git clean -fd # 
+git clean -fd #
 ```
 
 * undoing individual files to the last commit
@@ -146,6 +157,16 @@ git stash apply --index 0
 git stash apply --index 2
 ```
 
+```bash
+git stash
+# now you can
+git stash pop: unstash and merge stored changes.
+# or apply without remove off stack of stashes
+git stash apply
+# also you later remove  with
+git stash drop
+```
+
 
 
 
@@ -157,7 +178,7 @@ git stash apply --index 2
 # checking the log of repo
 
 ```bash
-git log 
+git log
 ```
 
 --pretty="..." defines the format of the output.
@@ -174,13 +195,22 @@ git log
 git log --graph
 git log --oneline
 git log --pretty=full
-git log -4 
+git log -4
 git log --date=short
+git log --decorate
+git log --simplify-by-decoration
+
+git reflog
+git diff --ignore-space-at-eol: ignore spaces (workaround for Atom formatter).
+git diff --cached: changes in files that you’ve already added.
+git diff mybranch master -- file.ext: compare file between branches.
 ```
 
 ```bash
 git log --grep $string
 git log <since>..<until>
+git log  git log --since="2019-08-15"
+git log --since=$(date --date="15 day ago" +"%Y-%m-%d")
 git log --stat
 git log --author=stbnrivas
 git show # show changes
@@ -252,20 +282,33 @@ git rebase master
 
 
 
-## workflow merge branches with git merge
+## workflow merge branches using `git merge`
 
 ```bash
 git checkout -b hotfix
 # ... changes
 git add ...
-git commit 
+git commit
 git checkout master
 git merge hotfix
 git branch -d hotfix
 ```
 
+```bash
+git status # First normal step, as a double-check for files not added to the repo or unwanted changes
+git checkout -b my_new_branch # Let's begin
+git add file_1 file_2
+git commit -a -m "Message" # If no long explanation is required, or ...
+git commit -a # ... if a long comment is convenient (see later)
+git fetch master
+git rebase master # If it's safe or ...
+git merge master # ... if it's not and
+git push # If there's no history rewrite or ...
+git push --force-with-lease # ... if it's not (see later)
+```
 
-## workflow merge branche with git rebase
+
+## workflow merge branches with git rebase
 
 when devs work in paralel it posible that you branch must be merged into another and newer head that exist into your repo, for than have git rebase
 
@@ -282,22 +325,25 @@ git rebase hotfix  # apply all changes of hotfix branch to a master
 
 
 
-# remote and locals repos 
+# remote and locals repos
 
 ```bash
-# downoad  all remote branches
-git fetch --all
-git checkout <remote-branch>
+# show remote branch
+git branch -r
 
 # download only one branch
 git fetch origin <remote-branch>
+git checkout <remote-branch>
+
+# download  all remote branches
+git fetch --all
 git checkout <remote-branch>
 
 # download all changes without do merge
 git fetch <remote> <branch>
 
 # download all changes and merge into local repo
-git pull <remote> <branch> 
+git pull <remote> <branch>
 git merge <remote> <branch>
 
 # Set a new remote
@@ -308,7 +354,7 @@ git remote -v
   origin  https://github.com/user/repo.git (fetch)
   origin  https://github.com/user/repo.git (push)
 
-# put changes on repo with privileges 
+# put changes on repo with privileges
 
 # check remotes available
 git remote
@@ -322,9 +368,18 @@ git push origin master
 
 
 # something wrong undo last commit in github
-git log 
+# you'll find the changes as uncommitted local modifications in your working copy.
+git reset --soft HEAD~1
+
+# something wrong undo last commit in github
+# all changes will LOST FOREVER!!...
+git reset --hard HEAD~1
+
+
+git log
 git reset --hard <SHA-1 last right commig>
 git log
+
 git push <remote> <branch> --force
 git push -f <remote> <branch>
 
@@ -335,13 +390,21 @@ git reset --soft HEAD~1
 git fetch origin [remote-branch]:[new-local-branch]
 ```
 
+```bash
+git remote update --dry-run
+git remote update --prune [--dry-run]
+```
 
 
-# creating and apply patches 
+
+# creating and apply patches
 
 ```bash
-# generate patch file
-git format--patch master --stdout > branch_name.patch
+git checkout fix-branch
+# generate one patch for every commit
+git format-patch  master
+# generate single patch file for all commits
+git format-patch master --stdout > branch_name.patch
 
 # apply patch
 git apply --stat filename.patch
@@ -352,7 +415,7 @@ git apply -R  filename.patch
 
 
 
-# rewriting the history of the repo 
+# rewriting the history of the repo
 
 there are several ways:
 
@@ -362,18 +425,18 @@ git add .
 git commit --amend
 ```
 * create new commit that reverse
-  
+
 ```bash
 git revert HEAD
 ```
 
 * removing commits from a branch (tag commit, reset before)
 ```bash
-  git checkout $commit
-  git tag $tag
-  git reset --hard $tag
+git checkout $commit
+git tag $tag
+git reset --hard $tag
 
-  git hist --all 
+git hist --all
 ```
 
 * If we hadn’t tagged them, they would still be in the repository, but there would be no way to reference them other than using their hash names. Commits that are unreferenced remain in the repository until the system runs the garbage collection software.
@@ -399,7 +462,7 @@ git reset --hard HEAD^
 ```
 
 
-# contribution 
+# contribution
 
 ```bash
 git clone <url>

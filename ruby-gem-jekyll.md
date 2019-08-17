@@ -1,6 +1,14 @@
 
+# server
+
+```bash
+cd blog
+bundle exec jekyll serve
+```
+
 
 # update
-´´´bash
+
+```bash
 $ bundle update jekyll
-´´´
+```

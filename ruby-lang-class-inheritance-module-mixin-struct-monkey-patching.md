@@ -1,4 +1,139 @@
-#ruby objects and classes
+# ruby objects, classes, structs , modules and mixins
+
+`.`  is the access to module method operator
+`::` is the access to module constant operator
+
+
+
+ruby modules serve to include method into clases as instance method with `include` or class method with `extend`
+
+```ruby
+module Api
+  module V1
+
+    def get
+      puts "get V1 version"
+    end
+
+    module Common
+      def common
+        puts "common works"
+      end
+    end
+  end
+
+  module V2
+    include Api::V1::Common
+
+    def get
+      puts "get V1 version"
+    end
+
+  end
+end
+
+
+
+class Example
+  include Api::V1::Common
+  include Api::V2
+end
+
+
+e = Example.new
+e.get
+e.common
+
+
+class StaticExample
+  extend Api::V1::Common
+  extend Api::V2
+end
+
+StaticExample.get
+StaticExample.common
+
+```
+
+
+ruby support two sintax for nested modules
+
+
+```ruby
+# syntax 1
+module API
+  module V1
+  end
+end
+
+
+# syntax 2
+module API
+end
+module API::V1
+end
+
+# but there are NOT interchangeables
+# - sintax 2 require that API module already exist
+```
+
+
+include using absolute path or relative path
+
+```ruby
+module Foo
+  class Engine < Rails::Engine
+  end
+end
+
+and
+
+module Foo
+  class Engine < ::Rails::Engine
+  end
+end
+
+::Rails::Engine #is an absolute path to the constant.
+# like /Rails/Engine in FS.
+
+Rails::Engine #is a path relative to the current tree level.
+# like ./Rails/Engine in FS.
+```
+
+
+
+
+## module, include vs extend
+
+```ruby
+module A
+  def method_of_a
+    puts "a"
+  end
+end
+
+class ClassIncludeA
+  include A
+end
+
+ClassIncludeA.new.method_of_a # a
+ClassIncludeA.method_of_a # NoMethodError: undefined method method_of_a for ClassIncludeA:Class
+
+class B
+  extend A
+end
+
+ClassIncludeA.new.method_of_a # NoMethodError: undefined method method_of_a for ClassIncludeA:Class
+ClassIncludeA.method_of_a # a
+```
+
+## including modules into modules, include or extend
+
+
+
+
+
+## classes in ruby
 
 Ruby has one simply rule: It's never allower access to anothers objects's instance variables. you need explicitly define setter and getter
 
@@ -10,15 +145,56 @@ String.new.methods
 String.new.methods - String.new.class.superclass.methods
 ```
 
+
+a simple inheritance example
+
+```ruby
+class Car
+  def drive
+      "from 0 to 100 at 10 seconds"
+  end
+end
+
+class FastCar < Car
+  def drive(top_speed)
+      super() + "in turbo mode from 0 to #{top_speed} 10 seconds"
+  end
+end
+```
+
+don't need write setter and getters
+
 ```ruby
 class Example
-    attr_reader :name
+  attr_reader :name
+  attr_accessor :age
 private
-    attr_reader :nickname
+  attr_writer :nickname
 end
 ```
 
 
+defining methods over instance,
+
+```ruby
+class Player
+  def play_game
+    rand(1..100)>50? "winner" : "loser"
+  end
+end
+
+player = Player.new
+
+def player.cheat
+  "winner"
+end
+
+player.cheat
+player.singleton_methods
+player.singleton_class
+```
+
+instance variables using `@`
 
 
 ```ruby
@@ -148,7 +324,7 @@ instance_name.dup
 
 
 
-# modules and namespaces
+## modules and namespaces
 
 a module is a container of methods and constants,
 a module create namespaces for methods with the same name
@@ -162,9 +338,31 @@ access to methods module with dot  ModuleName.
 access to constant with :: symbol (scope resolution operator)
 
 
+using module for namespace container
+
+```ruby
+module Scoping
+  class OriginalClassName
+  end
+end
+
+# without include
+c = Scoping::OriginalClassName.new
+
+# with include
+include Scoping
+c2 = OriginalClassName.new
+```
+
+
+
+
+
 ```ruby
 module Taggable
     attr_accessor :tags
+
+    COOL_CONSTANT = "cool"
 
     def taggable_setup
         @tags = []
@@ -195,6 +393,7 @@ end
 Taggable::default_tags
 ts = TaggableString.new
 ts.add_tag("awesome")
+ts.add_tag(Taggable::COOL_CONSTANT)
 ```
 
 example of diferents namespace with modules
@@ -242,45 +441,90 @@ clark_kent.extend(SuperPowerOfFly)
 clark_kent.superpower
 ```
 
+classes are open ever
+
 
 ```ruby
-class Car
-    def drive
-        "from 0 to 100 at 10 seconds"
-    end 
-end
-
-class FastCar < Car
-    def drive(top_speed)
-        super() + "in turbo mode from 0 to #{top_speed} 10 seconds"
-    end
-end
-```
-
-
-defining methods over instance, 
-
-```ruby
-class Player
-  def play_game
-    rand(1..100)>50? "winner" : "loser"
+class MyClass
+  def initialize(value)
+    @value = value
   end
 end
 
-player = Player.new
+my_instance = MyClass.new(20)
+my_instance.instance_eval{ puts @value }
 
-def player.cheat
-  "winner"
+my_instance.instance_exec('executing into class',0) do |text, n|
+  puts @value * n
+end
+```
+
+
+defining a Class method using module
+
+```ruby
+module Runner
+    def self.run
+        "run forest run"
+    end
 end
 
-player.cheat
-player.singleton_methods
-player.singleton_class
+class Man
+    include Runner
+    def run
+        Runner.run
+    end
+end
+
+Runner.run
+m = Man.new
+m.run
+```
+
+
+nesting modules
+
+```ruby
+module Player
+  module InstanceMethods
+    def play
+        @status = "playing"
+    end
+    def stop
+        @status = "stop"
+    end
+  end
+  module ClassMethods
+    def supported_formats
+      ['flac','mp3']
+    end
+    def factory_static
+        instance = new
+        instance
+    end
+  end
+end
+
+class Audio
+    include Player::InstanceMethods
+    extend Player::ClassMethods
+end
+
+
+a = Audio.new
+a.start
+
+Audio.supported_formats
+
+
+new_audio = Audio::factory_static
 ```
 
 
 
-# Mixins
+
+
+## Mixins
 
 a mixin is a module that inject additional behaviour into a class
 mixins allow us to simulate inheritance multiple

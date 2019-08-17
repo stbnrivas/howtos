@@ -1,9 +1,14 @@
 # block
+- blocks are anonymous functions
 - a block is not an object
 - a block is a collection of code to be executed
 - blocks must be attached to a method call
 - blocks alter the execution of the method
 - a block is not an argument / parameter to the method
+
+
+
+
 
 ```ruby
 [2,5,7,9].each {|n|puts n**2 }
@@ -17,6 +22,27 @@ end
 # yield
  
 yield transfer control from the method to the block that is attached to the method call
+
+
+
+```ruby
+TODO:
+users = ['john','jane']
+def last_user(users)
+    users.last
+end
+puts last_user(users)
+puts last_user(users){ |u| "user_id: #{u}" } # not differences
+
+
+def last_user(users)
+    yield(users.last) if block_given?
+    users.last
+end
+puts last_user(users)
+puts last_user(users){ |u| "user_id: #{u}" } # not differences
+```
+
 
 
 ```ruby
@@ -80,6 +106,13 @@ yielding_with_argument("hello world") {|s| puts s}
 
 a procs is an objects that essentially as a saved block
 
+
+```ruby
+my_proc = Proc.new{ |x| puts x}
+2.times &my_proc
+```
+
+
 ```ruby
 a = [1,2,3]
 b = [4,5,6]
@@ -96,6 +129,29 @@ a.map(&square)
 b.map(&square)
 c.map(&square)
 ```
+
+params and params named with hash
+
+```ruby
+print_person_unnamed = Proc.new do |a,s|
+ puts "#{a} #{s}"
+end
+print_person_unnamed.call "jane", "doe"
+
+# with named params
+formal_name = Proc.new do |first: name, last: surname|
+    puts "#{last}, #{first}"
+end
+formal_name.call(first: "john", last: "doe")
+formal_name.call(last: "doe", first: "john")
+
+#with default params
+formal_name = Proc.new do |first = "unassigned name", last = "unassigned surname"|
+    puts "#{last}, #{first}"
+end
+```
+
+
 
 ```ruby
 currencies = [10,20,30,40]
@@ -120,6 +176,7 @@ invoking a proc
 ```ruby
 example = Proc.new { puts "hi there" }
 example.call
+1.times &example
 ```
 
 
@@ -182,6 +239,18 @@ squares_lambda.call(5)
 ```
 
 lambdas and procs seems the same but ... they treat the wrong number of arguments
+
+
+```ruby
+proc = proc {|a,b| [a,b] }
+a_proc.call(1) 
+  #=> [1, nil]
+
+a_proc = lambda {|a,b| [a,b] }
+a_proc.call(1)   
+    # ArgumentError: wrong number of arguments (given 1, expected 2)
+```
+
 
 ```ruby
 some_proc = Proc.new do |name,age|

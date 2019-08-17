@@ -87,3 +87,16 @@ s.equal? 'hello world' #=> false this is testing object identity
 s.object_id
 'hello world'.object_id
 ```
+
+
+# stop to ask for nil
+
+
+foo&.bar return nil if foo == nil
+
+```ruby
+x.to_s unless x.nil?
+
+x&.to_s #
+```
+

@@ -28,7 +28,7 @@ bundle show gem_name
 ## gem creation with bundle
 
 ```bash
-bundle gem 
+bundle gem
 ```
 
 # Gemfile example
@@ -41,7 +41,7 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem "gem_name"
 gem "gem_name", "=3.48.0"
-gem "gem_name", "~> 3.0"	
+gem "gem_name", "~> 3.0"
 
 group :test do
 	gem 'hello'
@@ -52,10 +52,21 @@ group :development do
 end
 ```
 
-# install your gems into verdor folder
+# install your gems into vendor folder
 
 ```bash
 bundle install --path vendor/bundle
 ```
 
+
+# install your gems 
+
+```bash
+bundle install --with=development
+bundle install --with=development,test,production
+
+
+bundle install --without=development,test
+
+```
 
