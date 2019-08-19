@@ -14,11 +14,11 @@
 # Docker Installation
 
 ```bash
-$ dnf install docker-ce
-$ systemctl enable docker
+dnf install docker-ce
+systemctl enable docker
 
-$ service docker start
-$ service docker stop
+service docker start
+service docker stop
 ```
 
 ```bash
@@ -31,8 +31,8 @@ add user to use sudo. with visudo
 docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.26/containers/create: dial unix /var/run/docker.sock: connect: permission denied.
 
 ```bash
-	sudo groupadd docker
-	sudo usermod -aG docker $USER
+sudo groupadd docker
+sudo usermod -aG docker $USER
 ```
 
 
@@ -56,32 +56,32 @@ touch ~/.docker/config.json
 # CLI and Docker Images vs Docker Containers
 
 ```bash
-	$ docker login
-	$ docker logout
+docker login
+docker logout
 ```
 
 - docker images is like a class of OOP
 
 ```bash
-	$ docker image ls || docker image list
-	$ docker search centos
-		but there isn\'t way into docker cli to get tags of images
-	$ docker pull mariadb
-	$ docker history repo/tag
+docker image ls || docker image list
+docker search centos
+	but there isn\'t way into docker cli to get tags of images
+docker pull mariadb
+docker history repo/tag
 ```
 - instanciate a docker container from a docker image
 
 ```bash
-$ docker container run $image:$tag
+docker container run $image:$tag
 	# -p --publish			publish list of ports
 	# -d --detach			run container in background
 	#    --rm 				remove container when exits
 	# -e --env				pass environment variable
 	#    --env-file list    Read in a file of environment variables
 
-$ docker container run httpd:2.4
-$ docker container run -p 80:80 -p 443:443 httpd:2.4
-$ docker container run -p 80:80 --detach web-server:1.1
+docker container run httpd:2.4
+docker container run -p 80:80 -p 443:443 httpd:2.4
+docker container run -p 80:80 --detach web-server:1.1
 
 # you can check ss -tunpl
 ```
@@ -131,71 +131,71 @@ docker rm $CONTAINER_NAME
 - docker command lets us run commands against a running container.
 
 ```bash
-	$ docker container exec
-	$ docker container exec -it $container_id /bin/bash
-	$ docker exec --interactive --tty aaba69ef37ec  /bin/bash
-	$ docker exec -u 0 -ti $container_id /bin/bash
+docker container exec
+docker container exec -it $container_id /bin/bash
+docker exec --interactive --tty aaba69ef37ec  /bin/bash
+docker exec -u 0 -ti $container_id /bin/bash
 ```
 
 - docker has networks for containers
 
 ```bash
-	$ docker network ls
-	$ sudo ifconfig docker0
+docker network ls
+sudo ifconfig docker0
 
-	# docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
-    #    inet 172.17.0.1  netmask 255.255.0.0  broadcast 0.0.0.0
+# docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+#    inet 172.17.0.1  netmask 255.255.0.0  broadcast 0.0.0.0
 ```
 
 - check docker container status
 
 ```bash
-	$ docker attach $CONTAINER_ID
-	$ docker top $CONTAINER_ID
-	$ docker logs $CONTAINER_ID
+docker attach $CONTAINER_ID
+docker top $CONTAINER_ID
+docker logs $CONTAINER_ID
 ```
 
 - docker container stop
 
 ```bash
-	docker pause $CONTAINER_ID
-	docker stop $CONTAINER_ID
+docker pause $CONTAINER_ID
+docker stop $CONTAINER_ID
 ```
 
 - create new image from docker container running
 
 ```bash
-	$ docker pause $CONTAINER_ID
-	$ docker commit $CONTAINER_ID
-	# 	=> return $NEW_IMAGE_ID for this container status
-	$ docker tag $NEW_IMAGE_ID repo/newimagename
-	$ docker restart $CONTAINER_ID
+docker pause $CONTAINER_ID
+docker commit $CONTAINER_ID
+# 	=> return $NEW_IMAGE_ID for this container status
+docker tag $NEW_IMAGE_ID repo/newimagename
+docker restart $CONTAINER_ID
 
-	$ docker inspect $CONTAINER_ID
+docker inspect $CONTAINER_ID
 ```
 
 - removing containers
 
 ```bash
-	$ docker container ls --all
-	$ docker container rm $CONTAINER_ID
-	# or kill all
-	$ docker stop $(docker ps -a -q)
-	$ docker rm $(docker ps -a -q)
+docker container ls --all
+docker container rm $CONTAINER_ID
+# or kill all
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
 ```
 
 
 - docker containers don't persist any data if you need persistence need use docker volumes. there are two approaches involved copying a file into a container. copying into container
 
 ```bash
-	$ docker container cp page.html elegant_noether:/usr/local/apache2/htdocs/
+docker container cp page.html elegant_noether:/usr/local/apache2/htdocs/
 ```
 
 But as soon as the container is modified and stopped, all of those changes disappear. Is better to create a connection between files on our local computer (host) and the filesystem in the container. mounting a docker volume
 
 ```bash
-	$ docker container run  --rm -it --mount type=bind, source=/tmp/data, destination=/data debian:stretch
-	$ docker container run  --rm -it --mount type=bind, source=/tmp/data, target=/data debian:stretch
+docker container run  --rm -it --mount type=bind, source=/tmp/data, destination=/data debian:stretch
+docker container run  --rm -it --mount type=bind, source=/tmp/data, target=/data debian:stretch
 ```
 ADVICE: also you can use --volume -v flag but is better use --mount over --volume because is consistent with docker swarm
 
@@ -210,18 +210,75 @@ docker run -d -p 80:80 --name my-web -v /my-files:/usr/local/apache2/htdocs web-
 
 
 
-creacion de volumenes
+- docker volumes creation
+
 
 ```bash
-	$ docker volume create
-	$ docker volume inspect
-	$ docker volume ls
-	$ docker volume prune
-	$ docker volume rm
+docker volume --help
+docker volume create
+docker volume inspect
+docker volume ls
+docker volume rm
+
+docker volume prune
+```
+
+- docker networks
+
+default networks in docker are:
+
+ + bridge (default used if not specify, internal private network 172.17.0.0) 
+ + none
+ + host (not multiple container in the same port)
+
+```bash
+docker run alpine
+docker run alpine --network=none
+docker run alpine --network=host
 ```
 
 
+```bash
+ip a | grep docker
 
+#10: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+#    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+
+
+
+docker network create \
+	--driver bridge \
+	--subnet 182.18.0.0/16 \
+	--gateway 182.18.0.1/16 \
+	$network_isolate_name
+
+
+docker network inspect $network_name
+
+docker network ls
+
+docker network rm $network_name
+
+docker network prune
+
+docker network connect [OPTIONS] $network_id $container_id
+docker network connect [OPTIONS] $network_name $container_name
+
+
+docker run -d --name container1 centos
+docker run -d --name container2 centos
+
+docker exec container1 bash -c "ping 172.17.0.3" # success
+docker exec container1 bash -c "ping container2" # fail in default network
+docker exec container2 bash -c "ping container1" # fail in default network
+
+docker run -d --network new_network --name container3 centos
+docker run -d --network new_network --name container4 centos
+
+docker exec container3 bash -c "ping container4" # fail in default network
+docker exec container4 bash -c "ping container3" # fail in default network
+
+```
 
 
 
@@ -234,40 +291,41 @@ creacion de volumenes
 - docker container stop
 
 ```bash
-	docker pause $CONTAINER_ID
-	docker stop $CONTAINER_ID
+docker pause $CONTAINER_ID
+docker stop $CONTAINER_ID
+docker restart $CONTAINER_ID
 ```
 
 - create new image from docker container running
 
 ```bash
-	$ docker pause $CONTAINER_ID
-	$ docker commit $CONTAINER_ID
-		=> return $NEW_IMAGE_ID for this container status
-	$ docker tag $NEW_IMAGE_ID repo/newimagename
-	$ docker restart $CONTAINER_ID
+docker pause $CONTAINER_ID
+docker commit $CONTAINER_ID
+#	=> return $NEW_IMAGE_ID for this container status
+docker tag $NEW_IMAGE_ID repo/newimagename
+docker restart $CONTAINER_ID
 
-	$ docker inspect $CONTAINER_ID
+docker inspect $CONTAINER_ID
 ```
 
 - docker containers don't persist any data if you need persistence need use docker volumes. there are two approaches involved copying a file into a container. copying into container
 
 ```bash
-	$ docker container cp page.html elegant_noether:/usr/local/apache2/htdocs/
+docker container cp page.html elegant_noether:/usr/local/apache2/htdocs/
 ```
 
 But as soon as the container is modified and stopped, all of those changes disappear. Is better to create a connection between files on our local computer (host) and the filesystem in the container. mounting a docker volume
 
 
 ```bash
-	$ docker container run  --rm -it --mount type=bind, source=/tmp/data, destination=/data debian stretch
+docker container run  --rm -it --mount type=bind, source=/tmp/data, destination=/data debian stretch
 ```
 ADVICE: also you can use --volume -v flag but is better use --mount over --volume because is consistent with docker swarm
 
 ```bash
-	$ docker container run --rm -it -v path_out_container:path_into_container
-	$ docker container run --rm -it -v /tm/data:/data debian:stretch
-	$ docker run -d -p 80:80 --name my-web -v /my-files:/usr/local/apache2/htdocs web-server:1.1
+docker container run --rm -it -v path_out_container:path_into_container
+docker container run --rm -it -v /tm/data:/data debian:stretch
+docker run -d -p 80:80 --name my-web -v /my-files:/usr/local/apache2/htdocs web-server:1.1
 ```
 
 
@@ -286,20 +344,20 @@ write Dockerfile -> build Dockerfile to get Docker Image -> Run Docker Image as 
 - you must use versioning into dockerfiles like
 
 ```bash
-	FROM debian:stretch
-	RUN "echo '1' > /version "
+FROM debian:stretch
+RUN "echo '1' > /version "
 ```
 
 - when you finish your Dockerfile
 
 ```bash
-	$ docker image build --tag web-server:1.0 . ||
-	OR
-	$ docker build -t webserver:1.0 .
-	$ docker container run -p 80:80 web-server:1.0
+docker image build --tag web-server:1.0 . ||
+OR
+docker build -t webserver:1.0 .
+docker container run -p 80:80 web-server:1.0
 
-	$ docker image rmi
-	$ docker rmi $hash $hash
+docker image rmi
+docker rmi $hash $hash
 ```
 
 sometimes has to build with cache cause conflict because the cache only is invalidate when there are new version of image. For this cases... build with --no-cache flag to force fully build
@@ -435,7 +493,7 @@ COPY ${environment}.conf /app/app.conf
 ```
 
 ```bash
-$ docker build -t demo --build-argument environment=production -f Dockerfile
+docker build -t demo --build-argument environment=production -f Dockerfile
 	-t --tag		tag your image
 ```
 
@@ -535,21 +593,10 @@ with other containers running on the same network by name
 
 
 
-# Docker Volumes
+# volumes in docker-compose
 
 Part of the philosophy of using Docker is that we should treat containers as
 ephemeral, we should persist our data creating volume which are decoupled from the life cycle of container. 
-
-```bash
-docker volume --help
-docker volume create
-docker volume ls
-docker volume rm
-
-docker volume prune
-```
-
-
 
 
 ```bash
@@ -576,7 +623,43 @@ docker-compose exec web bin/rails db:create db:migrate
 
 in linux the data will be placed
 
-/var/lib/docker/volumes/$folder_name_app'\_'$$volume_name/\_data
+/var/lib/docker/volumes/$folder_name_app'\_'$volume_name/\_data
+
+
+
+
+# networking with docker-compose
+
+```yml
+version: "3"
+services:
+
+  proxy:
+    build: ./proxy
+    networks:
+      - frontend
+  app:
+    build: ./app
+    networks:
+      - frontend
+      - backend
+  db:
+    image: postgres
+    networks:
+      - backend
+
+networks:
+  frontend:
+    # Use a custom driver
+    driver: custom-driver-1
+  backend:
+    # Use a custom driver which takes special options
+    driver: custom-driver-2
+    driver_opts:
+      foo: "1"
+      bar: "2"
+```
+
 
 
 # Docker orchestration

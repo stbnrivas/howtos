@@ -4,7 +4,7 @@
 ## Environment Variables
 
 	$ env
-	$ set	
+	$ set
 	$ export
 
 
@@ -12,7 +12,7 @@
 ### setting environment variables
 
 
-	$ echo $SHELL    
+	$ echo $SHELL
 	$ export new variable
 	$ export VARIABLE=value
 
@@ -26,7 +26,7 @@
 
 
     Edit ~/.bashrc and add the line export VARIABLE=value
-	$ source ~/.bashrc 
+	$ source ~/.bashrc
 
 
 ### The PS1 Variable and the Command Line Prompt
@@ -45,14 +45,14 @@ param    | mean
 ### the history command
 
 
-Several associated environment variables can be used to get information about the history file. 
+Several associated environment variables can be used to get information about the history file.
 
 VARIABLE        | use
 ----------------|-----
-HISTFILE	 	| The location of the history file. 
-HISTFILESIZE	| The maximum number of lines in the history file (default 500). 
-HISTSIZE		| The maximum number of commands in the history file. 
-HISTCONTROL		| How commands are stored. 
+HISTFILE	 	| The location of the history file.
+HISTFILESIZE	| The maximum number of lines in the history file (default 500).
+HISTSIZE		| The maximum number of commands in the history file.
+HISTCONTROL		| How commands are stored.
 HISTIGNORE		| Which command lines can be unsaved.
 
 
