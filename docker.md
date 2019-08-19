@@ -208,10 +208,7 @@ docker run -d -p 80:80 --name my-web -v /my-files:/usr/local/apache2/htdocs web-
 
 
 
-
-
 - docker volumes creation
-
 
 ```bash
 docker volume --help
@@ -222,6 +219,15 @@ docker volume rm
 
 docker volume prune
 ```
+
+copy something from the docker volume to host
+
+```bash
+docker cp $volumen_name:/path/into/volume /path/into/host
+
+docker cp $nginx:/etc/nginx/ssl/cert.key ~/certs/
+```
+
 
 - docker networks
 
@@ -235,6 +241,12 @@ default networks in docker are:
 docker run alpine
 docker run alpine --network=none
 docker run alpine --network=host
+```
+
+```bash
+docker run mongo -p 27017:27017
+docker port $(docker ps -lq) 27017
+
 ```
 
 
@@ -280,7 +292,20 @@ docker exec container4 bash -c "ping container3" # fail in default network
 
 ```
 
-
+```yml
+version:
+services:
+	...
+volumes:
+	...
+network:
+  network_name:
+    driver: bridge
+    ipam:
+      driver:default
+      config:
+        - subnet: 172.10.5.0/24
+```
 
 
 
