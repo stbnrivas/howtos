@@ -1,5 +1,32 @@
 # postgreSQL into docker
 
+
+
+
+## into a single docker command
+
+```bash
+docker pull postgres:12.1
+```
+
+
+```bash
+docker run -p 5432:5432 \
+    --name pg_container_name \
+    -e 'POSTGRES_USER=dev' -e 'POSGRES_PASSWORD=secret'  -e 'POSTGRES_DB=pg_database' \
+    -d postgres:12.1
+```
+
+
+
+
+
+
+
+
+
+
+
 ```bash
 docker pull postgres:11.1
 ```
@@ -32,6 +59,10 @@ CREATE TABLE test_table (id smallint,text varchar(100));
 INSERT INTO test_table (id, text) VALUES (1,'hello world');
 SELECT * FROM test_table;
 \q
+
+
+CREATE USER youruser WITH ENCRYPTED PASSWORD 'yourpass';
+GRANT ALL PRIVILEGES ON DATABASE yourdbname TO youruser;
 ```
 
 
@@ -42,4 +73,12 @@ docker container stop pg11.1_instance_1
 docker container start pg11.1_instance_1
 ```
 
+
+
+
+
+
+```
+SELECT datname FROM pg_database;
+```
 

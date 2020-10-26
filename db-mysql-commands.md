@@ -12,7 +12,19 @@ mysql \
 --password db_pass \
 ```
 
-example for bitnami 
+```
+mysql -h 127.0.0.1 -u root -P 3306 -p
+
+show databases;
+use $database;
+
+show tables;
+select * from table\G
+
+exit
+```
+
+example for bitnami
 
     mysql -u root -p --socket=/home/$user/bitnami/drupal-commerce/mysql/tmp/mysql.sock
 
@@ -40,8 +52,8 @@ example for bitnami
 
 [Inside VM]
 
-    mysql -u root -p 
-    create user developer identified by '$pass' 
+    mysql -u root -p
+    create user developer identified by '$pass'
     grant all privileges on *.* to developer@"%"  identified by "password";
     grant all privileges on *.* to dev@"%"  identified by "dev";
 
@@ -66,7 +78,7 @@ example for bitnami
 
 
 
-# PROBLEM: mysql when mysql.sock has been realocate 
+# PROBLEM: mysql when mysql.sock has been realocate
 
     mysql -u root --socket /home/stbn/lampstack-3.0.6-0/mysql/tmp/mysql.sock
 

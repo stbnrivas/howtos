@@ -219,6 +219,41 @@ Usage: curl [options...] <url>
 
 ```
 
+# summary
+
+```
+-H  is for header like:
+-H "Content-Type: application/json"
+-H "Accept-Encoding: gzip"
+-H "Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l"
+
+
+--data is to post data like
+--data '{"version": "1.0"}'
+--data @filename.json
+
+
+-i is to show response headers
+-I is to show only response headers (HEAD request)
+
+
+-X is to senda post request instead of a GET (-X PUT ${} work too)
+
+
+-K is to skip SSL certificates verification
+
+
+--cert, --key  is to use a client certificate
+
+--output ${filename} is to download as file like
+curl http://example.com -o my.file -s
+
+-s --silent  quiet mode
+```
+
+
+
+
 
 to test need an API to tod
 
@@ -333,3 +368,10 @@ curl -IL http://google.com
 curl -o http://google.com
 curl --output http://google.com
 ```
+
+
+
+
+## exercises
+
+we’re going to make a lot of our requests to the same website: https://httpbin.org. httpbin is a service that accepts HTTP requests and then tells you what request you made.

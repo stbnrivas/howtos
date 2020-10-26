@@ -117,9 +117,12 @@ docker container run
 	-p --publish		container ports exposed
 		--name $name
 
+		                also can use -p IP:host_port:container_port or -p IP::port
+
 		--link 			some-postgres:postgres
 		--network=bridge
 docker container run -it -p 3000:3000 --name $container_name  $image_name:$image_tag
+
 
 
 docker stop $CONTAINER_ID
@@ -164,7 +167,7 @@ docker stop $CONTAINER_ID
 
 - create new image from docker container running
 
-```bash
+```
 docker pause $CONTAINER_ID
 docker commit $CONTAINER_ID
 # 	=> return $NEW_IMAGE_ID for this container status
@@ -233,7 +236,7 @@ docker cp $nginx:/etc/nginx/ssl/cert.key ~/certs/
 
 default networks in docker are:
 
- + bridge (default used if not specify, internal private network 172.17.0.0) 
+ + bridge (default used if not specify, internal private network 172.17.0.0)
  + none
  + host (not multiple container in the same port)
 
@@ -253,7 +256,7 @@ docker port $(docker ps -lq) 27017
 ```bash
 ip a | grep docker
 
-#10: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+#10: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default
 #    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
 
 
@@ -290,6 +293,8 @@ docker run -d --network new_network --name container4 centos
 docker exec container3 bash -c "ping container4" # fail in default network
 docker exec container4 bash -c "ping container3" # fail in default network
 
+# --user , -u 		Username or UID (format: <name|uid>[:<group|gid>])
+docker exec container5 -u1  /bin/bash -c "ping container3" # fail in default network
 ```
 
 ```yml
@@ -570,6 +575,13 @@ docker image history  $IMAGE_ID
 ## docker-compose CLI
 
 ```bash
+# check sintax
+docker-compose config
+
+# setting file
+docker-compose -f deploy/docker-compose.yml [config|build|up]
+
+
 docker-compose build
 docker-compose up
 # or
@@ -605,6 +617,9 @@ docker-compose exec web \
 
 ```bash
 docker exec -it <container name> /bin/bash
+
+docker exec -it -u 0 ${container_name} /bin/bash
+
 docker-compose exec web /bin/bash
 ```
 
@@ -621,7 +636,7 @@ with other containers running on the same network by name
 # volumes in docker-compose
 
 Part of the philosophy of using Docker is that we should treat containers as
-ephemeral, we should persist our data creating volume which are decoupled from the life cycle of container. 
+ephemeral, we should persist our data creating volume which are decoupled from the life cycle of container.
 
 
 ```bash

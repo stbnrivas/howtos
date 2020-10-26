@@ -1,6 +1,8 @@
 # fedora intallation to use with rails
 
 ## install packages
+
+```
 dnf install postgresql-server postgresql-contrib 
 dnf install pgadmin3
 
@@ -24,12 +26,12 @@ postgresql-setup initdb tuts
 su - root
 su - postgres
 psql 
+
+```
+
+```sql
 \password postgres
 \q
-
-
-
-
 createuser developer -P
 createdb --owner=developer tuts
 
@@ -61,6 +63,9 @@ ALTER USER postgres with encrypted password 'your_password';
 
 
 drop database [databaseName]
+
+```
+
 
 
 # postgresql installation

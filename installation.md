@@ -31,10 +31,13 @@ service <option> | --status-all | [ service_name [ command | --full-restart ] ]
 
 ## change history size at bash
 
+```
 vi ~/.bashrc
 
 echo 'HISTSIZE=100000' >> ~/.bashrc && echo 'HISTFILESIZE=20000' >> ~/.bashrc
 
+export HISTCONTROL=ignoreboth:erasedups
+```
 
 
 ## packages packages...

@@ -1,6 +1,12 @@
 # configuration
 
 ```bash
+sudo apt install tig
+```
+
+
+
+```bash
 git config --global user.name "stbn"
 git config --global user.email "stbnrivas@gmail.com"
 git config --global color.ui auto
@@ -165,9 +171,20 @@ git stash pop: unstash and merge stored changes.
 git stash apply
 # also you later remove  with
 git stash drop
+# see last stash diff
+git stash show -p
+# see arbitrary stash diff
+git stash show -p stash@{1}
+# see changes with other branch
+git diff stash@{0} master
 ```
 
+stash single file
 
+```bash
+git stash push -m saving_only_this_file project/path/to/file.c
+git stash pop
+```
 
 
 
@@ -264,6 +281,8 @@ git branch -d hotfix
 
 ```bash
 git diff --name-only --diff-filter=U
+
+git mergetool
 ```
 
 
@@ -322,7 +341,16 @@ git rebase hotfix  # apply all changes of hotfix branch to a master
 ```
 
 
+## merge a specific commit
 
+```bash
+git ckeckout experimental
+git log --graph
+# commit id =
+
+git checkout master
+
+```
 
 
 # remote and locals repos
@@ -330,6 +358,7 @@ git rebase hotfix  # apply all changes of hotfix branch to a master
 ```bash
 # show remote branch
 git branch -r
+git branch -a
 
 # download only one branch
 git fetch origin <remote-branch>
@@ -341,6 +370,16 @@ git checkout <remote-branch>
 
 # download all changes without do merge
 git fetch <remote> <branch>
+
+# duplicate the remote branch into local
+git branch --all
+# master
+# develop
+# origin/remote_develop
+git fetch origin remote_develop
+git checkout -b remote_develop origin/remote_develop
+git checkout -b other_name     origin/remote_develop
+
 
 # download all changes and merge into local repo
 git pull <remote> <branch>
@@ -428,6 +467,8 @@ git commit --amend
 
 ```bash
 git revert HEAD
+
+git revert SHA-1
 ```
 
 * removing commits from a branch (tag commit, reset before)
@@ -461,6 +502,14 @@ git reset --mixed HEAD^
 git reset --hard HEAD^
 ```
 
+send tag to github
+```bash
+git tag -a v1.01 -m 'release 1 fix #12312'
+
+git push origin --tags
+```
+
+
 
 # contribution
 
@@ -474,7 +523,7 @@ git push <remote> <branch_some_feature>
 git request-pull origin/master
 ```
 
-How to keep your fork up to date with its origin
+How to keep your fork update with its origin
 error: This branch is X commits behind $USER:master
 
 ```bash
@@ -562,7 +611,7 @@ git push origin HEAD:master
 
 PROBLEMS
 
-* debug the configuration 
+* debug the configuration
 ```bash
 ssh -vT git@github.com
 ```
@@ -587,7 +636,26 @@ git remote set-url origin git@github.com:<Username>/<Project>.git
 ```
 
 
+* mixin githup repo and local repo
 
+```
+cd repo
+git remote add origin git@github.com:<Username>/<Project>.git
+# ERROR
+# There is no tracking information for the current branch. Please specify which branch you want to merge with. See git-pull(1) for details.
+# EXPLANATION: remote:master:SHA-1 != local:master:SHA-1 point with:
+git remote set-url origin git@github.com:<Username>/<Project>.git
+git push origin master
+# ERROR
+# fatal: refusing to merge unrelated histories
+git pull origin master --allow-unrelated-histories
+
+# resolve conflicts
+
+git push origin master
+
+
+```
 
 
 # working for Bitbucket

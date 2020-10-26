@@ -2,6 +2,8 @@
 
 ```bash
 psql -h localhost -u user database
+
+psql postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE}
 ```
 ## shortcut into client
 
@@ -11,6 +13,9 @@ psql -h localhost -u user database
 
 `\c db user`		connect
 `\l` 				list databases
+
+`\x`                expanded mode to improve legibility into cli
+
 `\dt` 				list tables
 `\d table` 			show table
 
@@ -29,7 +34,45 @@ psql -h localhost -u user database
 CREATE DATABASE test_db;
 CREATE USER myuser WITH encrypted password 'mypass';
 GRANT ALL PRIVILEGES ON DATABASE test_db TO myuser;
+GRANT ALL PRIVILEGES ON DATABASE weride_test TO developer;
+
+ALTER DATABASE weride_test OWNER TO developer;
 ```
 ```sql
 CREATE TABLE test_table (id smallint,text varchar(100));
+```
+
+
+## example connection
+
+```
+psql -h localhost -u user [db_name*]
+
+# if user only has access some database need explicit
+
+
+\l                       # list databases
+\c database              # connect database
+\x                       # enable expand mode
+\dt                      # list table if exist else `no relation`
+\d table                 # describe table
+
+select * from table;
+```
+
+
+
+## create a backup database using connection string
+
+```
+pg_dump postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE} > ${DUMP_FILE_NAME}
+```
+
+
+## restore a backup database using connection string
+
+```
+pg_restore -d 'postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE}' -f ${DUMP_FILE_NAME}
+
+psql -d postgres://postgres:secret@127.0.0.1:5432/cool_database -f deploy/dumpfile_cool_database.sql
 ```
