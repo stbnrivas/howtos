@@ -20,6 +20,11 @@ https://www.python.org/ftp/python/3.7.7/python-3.7.7-amd64.exe
 
 Pipenv is a new package manager that combines pip and virtualenv into one easy-to-use too
 
+Por defecto, Pipenv guarda todos tus entorno virtuales en un solo lugar. Usualmente esto no es un problema, pero si te gustaría cambiarlo para comodidad de desarrollo, o si esta causando issues en servidores de construcción puedes setear PIPENV_VENV_IN_PROJECT para crear un entorno virtual dentro de la raíz de tu proyecto.
+
+It's easier to work with Pipenv than virtualenv and pip, because it creates the virtual environments for you and manages them too;
+
+It's safer to use Pipenv than virtualenv, because every dependency installed has a hash which is saved in a file called Pipfile.lock.
 
 ```bash
 # only if need
@@ -31,10 +36,48 @@ pip install pipenv
 
 # user scope library installation
 pip install --user pipenv
+```
 
+4. migrating from virtualenv to pipenv
+
+```bash
+# use on the same folder that you have requirements.txt file
+pipenv install
+
+rm requirements.txt
+
+cat Pipfile
+cat Pipfile.lock
+```
+
+
+
+5. running your app with pipenv
+
+```bash
+# pipenv will create a file called Pipfile 
+pipenv install
+
+# run your app or something without need activate virtualenv first
+pipenv run
+pipenv run python app.py
+
+
+
+# optionally can activate virtualenv
+pipenv shell
+
+# optionally can generate requirements.txt file
+pipenv lock --requirements > requirements.txt
+```
+
+
+
+
+```bash
 # specifying versions of python
-$ pipenv --python 3.7.7
-$ pipenv --python 2.7.17
+pipenv --python 3.7.7
+pipenv --python 2.7.17
 
 # for dev dependencies
 pipenv install --dev
@@ -71,23 +114,10 @@ pipenv uninstall
 
 
 
-```
-pipenv
-pipenv shell
-
-pipenv run python
-
-# check version in use
-import sys
-sys.executable
-```
 
 
-pipenv create a file called Pipfile like but the env it is no assocciated to a project... it will bi associated to 
 
-Virtualenv location: C:\Users\stbn\.virtualenvs\stbn-iSMLspIT
-Creating a Pipfile for this project...
-Successfully created virtual environment!
+
 
 
 

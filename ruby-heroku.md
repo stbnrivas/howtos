@@ -272,3 +272,30 @@ Get help for the heroku ps command  heroku ps --help
 Launch a one-off dyno that runs bash in a console   heroku run bash     One-Off Dynos
 Launch a one-off dyno that runs the “worker” process type that is present in your application’s Procfile    heroku run worker   One-Off Dynos
 View logs   heroku logs or heroku logs --tail   Logging
+
+
+
+
+# heroku addons
+
+- reset repo of app
+
+```
+heroku plugins:install heroku-repo
+
+
+heroku repo:reset -a $app // this don't remove configuration ENV
+
+heroku repo:clone       -a $app
+heroku repo:download    -a $app
+heroku repo:gc          -a $app
+heroku repo:purge_cache -a $app
+```
+
+
+
+## heroku connect to postgresql
+
+```bash
+heroku psql
+```

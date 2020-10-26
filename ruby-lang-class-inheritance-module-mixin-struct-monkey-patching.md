@@ -100,7 +100,18 @@ Rails::Engine #is a path relative to the current tree level.
 # like ./Rails/Engine in FS.
 ```
 
+```ruby
 
+module ModuleX
+  class CoolClass
+  end
+end
+
+# equivalent 
+
+class ModuleX::CoolClass
+end
+```
 
 
 ## module, include vs extend

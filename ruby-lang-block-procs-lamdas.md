@@ -1,13 +1,11 @@
-# block
+# block, procs, lamdas, yield
+
 - blocks are anonymous functions
 - a block is not an object
 - a block is a collection of code to be executed
 - blocks must be attached to a method call
 - blocks alter the execution of the method
 - a block is not an argument / parameter to the method
-
-
-
 
 
 ```ruby
@@ -102,7 +100,7 @@ yielding_with_argument("hello world") {|s| puts s}
 ```
 
 
-# procs
+## procs
 
 a procs is an objects that essentially as a saved block
 
@@ -262,4 +260,34 @@ some_proc.call
 some_lambda = lambda { |name,age| puts "#{name} #{age}" }
 some_lambda.call("john doe",42)
 some_lambda.call() # => wrong number of arguments ...
+```
+
+
+
+## extras
+
+into method you can define  a params
+
+```ruby
+def why_so_serious(&block)
+  puts "before"
+  block.call
+  puts "after"
+end
+
+def wtf(&block)
+  why_so_serious block
+end
+
+def wtf(block)
+  why_so_serious(&block)
+end
+
+def wtf(&block)
+  block.call
+end
+
+wtf do
+  puts "hello"
+end
 ```

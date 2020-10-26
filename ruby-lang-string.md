@@ -121,3 +121,22 @@ rna.tr("AG","_X") # => "C_T__TX"
 s.tr!
 ```
 
+
+
+```ruby
+# string
+"[%10s]" % "carrot"    # paddging: "[    carrot]"
+"[%-10s]" % "carrot"   # negative padding "[carrot    ]"
+
+# decimal
+"Number is %d" % 12
+
+# float-pointing
+"Result is %.2f" % 12.3456
+"Result can be %.2f %.2f %.2f" % [12.3456,12.43545,765.4656456]
+
+
+"name %{b} age %{z}" % {b: "John", z: 58}
+
+Kernel::sprintf("There are %d units.", 10)
+```

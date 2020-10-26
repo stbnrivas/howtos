@@ -1,3 +1,10 @@
+# intro
+
+pip     is like gem in ruby
+pyenv   is like rbenv in ruby
+pipenv  is like bundler in ruby
+
+
 # pip - the python package installer
 
 

@@ -2,7 +2,15 @@
 
 Sequel includes an IRB console for quick'n'dirty access to databases. You can use it like this:
 
-  sequel sqlite://test.db # test.db in current directory
+```
+sudo apt-get install sqlite3 libsqlite3-dev
+
+gem install sqlite3
+gem install sequel --version=4.49.0
+
+
+sequel sqlite://test.db
+```
 
 ## running migrations 
 

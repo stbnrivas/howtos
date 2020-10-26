@@ -58,8 +58,13 @@ end
 bundle install --path vendor/bundle
 ```
 
+# uninstall
 
-# install your gems 
+```bash
+bundle uninstall $gem_name
+```
+
+# install your gems using bundler
 
 ```bash
 bundle install --with=development
@@ -69,4 +74,7 @@ bundle install --with=development,test,production
 bundle install --without=development,test
 
 ```
+
+
+
 

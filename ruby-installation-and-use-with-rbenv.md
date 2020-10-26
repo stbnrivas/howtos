@@ -23,6 +23,8 @@ sudo apt update
 
 sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev sqlite3 libsqlite3-dev
 
+sudo apt install libpq-dev
+
 ```
 
 ## PROBLEM IN FEDORA 29
@@ -37,7 +39,7 @@ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 ```
-type rbenv to test
+type `rbenv` to test
 
 ## rbenv plugin: The ruby-build plugin provides an rbenv install uninstall command
 
