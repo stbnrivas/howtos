@@ -37,6 +37,7 @@ unzip backup.zip 	Extracts all files in the file backup.zip and places them in t
 
 # archiving using tar
 
+$ tar cvf dst.tar src-file-or-folder
 $ tar xvf mydir.tar 		Extract all the files in mydir.tar into the mydir directory
 $ tar zcvf mydir.tar.gz mydir 	Create the archive and compress with gzip
 $ tar jcvf mydir.tar.bz2 mydir 	Create the archive and compress with bz2
