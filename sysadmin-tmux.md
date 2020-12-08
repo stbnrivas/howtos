@@ -16,16 +16,47 @@ a multiplexor of terminals that use process client-server
 - panel (every panel is a bash session terminal)
 
 
+## configuration
+
+```
+# see config
+tmux show -g
+
+# you could create a ~/.tmux.conf with the default settings
+tmux show -g | cat > ~/.tmux.conf
+
+
+# history file to save commands
+set -g history-file ~/.tmux_history
+```
+
+- problem missing commands to history solve by adding to `~/.bashrc`
+
+```bash
+# Avoid duplicates
+export HISTCONTROL=ignoredups:erasedups
+# When the shell exits, append to the history file instead of overwriting it
+shopt -s histappend
+# After each command, append to the history file and reread it
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+```
+
+
 ## running tmux
 
 ```bash
 tmux
-tmux new - $session_name
-tmux new - prod
+tmux list-sessions
+tmux attach-session -t $session_name
+
+tmux kill-pane
+tmux kill-session
+tmux kill-window
+
 ```
 
 
-## prefix of command 
+## prefix of command
 
 ```bash
 # prefix of command
@@ -35,7 +66,7 @@ tmux new - prod
 # ctrl+b : detach
 
 #ctrl + E
-#ctrl + 1 
+#ctrl + 1
 #ctrl + 2
 
 ```
@@ -52,7 +83,7 @@ tmux attach -t --target 0
 ```
 
 ```bash
-#rename session 
+#rename session
 # CTRL+D $
 
 # change between sessions
@@ -66,7 +97,7 @@ tmux attach -t --target 0
 CTRL+B : kill-session
 
 # rename a window
-CTRL+B , 
+CTRL+B ,
 
 # create a new window
 CTRL+B c
@@ -86,7 +117,7 @@ panels
 
 ```bash
 # scroll into window
-# ctrl + b [ 
+# ctrl + b [
 # q to exit
 ```
 
@@ -126,3 +157,24 @@ modo copia
 
 ctrl + b + [
 q
+
+
+
+
+
+
+
+## Sharing a read-only tmux session
+
+* Start it with
+```
+./ttyd -R tmux new -A -s ttyd bash
+```
+* Join it with
+```
+tmux new -A -s ttyd
+```
+* Share with public ip
+```
+ssh -R 80:localhost:7681 ssh.localhost.run
+```
