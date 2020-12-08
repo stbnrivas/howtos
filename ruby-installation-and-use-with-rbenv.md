@@ -118,7 +118,7 @@ rbenv rehash                          even you do gem install gem must run this 
 rbenv global 1.8.7-p375               set to global default version
 rbenv global				                  check global version
 
-cd project-dir                        
+cd project-dir
 rbenv local 1.8.7-p375                set to project dir to ruby version by .rbenv dir
 rbenv local                           check local directory version
 
