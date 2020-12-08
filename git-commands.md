@@ -43,6 +43,8 @@ git config --global mergetool.prompt false
 
 
 
+
+
 # inicialization repository
 
 ```bash
@@ -434,6 +436,33 @@ git remote update --dry-run
 git remote update --prune [--dry-run]
 ```
 
+# pull a new remote branch
+
+```bash
+git fetch origin
+
+git branch -a
+
+#  local_one
+#  local_two
+#  master
+#  remotes/origin/HEAD -> origin/master
+#  remotes/origin/local_one
+#  remotes/origin/local_two
+#
+#  remotes/origin/new_remote_branch_to_pull
+
+
+git checkout -b new_remote_branch_to_pull origin/new_remote_branch_to_pull
+
+git branch
+#  master
+#  local_one
+#  local_two
+#* new_remote_branch_to_pull
+```
+
+
 
 
 # creating and apply patches
@@ -562,6 +591,24 @@ if a repos has multiples git submodules to download all
 ```bash
 git clone $repo --recurse-submodules
 ```
+
+
+# issues
+
+1.  problem with \r\n and phantom changes...
+
+```
+git config --local core.autocrlf input
+```
+
+or
+
+```
+rm .gitatributtes
+```
+
+
+
 
 
 # working with Github
