@@ -23,10 +23,6 @@ source /usr/share/doc/git-1.7.4.4/contrib/completion/git-completion.bash
 git config --global diff.tool meld
 git config --global difftool.meld.path "/usr/bin/meld"
 git config --global difftool.prompt false
-
-git config --global merge.tool meld
-git config --global mergetool.meld.path "/usr/bin/meld"
-git config --global mergetool.prompt false
 ```
 
 
@@ -72,6 +68,9 @@ git has a .gitignore file to specify
 git update-index --assume-unchanged <file>
 # If you wanna start tracking changes again
 git update-index --no-assume-unchanged <file>
+
+# also for folders
+git update-index --skip-worktree <path-name>
 ```
 
 
@@ -301,6 +300,23 @@ git checkout <branch>
 git rebase master
 ```
 
+## moving into same branch differents commits (detach mode)
+
+
+```bash
+git log
+git branch <branch-name>
+
+git checkout <commit> # this will enter into detach mode
+git log               # commit after <commit> wont be shown
+git reflog            # this will show lost commits (commit after <commit>)
+
+git checkout <branch> #  this will exit from detach mode
+
+```
+
+
+
 
 
 ## workflow merge branches using `git merge`
@@ -504,9 +520,14 @@ git revert SHA-1
 ```bash
 git checkout $commit
 git tag $tag
+git tag $tag -a   # If you want to include a description with your tag
 git reset --hard $tag
 
 git hist --all
+```
+
+```bash
+git push origin --tags
 ```
 
 * If we hadn’t tagged them, they would still be in the repository, but there would be no way to reference them other than using their hash names. Commits that are unreferenced remain in the repository until the system runs the garbage collection software.
@@ -540,7 +561,7 @@ git push origin --tags
 
 
 
-# contribution
+# contribution (upstream)
 
 ```bash
 git clone <url>
