@@ -131,7 +131,7 @@ docker run --interactive --tty --publish 3000:3000 --mount type=bind,source=${PW
 
 7. Check in the browser to http://localhost:3000
 
-could not connect to server: No such file or directory Is the server running locally and accepting connections on Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"? 
+could not connect to server: No such file or directory Is the server running locally and accepting connections on Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"?
 
 right this must be fail
 

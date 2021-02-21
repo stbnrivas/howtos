@@ -54,7 +54,8 @@ psql -h localhost -u user [db_name*]
 \l                       # list databases
 \c database              # connect database
 \x                       # enable expand mode
-\dt                      # list table if exist else `no relation`
+\x on
+\dt                      # list tables if exist else `no relation` but required `\c database`
 \d table                 # describe table
 
 select * from table;
@@ -75,4 +76,16 @@ pg_dump postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE} > ${DUMP_FILE
 pg_restore -d 'postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE}' -f ${DUMP_FILE_NAME}
 
 psql -d postgres://postgres:secret@127.0.0.1:5432/cool_database -f deploy/dumpfile_cool_database.sql
+```
+
+
+
+## drop database
+
+```
+docker exec -it $(container_name) psql -U postgres
+
+SELECT * FROM pg_stat_activity WHERE pg_stat_activity.datname='mydb';
+SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'mydb'
+DROP DATABASE mydb;
 ```

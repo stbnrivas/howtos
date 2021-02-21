@@ -82,3 +82,20 @@ docker container start pg11.1_instance_1
 SELECT datname FROM pg_database;
 ```
 
+
+```
+SHOW max_connections;
+select count(*) from pg_stat_activity;
+
+
+SELECT pg_terminate_backend(pg_stat_activity.pid)
+FROM pg_stat_activity
+WHERE datname = current_database()
+  AND pid <> pg_backend_pid();
+```
+
+
+
+```bash
+docker exec -it  $container_id psql -U postgres
+```
