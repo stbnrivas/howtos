@@ -6,6 +6,10 @@ sudo dnf install snapd
 sudo ln -s /var/lib/snapd/snap /snap
 
 sudo snap install --classic heroku
+
+
+
+curl https://cli-assets.heroku.com/install.sh | sh
 ```
 
 check if installed
@@ -19,6 +23,15 @@ add snap path to system path
 vi ~/.bash_profile
 # export PATH="$PATH:/snap/bin/"
 ```
+
+
+- heroku update
+
+```
+heroku update
+```
+
+
 
 # heroku deploy project
 

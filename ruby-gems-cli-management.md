@@ -29,10 +29,11 @@
 	gem search -r <gem>						remote search for gems
 
 	gem list <gem> --remote --all			search all versions of gems
+
 	gem search --remote --all | grep "^rails"
+	gem search '^rails$' --all
 
-
-## installation 
+## installation
 
 	gem install <gem>						install last version
 	gem install <gem> -v 2.3				install the specific version
@@ -54,7 +55,7 @@
 	gem uninstall <gem> --version 1.1.9		remove version 1.1.9 only
 	gem uninstall <gem> --version '<1.3.4'	remove all versions less than 1.3.4
 	gem cleanup --dryrun					for removing older versions of all installed gems, with preview what gems are going to be removed.
-	
+
 	gem uninstall --all 					to remove all
 	gem cleanup 							removing older versions
 

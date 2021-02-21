@@ -14,7 +14,6 @@ we need a `ruby/shared/staging` folder to contain production /config/database.ym
 the structure will be like as shown below
 
 ```
-
 ls ~/ruby
 
 repo-staging
@@ -31,7 +30,7 @@ www-staging -> /home/${USER}/ruby/staging/current
 
 ```
 # subdomain staging
-staging.${DOMAIN}.com 	
+staging.${DOMAIN}.com
 sites/staging.${DOMAIN}.com
 /home/${USER}/sites/staging.${DOMAIN}
 ```
@@ -86,7 +85,7 @@ group :development do
   gem "capistrano-rails", "~> 1.4", require: false
   gem 'capistrano-dotenv', require: false
 end
-```  
+```
 
   + configuration of capistrano
 
@@ -138,13 +137,13 @@ set :repo_tree, 'src/'
 
 set :repo_url, 'file:///home/${USER}/ruby/repo-staging'
 set :deploy_to, '/home/${USER}/ruby/staging'
-append :linked_files, "config/database.yml" 
+append :linked_files, "config/database.yml"
 #------------
 
 
 # src/config/webpacker.yml
 #     make sure that `webpack_compile_output: false`
-```  
+```
 
 - create a task into `lib/capistrano/task`
 
@@ -184,7 +183,7 @@ end
 SECRET_KEY_BASE=wekja5w49ngaerj843taeij5s9iufmnzwe94m9qrztj
 ```
 
-- add as linked files 
+- add as linked files
 
 ```ruby
 # src/config/deploy.rb
@@ -274,8 +273,9 @@ cap {staging, production} deploy:compile_assets
 ## when your project are into a subfolder like src
 
 
-SSHKit::Runner::ExecuteError: Exception while executing as ${USER}@${DOMAIN}: bundle exit status: 10                                                                                                        
-bundle stdout: Nothing written                                                                                                                                                                                     
+SSHKit::Runner::ExecuteError: Exception while executing as ${USER}@${DOMAIN}: bundle exit status: 10
+
+bundle stdout: Nothing written
 bundle stderr: Could not locate Gemfile
 
 
@@ -309,4 +309,4 @@ EDITOR=vim rails credentials:edit
 
 ## problems
 
-enable the develpment environment to show 
+enable the development environment to show

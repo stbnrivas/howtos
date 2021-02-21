@@ -31,6 +31,8 @@ rails new $new_project --webpack=vue
 ```
 
 ```bash
+rails _5.2.1_ new my-cool-rails-app
+
 rails new \
   --skip-spring \
   --skip-action-mailer \
@@ -723,6 +725,11 @@ bin/rails generate scaffold user email:uniq password:digest
 bin/rails generate destroy user email:uniq password:digest
 ```
 
+```bash
+bin/rails generate scaffold_controller --help
+
+bin/rails g scaffold_controller user email:string crypted_password:string salt:string
+```
 
 ## strong parameters into
 

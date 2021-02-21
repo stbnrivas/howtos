@@ -12,7 +12,7 @@ gem install sequel --version=4.49.0
 sequel sqlite://test.db
 ```
 
-## running migrations 
+## running migrations
 
 The -m switch requires an argument that should be a path to a directory of migration files:
 
@@ -38,7 +38,7 @@ if you need use some Model type this into console
   class Post < Sequel::Model
   end
 
-et voila you can use 
+et voila you can use
 
   p = Post.all ...
 
@@ -116,12 +116,12 @@ Most dataset methods are chainable
 # Datasets are Enumerable
 
   dataset.map{|r| r[:name]}
-or 
+or
   dataset.map(:name)
 or
   dataset.inject(0){|sum, r| sum + r[:value]}
 or
-  dataset.sum(:value) 
+  dataset.sum(:value)
 
 # Filtering (see also doc/dataset_filtering.rdoc)
 

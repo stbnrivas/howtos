@@ -78,3 +78,12 @@ bundle install --without=development,test
 
 
 
+# directly add to gemfile
+
+```bash
+bundle add minitest
+
+bundle add minitest --group=test
+bundle add minitest --group=development
+bundle add minitest --group=development,production
+```

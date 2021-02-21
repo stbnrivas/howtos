@@ -1,5 +1,16 @@
+# pre requirement
+
+```
+sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev \
+        autoconf bison build-essential libyaml-dev \
+        libreadline-dev libncurses5-dev libffi-dev libgdbm-dev
+```
+
+
 
 # installation and use of ruby with rbenv
+
+- FEDORA
 
 ruby need some package dependences to install natively some extensions because it need recompile
 
@@ -17,6 +28,9 @@ dnf install -y mysql-devel community-mysql community-mysql-libs
 
 ```
 
+- DEBIAN
+
+
 ```bash
 # debian
 sudo apt update
@@ -26,6 +40,24 @@ sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison b
 sudo apt install libpq-dev
 
 ```
+
+
+## PROBLEM ruby not found
+
+```
+rbenv install 2.7.2
+rbenv global 2.72
+ruby --version
+
+bash: /bin/ruby: No such file or directory
+
+# SOLUTION 1:
+rbenv rehash
+
+# SOLUTION 2
+
+```
+
 
 ## PROBLEM IN FEDORA 29
 
@@ -106,7 +138,8 @@ installations of diferents ruby versions
 
 ```bash
 rbenv install -l
-rbenv install --list
+rbenv install --list      # Only latest stable releases for each Ruby implementation are shown.
+rbenv install --list-all  # show all releases for each ruby implementation
 
 rbenv install 1.8.7-p375
 rbenv install 2.1.2
