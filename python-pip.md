@@ -1,6 +1,8 @@
 # intro
 
 pip     is like gem in ruby
+pip3       same pip but for python3
+
 pyenv   is like rbenv in ruby
 pipenv  is like bundler in ruby
 

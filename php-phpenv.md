@@ -34,5 +34,5 @@ php -r "unlink('composer-setup.php');"
 
 + option 1 install global
 
-	
+
 + option 2 intall locally into a project
