@@ -146,6 +146,21 @@ ClassIncludeA.method_of_a # a
 
 ## classes in ruby
 
+```ruby
+class CoolClass
+  def method_public
+  end
+
+  protected
+  def method_protected
+  end
+
+  private
+  def method_private
+  end
+end
+```
+
 Ruby has one simply rule: It's never allower access to anothers objects's instance variables. you need explicitly define setter and getter
 
 ```ruby

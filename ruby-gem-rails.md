@@ -20,6 +20,14 @@ others components/gems of rails:
 
 ## ruby on rails new app creation
 
+```bash
+gem list --local rails
+gem install rails -v 6.0.1
+
+rails _6.0.1_ --version
+rails _6.0.1_ new $new_project
+```
+
 
 ```bash
 mkdir $new_project && cd && rails new .
@@ -29,6 +37,8 @@ rails new $new_project --database postgresql
 
 rails new $new_project --webpack=vue
 ```
+
+## flags in rails new
 
 ```bash
 rails _5.2.1_ new my-cool-rails-app
@@ -80,6 +90,37 @@ rails new cool_app --minimal webpack=react works
 
 ```
 
+## check errors and currents version for existing app
+
+```bash
+bin/rails about
+```
+
+
+## running rails
+
+```bash
+# only within the host
+bin/rails server
+```
+
+```bash
+# all host into the same network
+bin/rails server -b 0.0.0.0
+
+cat 'config.hosts.clear' >> config/enviroments/development
+```
+
+```bash
+yarn install
+# into production environment
+RAILS_ENV=production bin/rails assets:precompile
+
+bin/rails server -e production
+```
+
+
+
 ## change database for installed rails
 
 ```bash
@@ -88,8 +129,23 @@ bin/rails db:system:change --to=mysql
 
 
 
-## flags in rails new
 
+## configuration for load
+
+```bash
+bin/rails runner 'p ActiveSupport::Dependencies.autoload_paths'
+```
+
+
+```ruby
+# config/enviroment/development.rb
+config.autoload_paths += %W(#{Rails.root}/app/services)
+```
+
+```ruby
+# config/application.rb
+config.autoload_paths += %W(#{Rails.root}/app/services)
+```
 
 
 ## create database in mysql
@@ -227,6 +283,13 @@ rails generate controller demo index
 ```
 
 ```bash
+# you can push controller into subfolder to group diferent controlles
+
+rails g controller API::Events
+```
+
+
+```bash
 rails destroy model $model_name
 rails destroy controller $controller_name
 
@@ -300,7 +363,7 @@ rails db:schema:dump
 
 ```bash
 rails generate migration MigrationNameCamelCase
-rails generate 
+rails generate
 ```
 
 ```ruby

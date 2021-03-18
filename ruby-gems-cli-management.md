@@ -67,7 +67,7 @@
 	-I ignore dependencies
 	-x includes executables
 
-## rubygems.org 
+## rubygems.org
 
 	gem push *.gem							Upload to rubygems.org
 	gem yank foogem -v 0.0.1				Take it back

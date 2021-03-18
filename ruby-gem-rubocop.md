@@ -11,9 +11,22 @@ rubocop --auto-gen-config
 rubocop
 
 # search offenses checking specific list of files or folders
-rubocop folder  lib/something.rb
+rubocop folder lib/something.rb
 ```
 
 
+RuboCop comes with a preconfigured set of rules for each of its cops you may wish to reconfigure a cop, tell to ignore certain files, or disable it altogether.
+
+The most common way to change RuboCop’s behaviour is to create a configuration file named .rubocop.yml in the project’s root directory.
 
 
+
+```bash
+bundle add rubocop-rails
+```
+
+
+```yml
+# .rubocop.yml
+require: rubocop-rails
+```
