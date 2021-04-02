@@ -37,6 +37,12 @@ live server
 
 ES7 React/Redux/GraphQL/React-Native snippets
 
+# add emmet on tab
+
+add addon HTML CSS SUPPORT
+
+
+1. ctrl + shift + p > Open User Settings (JSON)  > Extensions > Emmet.trigger Expansion On Tab
 
 
 
