@@ -149,14 +149,17 @@ ClassIncludeA.method_of_a # a
 ```ruby
 class CoolClass
   def method_public
+
   end
 
   protected
   def method_protected
+    # can be called  by the same instance and by other instances of the same class and its subclasess
   end
 
   private
   def method_private
+    # can be called only from within the asme instance
   end
 end
 ```

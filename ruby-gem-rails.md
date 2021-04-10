@@ -97,6 +97,22 @@ bin/rails about
 ```
 
 
+## error add domain to config host 
+
+Error: Blocked host
+
+```ruby
+# config/environments/{development,production}.rb
+Rails.application.configure do
+  # config.hosts = nil
+  config.hosts = "yourcooldomain.com" # static
+  config.hosts = ENV.fetch("DOMAIN")  # dinamically by .env
+end
+
+```
+
+
+
 ## running rails
 
 ```bash
@@ -292,20 +308,23 @@ rails g controller API::Events
 ```bash
 rails destroy model $model_name
 rails destroy controller $controller_name
-
-
 ```
 
 
 
 
-docker container ls --all
-docker restart vigilant_stallman
+
+
 
 
 
 
 ## routing
+
+controller can be:
+ - resource based (use resource in routes)
+ - action based (don't use resource in routes)
+
 
 ```ruby
 # config/routes.rb
@@ -351,7 +370,20 @@ link_to('click to go',{:controller => 'demo',:action => 'index'})
 link_to('click',{:controller=>'demo',:action=>'index',:id => 2,:page=>2,:pagination=>10})
 ```
 
+model_path vs model_url
 
+```ruby
+product_url(product)
+# => https://domain.com/products/1
+# use for redirect_to
+redirect_to 'see more', product_url(product)
+
+
+product_path(product)
+# => /product/1
+# user for link_to
+link_to 'see more', product_path(product)
+```
 
 
 
@@ -454,20 +486,23 @@ rails db:migrate:redo VERSION=20190101190412
 
 
 column migration method
+```ruby
 
 create_table :table_name do |t|
 end
 rename_table("table","new_name")
 
+
 add_column(table,column,type,options)
 remove_column(table,column)
+
 rename_column(table,column,new_name)
 change_column(table,column,type,options)
 
 add_index(:table,:column,{})
   options = {:unique => true, :name => "custom_name"}
 remove_index(table,column)
-
+```
 
 
 
@@ -1475,7 +1510,8 @@ logs level:
 
 
 ```bash
-rails log:clear
+bin/rails log:clear
+bin/rails log:clear LOGS=test
 ```
 
 
@@ -1488,9 +1524,17 @@ logger.fatal("")
 ```
 
 
+
+force to rails don't log specific parameter by adding into config/application.rb
+
+```ruby
+config.filter_parameters += [:credit_card_number]
+```
+
+
 ## test
 
-rails has a minitest by default if you want use rspec it needs add 
+rails has a minitest by default if you want use rspec it needs add
 
 ```ruby
 group :development, :test do
@@ -1554,6 +1598,9 @@ create a controller to access
 
 ```bash
 bin/rails generate controller Access menu login
+
+bin/rails generate controller namespace_name/controller_name
+bin/rails generate controller api/v1/controller_name
 ```
 
 ```ruby

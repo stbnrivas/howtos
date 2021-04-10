@@ -1,5 +1,20 @@
 # regexp in ruby
 
+```ruby
+/\.(jpg|gif|png)\z/
+%r{\.(jpg|gif|png)\z}
+```
+
+preferred define as constant into class or module like
+
+```ruby
+REGEXP = {
+	file_extension_jpg_png_gif: %r{\.(jpg|gif|png)\z}
+}
+```
+
+
+
 ## The Match Operator
 
 ```ruby
@@ -13,6 +28,8 @@
 #=> 5
 /g/=~"string"
 #=> 5
+
+
 ```
 
 ## cheatsheet
