@@ -9,7 +9,12 @@
 docker pull postgres:12.1
 ```
 
+simple
+```bash
+docker run -p 5432:5432 --name pgdb -e POSTGRES_PASSWORD=secret -d postgres:12
+```
 
+with extra config
 ```bash
 docker run -p 5432:5432 \
     --name pg_container_name \
@@ -17,7 +22,13 @@ docker run -p 5432:5432 \
     -d postgres:12.1
 ```
 
+```bash
+# check client was installed
+pg_config --version
 
+# connect
+psql -h localhost -U postgres
+```
 
 
 
