@@ -1,7 +1,8 @@
 # configuration
 
 ```bash
-sudo apt install tig
+sudo apt install git tig # Text-mode interface for the git revision control system
+sudo dnf install git tig
 ```
 
 
@@ -10,6 +11,8 @@ sudo apt install tig
 git config --global user.name "stbn"
 git config --global user.email "stbnrivas@gmail.com"
 git config --global color.ui auto
+
+git config --global core.editor "vim"
 
 git config --global format.pretty oneline
 git config --global core.pager 'less'
@@ -22,6 +25,7 @@ source /usr/share/doc/git-1.7.4.4/contrib/completion/git-completion.bash
 # set diff tool and merge tool meld
 git config --global diff.tool meld
 git config --global difftool.meld.path "/usr/bin/meld"
+git config --global difftool.meld.path "/usr/bin/tig"
 git config --global difftool.prompt false
 ```
 
@@ -111,17 +115,25 @@ git rm --cached <file>
 * reset the working directory and stage to last commit, but unstaged all changes keeping untracked files
 
 ```bash
-  git reset --hard HEAD
+
+
+git reset --hard HEAD
 ```
 
 * remove untracked files from the working tree
 
 ```bash
-git clean -n # to show what will be removed
-git clean -f # to remove untracked files
-git clean -d # to remove untracked directories
+# CAUTION FILES REMOVE FOREVER
+git clean -n  # to show what will be removed
+git clean -f  # delete untracked files
+git clean -fx # delete non-ignored files
+git clean -fX # delete ignored files
+git clean -d  # delete untracked directories
 
-git clean -fd #
+
+# RECOMMENDED
+git clean -nfd  # simulate
+git clean -fd   # do it
 ```
 
 * undoing individual files to the last commit
@@ -133,6 +145,9 @@ git clean -fd #
 * unstage something undoing in the staging area
 
 ```bash
+# unstage all
+git reset
+
 git reset HEAD <file> # unstage file
 git checkout HEAD <file> to discard
 ```
@@ -145,8 +160,45 @@ git checkout HEAD <file> to discard
   git add <file>
   git commit --amend -m "Message"
 ```
+* adding hunks of coden within of CLI
+
+```bash
+# Interactively choose hunks of patch between the index and the work tree and add them
+# to the index. This gives the user a chance to review the difference before adding
+# modified contents to the index.
+
+# for all modified files
+git add -p
+git add --patch
+
+# for specified file
+
+git add $file -p
+git add $file --patch
+
+
+# y - stage this hunk
+# n - do not stage this hunk
+# q - quit; do not stage this hunk or any of the remaining ones
+# a - stage this hunk and all later hunks in the file
+# d - do not stage this hunk or any of the later hunks in the file
+# g - select a hunk to go to
+# / - search for a hunk matching the given regex
+# j - leave this hunk undecided, see next undecided hunk
+# J - leave this hunk undecided, see next hunk
+# k - leave this hunk undecided, see previous undecided hunk
+# K - leave this hunk undecided, see previous hunk
+# s - split the current hunk into smaller hunks
+#
+# e - manually edit the current hunk
+#
+# ? - print help
+```
+
+
 
 * commit one command
+
 ```bash
 git commit -a		# like git add . ; git commit
 ```
@@ -675,9 +727,25 @@ git remote set-url origin git@github.com:stbnrivas/sinatra-static-assets.git
 git push origin HEAD:master
 ```
 
+## remove sensible data files
+
+```bash
+git filter-branch --force --index-filter "git rm --cached --ignore-unmatch ./FUCK-FILE" --prune-empty --tag-name-filter cat -- --all
+```
+
+
+
 ### PROBLEMS
 
 PROBLEMS
+
+* sign_and_send_pubkey: signing failed for RSA  from agent: agent refused operation
+```bash
+chmod 600 ~/.ssh/id_rsa
+```
+
+
+
 
 * debug the configuration
 ```bash
