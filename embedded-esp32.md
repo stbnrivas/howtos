@@ -1,6 +1,49 @@
 # Espressif 32
 
 
+
+## ESP-WROOM-32
+
+- successor of ESP8266 released september 2016
+- dual core, 32-bit microcontroller modudel
+- cpu cores can bee individually controlled
+- clock frequency up to 240MHz
+- multiple power modules
+- integrated wifi, bluetooth and BLE (bluetooth low energy)
+- multiple digital and anaglo I/O pins
+
+- up to 18 12-bit ADC
+- 2 8-bits DAC
+- 10 capacitive touch sensors inputs
+- 4 SPI bus channel
+- 2 I2C bus connections
+- 2 I2S bus connections (audio)
+- 3 UART
+
+- SD card host controller
+- IR remote controller, up to eight channels
+- motor PWN
+- led PWM, up to sixteen channels
+- real time clocks
+
+
+
+WARNING: most pints have multiple functions, some function conflicts, not all can be used simultaneously
+WARNING: not all development boards expose all pins
+WARNING: some pins not recommended for use
+
+
+
+Node MCu EsP-32S board has an ESP-WROOM-32
+
+
+
+
+
+
+
+## installation
+
 ```
 sudo apt-get install git wget libncurses-dev flex bison gperf python python-pip python-setuptools cmake ninja-build ccache libffi-dev libssl-dev
 
