@@ -6,7 +6,7 @@ handshake
 OCSP	Online Certificate Status Protocol
 
 
-
+https://www.freecodecamp.org/news/openssl-command-cheatsheet-b441be1e8c4a/
 
 
 
@@ -15,18 +15,20 @@ OCSP	Online Certificate Status Protocol
 
 ```bash
 # generate an self-signed
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 3650
 # generate .crt from pem
 openssl x509 -outform der -in cert.pem -out cert.crt
 
 
+# answering questions
+sudo openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout ./nginx-selfsigned.key -out ./nginx-selfsigned.crt
 
 # generate for an script without propmpt
-sudo openssl req -x509 -days 365 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/self.key -out /etc/nginx/ssl/self.crt -subj "/C=ES/ST=Madrid/L=Madrid/O=Global Security/OU=IT Department/CN=parkingverde.com"
+sudo openssl req -x509 -days 365 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/self.key -out /etc/nginx/ssl/self.crt -subj "/C=ES/ST=Madrid/L=Madrid/O=Global Security/OU=IT Department/CN=wgzk.com"
 
 
 
-# 
+#
 openssl verify cert.pem
 
 openssl verify -untrusted ca-bundle cert.pem
@@ -35,6 +37,26 @@ openssl verify -untrusted ca-bundle cert.pem
 
 openssl verify -verbose -x509_strict -CAfile ca.pem -CApath nosuchdir cert_chain.pem
 ```
+
+
+
+
+connect and show certificate
+```
+openssl s_client -showcerts -host example.com -port 443 </dev/null
+```
+
+
+extract the cert
+```bash
+openssl s_client -connect example.com:443 2>&1 < /dev/null | sed -n '/-----BEGIN/,/-----END/p' > certificate.pem
+
+sudo cp certs/CA/certificate.pem /usr/local/share/ca-certificates/certificate.pem
+
+sudo update-ca-certificates
+```
+
+
 
 
 
@@ -88,6 +110,7 @@ sudo dnf install certbot certbot-nginx
 
 # try write into /etc/nginx.conf
 sudo certbot --nginx
+
 # use this
 sudo certbot certonly --nginx
 

@@ -136,3 +136,14 @@ echo options hid_apple iso_layout=0 | sudo tee -a /etc/modprobe.d/hid_apple.conf
 ```
 
 
+# the FN F1-F12 keys
+
+
+```bash
+# default 
+sudo cat /sys/module/hid_apple/parameters/fnmode
+1
+
+# new config
+echo 2 | sudo tee /sys/module/hid_apple/parameters/fnmode
+```

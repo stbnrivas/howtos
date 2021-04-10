@@ -10,10 +10,11 @@ cp -r /Applications/Slack.app/Contents/Resources/app.asar.unpacked ~/tmp/slack
 
 
 # linux
+mkdir -p /tmp/slack
 cp /var/lib/flatpak/app/com.slack.Slack/current/active/files/extra/lib/slack/resources/app.asar /tmp/slack
 cp -r /var/lib/flatpak/app/com.slack.Slack/current/active/files/extra/lib/slack/resources/app.asar.unpacked /tmp/slack
 
-cd ~/tmp/slack
+cd /tmp/slack
 asar extract app.asar app
 
 vim app/dist/ssb-interop.bundle.js
