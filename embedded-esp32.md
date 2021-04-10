@@ -4,6 +4,8 @@
 ```
 sudo apt-get install git wget libncurses-dev flex bison gperf python python-pip python-setuptools cmake ninja-build ccache libffi-dev libssl-dev
 
+
+
 mkdir esp
 cd esp
 git clone -b v4.0.1 --recursive https://github.com/espressif/esp-idf.git
@@ -29,13 +31,14 @@ alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
 
 
-- create enviroment variables (for vscode)
+- create enviroment variables (for vscode) "${IDF_PATH}", "${IDF_TOOLS}"
+
+```bash
+IDF_PATH=~/esp/esp-idf
+IDF_TOOLS_PATH=$HOME/.espressif
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
 ```
-"${IDF_PATH}",
-"${IDF_TOOLS}"
-```
-
 - check variables
 
 
