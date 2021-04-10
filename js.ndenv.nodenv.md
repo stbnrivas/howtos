@@ -4,7 +4,8 @@
 ```bash
 git clone https://github.com/nodenv/nodenv.git ~/.nodenv
 cd ~/.nodenv && src/configure && make -C src
-echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="$HOME/.nodenv/bin:$HOME/.nodenv/shims:$PATH"' >> ~/.bashrc
+
 ~/.nodenv/bin/nodenv init
 ```
 
@@ -46,6 +47,15 @@ npm get prefix
 ~/.nodenv/versions/${version}/lib/node_modules/npm/node_modules
 
 ~/.nodenv/versions/12.19.0/lib/node_modules/npm/node_modules
+```
+
+
+## check if works
+
+```bash
+source .bash_profile
+node --version
+npm --version
 ```
 
 

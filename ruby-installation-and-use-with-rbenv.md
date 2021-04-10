@@ -16,13 +16,16 @@ ruby need some package dependences to install natively some extensions because i
 
 ```bash
 # fedora
-dnf groupinstall "Development Tools"
+sudo dnf groupinstall "Development Tools"
 
-dnf install libsq3.x86_64
-dnf install sqlite3-devel ruby-sqlite3 libsqlite3x-devel libsqlite3x
-dnf install -y libxml2 libxml2-devel libxslt libxslt-devel
-dnf install -y nokogiri
-dnf install -y openssl-devel readline-devel
+sudo dnf install sqlite3-devel ruby-sqlite3 # No match for argument..
+
+sudo dnf install rubygem-sqlite3 sqlite-devel # No match for argument..
+
+
+sudo dnf install libsq3.x86_64 libsqlite3x-devel libsqlite3x libxml2 libxml2-devel libxslt libxslt-devel nokogiri openssl-devel readline-devel
+
+dnf install -y
 
 dnf install -y mysql-devel community-mysql community-mysql-libs
 
@@ -67,15 +70,23 @@ because  you can't do  source ~/.bash_profile into ~/.bashrc or terminal won't s
 ## rbenv install
 
 ```bash
+git clone https://github.com/rbenv/rbenv ~/.rbenv
+
 git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+
+source ~/.bash_profile
 ```
 type `rbenv` to test
+
+curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
 
 ## rbenv plugin: The ruby-build plugin provides an rbenv install uninstall command
 
 ```bash
+git clone git@github.com:rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+
 git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 ```
 

@@ -2,8 +2,10 @@ https://bencane.com/2012/09/17/iptables-linux-firewall-rules-for-a-basic-web-ser
 
 # iptables
 
-    iptables
-    ip6tables
+```
+iptables
+ip6tables
+```
 
 chain   | behaviour
 --------|-----
@@ -20,50 +22,90 @@ DROP     | Drop the connection (as if no connection was ever made; useful if you
 REJECT   | Don't allow the connection but send an error back.
 
 
+
+
+## rule LIST|FLUSH|CHECK|APPEND|DELETE|POLICY
+
+you can flush(delete all), check, append or delete rule
+
+```
+iptables -L ...
+iptables --list
+
+iptables -F ...
+iptables --flush ...
+
+iptables -C ...
+iptables --check ...
+
+iptables -A ...
+iptables --append ...
+
+iptables -D ...
+iptables --delete ...
+
+iptables -P ...
+iptables --policy ...
+```
+
+
+
 ## list
 
-    iptables -L 
-    iptables -L | grep policy
+```
+iptables -L
+iptables -L | grep {INPUT,OUTPUT,ACCEPT,DROP,FORWARD}
+```
 
 to dump a file
 
-	sudo iptables -S | tee ~/firewalld_iptables_rules
-    sudo ip6tables -S | tee ~/firewalld_ip6tables_rules
+```
+sudo iptables -S | tee ~/firewalld_iptables_rules
+sudo ip6tables -S | tee ~/firewalld_ip6tables_rules
+```
 
 ## quick and dirty accept
 
-If we want to ACCEPT all connections 
+If we want to ACCEPT all connections
 
-    iptables --policy INPUT ACCEPT
-    iptables --policy OUTPUT ACCEPT
-    iptables --policy FORWARD ACCEPT
+```
+iptables --policy INPUT ACCEPT
+iptables --policy OUTPUT ACCEPT
+iptables --policy FORWARD ACCEPT
+```
 
 or drop
 
-    iptables --policy INPUT DROP
-    iptables --policy OUTPUT DROP
-    iptables --policy FORWARD DROP
+```
+iptables --policy INPUT DROP
+iptables --policy OUTPUT DROP
+iptables --policy FORWARD DROP
+```
 
-## clear rules
-
-    iptables -F
 
 ## parameters
 
-source
-    
-    -s=10.0.0.1
-    -s=10.0.0.0/8
 
-destination
+```
+source:
 
-    -d=10.0.0.1
-    -d=10.0.0.0/8
+-s=10.0.0.1
+-s=10.0.0.0/8
 
-protocol
+destination:
 
-    -p tcp,udp,icmp
+-d=10.0.0.1
+-d=10.0.0.0/8
 
+protocol:
+
+-p --proto  tcp,udp,icmp
+
+
+-j --jump
+
+-i  --in-interface
+```
 ## NAT (network address translation)
 
 
@@ -75,25 +117,33 @@ protocol
 
 ### source NAT (change source)
 
+```
 change source ip to 1.2.3.4
 
-    iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 1.2.3.4
+iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 1.2.3.4
 
 change source ip to 1.2.3.4, 1.2.3.5 o 1.2.3.6
 
-    iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 1.2.3.4-1.2.3.6
+iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 1.2.3.4-1.2.3.6
 
 change source ip to 1.2.3.4, ports 1-1023
 
-    iptables -t nat -A POSTROUTING -p tcp -o eth0 -j SNAT --to 1.2.3.4:1-1023
+iptables -t nat -A POSTROUTING -p tcp -o eth0 -j SNAT --to 1.2.3.4:1-1023
+```
 
 ### destination NAT (change destination)
+
+
+
+
 
 
 
 # firewalld: firewall-cmd
 ============================
 
-    firewall-cmd --permanent --add-service=http
-    firewall-cmd --permanent --add-service=https
+```
+firewall-cmd --permanent --add-service=http
+firewall-cmd --permanent --add-service=https
+```
 

@@ -1,0 +1,5 @@
+# keybase
+
+```
+keybase ctl stop
+```

@@ -42,7 +42,9 @@ export HISTCONTROL=ignoreboth:erasedups
 
 ## packages packages...
 
-dnf groupinstall "Development Tools"
+sudo dnf groupinstall "Development Tools"
+sudo dnf groupinstall "C Development Tools and Libraries"
+
 
 dnf install lsb nmap openssh-client libcrypto git git-cola wget sqlite sqlite-devel sqlite-libs openssl-libs
 
@@ -64,6 +66,11 @@ dnf install libreoffice libreoffice-langpack-en hunspell-en aspell-en
 dnf install ruby ruby-devel ruby-irb ruby-libs rubygems
 
 dnf install -y gtypist meld
+
+
+sudo dnf install postgresql postgresql-contrib libpqxx-devel libpq-devel
+
+sudo dnf install vips vips-devel vips-tools
 
 ### search rpm
 

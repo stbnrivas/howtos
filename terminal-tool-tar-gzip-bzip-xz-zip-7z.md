@@ -1,3 +1,12 @@
+# tar
+
+```bash
+
+# package multiples files into tar
+tar -cvf my_files.tar file1 file2
+```
+
+
 # gzip
 
 gzip is the most often used Linux compression utility. It compresses very well and is very fast. The following table provides some usage examples:ç
