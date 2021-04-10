@@ -5,19 +5,26 @@ step 1.-    Image is processed with a "lossy" filter that eliminates some pixel 
 step 2.-    Image is processed with a "lossless" filter that compresses the pixel data
 
 
+## tools requirements
+
+- optipng
+- jpegoptim
+- gifsicle
+- pngquant
+
 
 ## lossy optimization
 
 	$ dnf install jpegoptim
 
 
-$ jpegoptim photo.jpg 
-$ jpegoptim -v photo.jpg 
-$ jpegoptim -d ./compressed photo.jpg 
-$ jpegoptim -m50 photo.jpg 
+$ jpegoptim photo.jpg
+$ jpegoptim -v photo.jpg
+$ jpegoptim -d ./compressed photo.jpg
+$ jpegoptim -m50 photo.jpg
 
 
-## dnf install optipng 
+## dnf install optipng
 
 $ optipng [options] filename.png
 
@@ -34,3 +41,17 @@ $ git clone https://github.com/rflynn/imgmin.git
 
 
 imgmin source.jpg destination.jpg
+
+
+
+
+# into ruby
+
+
+```
+sudo apt-get install -y advancecomp gifsicle jhead jpegoptim libjpeg-progs optipng pngcrush pngquant
+
+bundle add image_optim
+
+
+```
