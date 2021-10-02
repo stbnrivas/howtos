@@ -69,16 +69,18 @@ docker run --interactive --tty --publish 3000:3000 --mount type=bind,source=$(pw
 docker run --interactive --tty --publish 3000:3000 --mount type=bind,source=${PWD}\\src,destination=/app rails:1.0
 ```
 
-PROBLEM 
+```
+PROBLEM
 
 C:\Program Files\Docker\Docker\Resources\bin\docker.exe: Error response from daemon: driver failed programming external connectivity on endpoint thirsty_chaum (a4b3bb65ada07cdf304194d136aaacde29f572f5cd6a97e487e81b81ef1fead0): Error starting userland proxy: mkdir /port/tcp:0.0.0.0:3000:tcp:172.17.0.2:3000: input/output error.
+```
 
 Simply restart docker from systemtray
 
 
-4.- Generate the rails project
+5.- Generate the rails project
 
-inside the container 
+inside the container
 
 ```bash
 pwd
@@ -95,11 +97,11 @@ check into your host that rails project has been created
 FROM ruby:2.5.1
 LABEL MAINTAINER @stbnrivas
 RUN \
-  apt-get update && apt-get install -y \ 
-  build-essential \ 
+  apt-get update && apt-get install -y \
+  build-essential \
   libpq-dev \
   nodejs
-RUN mkdir -p /app 
+RUN mkdir -p /app
 WORKDIR /app
 RUN gem install bundler && \
   gem install rails -v 5.2.2
@@ -191,7 +193,7 @@ at ./src/config/database.yml
 ```yml
 default: &default
   adapter: postgresql
-  encoding: unicode  
+  encoding: unicode
   #host: 172.17.0.1
   host: postgres
   username: postgres
@@ -221,7 +223,7 @@ docker-compose build
 docker-compose up
 ```
 
-you can check volumes with 
+you can check volumes with
 
 ```bash
 docker volume ls
@@ -297,6 +299,10 @@ to get an terminal into container
 docker ps
 # get container id 8f9f12aced43
 docker container exec -it $container_id /bin/bash
+
+# exec as root
+
+docker container exec -it --user 0 $container_id /bin/bash
 ```
 
 

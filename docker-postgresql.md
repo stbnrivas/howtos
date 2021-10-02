@@ -18,7 +18,7 @@ with extra config
 ```bash
 docker run -p 5432:5432 \
     --name pg_container_name \
-    -e 'POSTGRES_USER=dev' -e 'POSGRES_PASSWORD=secret'  -e 'POSTGRES_DB=pg_database' \
+    -e 'POSTGRES_USER=dev' -e 'POSTGRES_PASSWORD=secret'  -e 'POSTGRES_DB=pg_database' \
     -d postgres:12.1
 ```
 

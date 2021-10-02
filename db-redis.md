@@ -16,6 +16,8 @@ sudo dnf install redis
 
 ```bash
 docker pull redis:5.0.4
+docker pull redis:alpine
+
 docker run -it --rm -p 6379:6379 --name=redis-token-keeper redis
 # or without remove automatically
 docker run -it -p 6379:6379 --name=redis-token-keeper redis

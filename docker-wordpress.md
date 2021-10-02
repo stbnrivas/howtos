@@ -31,7 +31,7 @@ docker exec -it wp /bin/bash
 ```
 
 
-duplicate filee check file wordpress-installation/wp-content/wp-config.php to get database name
+duplicate files check file wordpress-installation/wp-content/wp-config.php to get database name
 
 ```bash
 cp wordpress-installation/wp-content/wp-config.php wordpress-installation/wp-content/wp-config.ori.php
@@ -50,6 +50,21 @@ define('DB_PASSWORD', 'XXXXXXXXXXX');
 define('DB_HOST', 'XXXXXXXXXXX');
 ```
 
+
+
+
+# using docker to mount wordpress
+
+
+1. choose your version  at [https://wordpress.org/download/releases/](https://wordpress.org/download/releases/)
+
+2. build dockerfile
+
+```dockerfile
+```
+
+
+3. use docker-compose
 
 
 build your docker-compose.yml
@@ -80,7 +95,8 @@ services:
       WORDPRESS_DB_PASSWORD: secret
       WORDPRESS_DB_NAME: testdb
     ports:
-      - 8080:80
+      - '80:80'
+      - '443:443'
     volumes:
       - ~/work/project/wordpress:/var/www/html
 #      - ./wordpress:/var/www/html

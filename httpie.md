@@ -4,7 +4,7 @@
 sudo apt install httpie
 ```
 
-
+## usage
 
 ```
 http [flags] [METHOD] URL [ITEM [ITEM]]
@@ -44,4 +44,45 @@ http -v httpbin.org/get
 	    "origin": "188.78.219.215",
 	    "url": "http://httpbin.org/get"
 	}
+```
+
+
+## usage with headers
+
+
+```
+http $(URL)  User-Agent:Bacon/1.0  'Cookie:valued-visitor=yes;foo=bar' X-Foo:Bar  Referer:https://httpie.org/
+```
+
+
+```
+http $(URL)  User-Agent:Bacon/1.0  'Cookie:valued-visitor=yes;foo=bar' X-Foo:Bar  Referer:https://httpie.org/
+```
+
+
+## usage with params
+
+```
+http $(URL) foo==bar wicked==witch
+```
+
+
+## usage with verbs
+
+```
+http POST $(URL) wicked=witch casts:='["spells", "curses"]' --json
+```
+
+
+
+## usage authentication
+
+
+```
+http -a username:password pie.dev/basic-auth/username/password
+http -a username:         pie.dev/headers
+
+
+http -A digest -a username:password pie.dev/digest-auth/httpie/username/password
+
 ```

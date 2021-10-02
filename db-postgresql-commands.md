@@ -63,19 +63,32 @@ select * from table;
 
 
 
+## create database from cli no sql
+
+
+```
+createdb -h 127.0.0.1 -p  5432 $database -U postgres
+```
+
+
 ## create a backup database using connection string
 
 ```
 pg_dump postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE} > ${DUMP_FILE_NAME}
+
+
+pg_dump -U postgres -f pg_mibd.sql mibd
+pg_dump -U postgres -f gobierto_staging.sql gobierto_staging
+
 ```
 
 
 ## restore a backup database using connection string
 
 ```
-pg_restore -d 'postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE}' -f ${DUMP_FILE_NAME}
+psql -U username -d dbname < filename.sql
 
-psql -d postgres://postgres:secret@127.0.0.1:5432/cool_database -f deploy/dumpfile_cool_database.sql
+pg_restore -U postgres -h 127.0.0.1 -p 5432 --file=../db.dump
 ```
 
 
@@ -88,4 +101,26 @@ docker exec -it $(container_name) psql -U postgres
 SELECT * FROM pg_stat_activity WHERE pg_stat_activity.datname='mydb';
 SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'mydb'
 DROP DATABASE mydb;
+```
+
+
+
+## backup of database
+
+```bash
+pg_dump -U usuario -W -h host dbname > dbname.sql
+pg_dump -U usuario -W -h host dbname > dbname.sql
+
+```
+
+
+
+## rename database
+
+```sql
+
+psql -h localhost -u user [db_name*]
+
+ALTER DATABASE db RENAME TO newdb;
+
 ```

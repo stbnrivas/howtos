@@ -27,6 +27,8 @@ git config --global diff.tool meld
 git config --global difftool.meld.path "/usr/bin/meld"
 git config --global difftool.meld.path "/usr/bin/tig"
 git config --global difftool.prompt false
+
+git config --global merge.conflictstyle diff3
 ```
 
 
@@ -38,6 +40,11 @@ git config --global difftool.prompt false
   st = status
   br = branch
   hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  hist = log --pretty=format:'%C(yellow)%h %C(cyan)%ad | %C(green)%s%d %C(blue)[%an]' --graph --date=short
+
+  hist2 = log --pretty=format:"%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%Cred%d %Creset%s" --date=short
+
+  hist2 = log --pretty=format:"%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%Cred%d %Creset%s" --date=short
   type = cat-file -t
   dump = cat-file -p
 
@@ -87,6 +94,8 @@ git diff    # diff between current status and last commit
 git diff --ignore-space-at-eol
 git diff --cached # between add to stage and last commit
 git diff --staged #
+
+git difftool
 
 # show files changes
 git diff --name-status
@@ -270,6 +279,8 @@ git log --date=short
 git log --decorate
 git log --simplify-by-decoration
 
+git log --pretty=format:"%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%Cred%d %Creset%s"
+
 git reflog
 git diff --ignore-space-at-eol: ignore spaces (workaround for Atom formatter).
 git diff --cached: changes in files that you’ve already added.
@@ -352,6 +363,15 @@ git checkout <branch>
 git rebase master
 ```
 
+## rename branch
+
+```bash
+git checkout $old-name
+git branch -m $new-name
+
+git branch -m $old-name $new-name
+```
+
 ## moving into same branch differents commits (detach mode)
 
 
@@ -380,6 +400,8 @@ git add ...
 git commit
 git checkout master
 git merge hotfix
+
+git merge --abort
 git branch -d hotfix
 ```
 
@@ -425,14 +447,33 @@ git checkout master
 
 # remote and locals repos
 
+change remote from http to ssh
+
+````bash
+git remote -v
+origin  https://github.com/${OWNER}/${REPO_NAME} (fetch)
+origin  https://github.com/${OWNER}/${REPO_NAME} (push)
+
+git remote set-url origin git@github.com/${OWNER}/${REPO_NAME}.git
+git remote -v
+origin  git@github.com/${OWNER}/${REPO_NAME}.git (fetch)
+origin  git@github.com/${OWNER}/${REPO_NAME}.git (push)
+
+
+```
+
+
+
+
 ```bash
-# show remote branch
-git branch -r
-git branch -a
+git branch -r   # show remotes branch
+git branch -a   # show all branch
 
 # download only one branch
 git fetch origin <remote-branch>
 git checkout <remote-branch>
+
+git switch <remote-branch>
 
 # download  all remote branches
 git fetch --all
@@ -549,6 +590,12 @@ git apply -R  filename.patch
 ```
 
 
+# download a pull request
+
+```bash
+git fetch origin pull/3344/head:pull_3344
+```
+
 
 
 # rewriting the history of the repo
@@ -564,6 +611,11 @@ git commit --amend
 
 ```bash
 git revert HEAD
+
+
+git revert $SHA_1
+
+git revert HEAD^2
 
 git revert SHA-1
 ```
@@ -713,6 +765,7 @@ vi ~/home/.ssh/config
 
 Host github.com
   Hostname github.com
+  PreferredAuthentications publickey
   User git
   IdentityFile ~/.ssh/id_rsa_github
 

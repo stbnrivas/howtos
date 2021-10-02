@@ -1,5 +1,14 @@
 # curl: c url
 
+
+curl --header
+
+curl --header "Host:google.com" "https://www.google.com"
+
+curl -I https://some.com | grep Server
+
+
+
 ```bash
 curl --help
 Usage: curl [options...] <url>
@@ -219,7 +228,7 @@ Usage: curl [options...] <url>
 
 ```
 
-# summary
+## summary
 
 ```
 -H  is for header like:
@@ -275,16 +284,16 @@ curl -O filename
     # -O   --remote-name   Write output to a file named as the remote file
 ```
 
-# API test with Curl
+## API test with Curl
 
-## get request
+### get request
 default behaviour
 
 ```bash
 curl $url
 ```
 
-## post request
+### post request
 
 ```bash
 curl --data "title=Hello&body=Hello world" http://jsonplaceholder.typicode.com/posts
@@ -297,7 +306,7 @@ curl --data "title=Hello&body=Hello world" http://jsonplaceholder.typicode.com/p
 ```
 
 
-## put request
+### put request
 
 ```bash
 curl -X PUT -d "title=Hello" http://jsonplaceholder.typicode.com/posts/3
@@ -308,7 +317,7 @@ curl -X PUT -d "title=Hello" http://jsonplaceholder.typicode.com/posts/3
 curl http://jsonplaceholder.typicode.com/posts/3
 ```
 
-## delete request
+### delete request
 
 ```bash
 curl -X DELETE "http://jsonplaceholder.typicode.com/posts/3"
@@ -317,7 +326,7 @@ curl -X DELETE "http://jsonplaceholder.typicode.com/posts/3"
 ```
 
 
-# authentication with curl using ftp credentials
+## authentication with curl using ftp credentials
 
 ```bash
 curl -u user:secret $url
@@ -331,7 +340,7 @@ curl -u user:secret -T $fiename ftp://ftp.domain.com
 curl -u user:secret -O $fiename ftp://ftp.domain.com/filename
 ```
 
-# follow 301 redirection
+## follow 301 redirection
 
 ```bash
 curl http://google.com
@@ -344,7 +353,7 @@ curl http://google.com
 curl -L http://google.com
 ```
 
-# with response status code 
+## with response status code
 
 ```bash
 curl -I http://google.com

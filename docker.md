@@ -153,7 +153,7 @@ sudo ifconfig docker0
 - check docker container status
 
 ```bash
-docker attach $CONTAINER_ID
+docker attach -t -i $CONTAINER_ID /bin/bash
 docker top $CONTAINER_ID
 docker logs $CONTAINER_ID
 ```
@@ -232,6 +232,37 @@ docker cp $nginx:/etc/nginx/ssl/cert.key ~/certs/
 ```
 
 
+- stop start restart group of containers
+
+for all containers purifying fire
+```bash
+docker ps -aq
+
+docker stop    $(docker ps -aq)
+docker start   $(docker ps -aq)
+docker restart $(docker ps -aq)
+docker rm      $(docker ps -aq)
+```
+
+
+for specific prefix or suffix
+```bash
+# running with prefix
+docker ps --filter 'name=prefix*'
+
+# all with prefix
+docker ps -aq --filter 'name=prefix*'
+
+docker stop    $(docker ps -aq --filter 'name=prefix_*')
+docker start   $(docker ps -aq --filter 'name=prefix_*')
+docker restart $(docker ps -aq --filter 'name=prefix_*')
+docker rm      $(docker ps -aq --filter 'name=prefix_*')
+```
+
+
+
+
+
 - docker networks
 
 default networks in docker are:
@@ -251,6 +282,8 @@ docker run mongo -p 27017:27017
 docker port $(docker ps -lq) 27017
 
 ```
+
+
 
 
 ```bash
