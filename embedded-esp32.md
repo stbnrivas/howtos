@@ -10,8 +10,6 @@ ESP32    - year 2016
 ESP32-S2 - year 2019
 ESP32-C3 - year 2020
 
-
-
 - successor of ESP8266 released september 2016
 - dual core, 32-bit microcontroller modudel
 - cpu cores can bee individually controlled
@@ -19,6 +17,7 @@ ESP32-C3 - year 2020
 - multiple power modules
 - integrated wifi, bluetooth and BLE (bluetooth low energy)
 - multiple digital and anaglo I/O pins
+https://socialcompare.com/es/comparison/esp8266-vs-esp32-vs-esp32-s2
 
 
 - up to 18 12-bit ADC
@@ -108,7 +107,7 @@ alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
 
 
-### FIX 1 
+### FIX 1
 
 [https://github.com/abobija/esp-idf-vscode-boilerplate](https://github.com/abobija/esp-idf-vscode-boilerplate)
 
@@ -171,5 +170,3 @@ create .vs/c_cpp_properties.json
 }
 
 ```
-
-
