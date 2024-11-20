@@ -71,7 +71,7 @@ int math_example(int x2){
 
 ## variables and constants
 
-a variable in C is a name used to refer to some address location in memory ;-), a const variable it is a read only variable 
+a variable in C is a name used to refer to some address location in memory ;-), a const variable it is a read only variable
 
 ```c
 int a = 42;
@@ -105,15 +105,29 @@ int main(){
 ```
 
 ```c
-extern int variable_global;
+// some file
+// int varible_global;
+
+extern int variable_global; // it's not a declaration it should be defined for compiler at this moment
 int inc(){
 	variable_global++;
+}
+
+
+
+// also for functions?
+
+extern void defined_at_other_file(void);
+
+
+void main(){
+	defined_at_other_file();
 }
 ```
 
 - static variables
 
-  + static var only  the code into same file are declared can be access to 
+  + static var only  the code into same file are declared can be access to
   + static vars into function, only can be acceses into the function and keep the value between execution of function
 
 ```c
@@ -365,7 +379,7 @@ _Bool     bool(defined in stdbool.h)
 // true  1
 // false 0
 ```
-also can use macro bool 
+also can use macro bool
 
 ### integer
 

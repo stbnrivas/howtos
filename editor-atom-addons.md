@@ -5,6 +5,11 @@
 
 edit -> preferences:
 
+
+## create shortcut
+
+ctr + shift + p > Settings -> Keybindings >
+
 ## addons
 
 * file-icons
@@ -16,6 +21,15 @@ edit -> preferences:
 
 * markdown-preview
 * geojson-preview
+
+* rainbow-csv
+
+* path-copy
+```
+use ctrl + shift + c  to copy full path to current file
+
+ Settings/Preferences ➔ Packages ➔ Search for
+```
 
 ## shortcuts
 
@@ -50,5 +64,14 @@ vi /usr/bin/gvfs-trash
 # GVFS updated and dropped gvfs-trash to gio, but Atom didn't update.
 /usr/bin/gio trash "$@"
 ```
+
+
+
+
+
+
+
+## show invisibles & show indent guide
+
 
 

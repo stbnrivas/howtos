@@ -42,9 +42,9 @@ ES7 React/Redux/GraphQL/React-Native snippets
 add addon HTML CSS SUPPORT
 
 
-1. ctrl + shift + p > Open User Settings (JSON)  > Extensions > Emmet.trigger Expansion On Tab
+1. ctrl + shift + p > Open User Settings (JSON)  > Extensions > "emmet.triggerExpansionOnTab" Emmet  > Emmet.trigger Expansion On Tab
 
-
+"emmet.includeLanguages":
 
 # configuration at  config/Code/User/settings.json
 
