@@ -1,7 +1,14 @@
 # installation in debian in docker
 
+```bash
+sudo apt-get install language-packs-es
+sudo cp /usr/share/zoneinfo/Europe/Madrid /et/localtime
+```
+
+
 
 ```bash
+
 sudo apt-get install arp-scan
 
 sudo apt-get install iputils-ping

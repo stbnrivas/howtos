@@ -36,7 +36,12 @@ sdk
 sdk install scala 2.13.1
 sdk install scala 2.11.12
 
+sdk list java | grep installed
+
 sdk list scala
 sdk use scala 2.11.12
 sdk default scala 2.11.12
+
+
+sdk uninstall scala 3.1.1.
 ```

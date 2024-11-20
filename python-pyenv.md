@@ -34,4 +34,8 @@ echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nf
 exec "$SHELL"
 
 source ~/.bash_profile
+
+
+$ python -V
+Python 3.9.5
 ```

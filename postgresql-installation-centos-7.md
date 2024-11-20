@@ -55,11 +55,19 @@ $ psql -h localhost -U developer tuts
 export EDITOR="subl -w"
 \q 		quit
 
+
+
 psql
+```
+
+```sql
 CREATE DATABASE database_name;
 CREATE USER my_username WITH PASSWORD 'my_password';
 GRANT ALL PRIVILEGES ON DATABASE "database_name" to my_username;
 ALTER USER postgres with encrypted password 'your_password';
+
+
+ALTER DATABASE database_name OWNER TO new_owner;
 
 
 drop database [databaseName]

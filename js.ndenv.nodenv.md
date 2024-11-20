@@ -61,6 +61,7 @@ npm --version
 
 
 ```bash
+npm install -g yarn
 npm install -g watchy
 
 nodenv rehash

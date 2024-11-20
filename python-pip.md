@@ -27,7 +27,25 @@ pip install 'stevedore>=1.3.0,<1.4.0'
 pip install -Iv 'flask==0.10.1'
 ```
 
+
+
 ```bash
+# install globally
+sudo -H pip install keyring
+
+
+# pip install into home without privileges
+pip install --user data-catalog-dcat-validator
+pip uninstall data-catalog-dcat-validator
+```
+
+
+
+
+```bash
+pip3 freeze > requirements.txt  # Python3
+pip  freeze > requirements.txt  # Python2
+
 pip freeze --local > requirements.txt
 ```
 

@@ -9,7 +9,7 @@ dnf install net-tools
 ## network tools
 
 ifcfg
-nmtui 
+nmtui
 ip addr show
 
 $ /sbin/ip addr show
@@ -119,3 +119,13 @@ dnf install install php-pecl-apc php-cli php-pear php-pdo php-mysql php-pgsql ph
 
 
 
+```
+## PROBLEM
+snap install slack --classic
+
+error: cannot install "vscode": classic confinement requires snaps under /snap or symlink from
+       /snap to /var/lib/snapd/snap
+
+#SOLVE
+ln -s /var/lib/snapd/snap /snap
+```

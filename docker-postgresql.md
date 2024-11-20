@@ -11,7 +11,7 @@ docker pull postgres:12.1
 
 simple
 ```bash
-docker run -p 5432:5432 --name pgdb -e POSTGRES_PASSWORD=secret -d postgres:12
+docker run -p 5432:5432 --name pgdb -e POSTGRES_PASSWORD=secret -d postgres:12.1
 ```
 
 with extra config
@@ -46,7 +46,6 @@ postgres 11 use by default the /var/lib/postgresql/data
 
 using volumes
 ```powershell
-docker run -p 5432:5432 --name pg11.1_instance_1 -v ${PWD}\DeveloperDocker\postgres_instance1:/var/lib/postgresql/data -e POSGRES_PASSWORD=secret -d postgres:11.1
 ```
 
 

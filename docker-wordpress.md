@@ -114,7 +114,7 @@ docker exec -ti container /bin/bash
 
 mysql -u root -p
 
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'secret';
 CREATE DATABASE testdb
 
 exit
@@ -148,3 +148,53 @@ use `/etc/hosts` to set final domain name
 # ISSUES
 
 1. `apache2: Could not reliably determine the server's fully qualified domain name`
+
+
+
+
+
+
+```bash
+docker pull mysql:8.0.30
+
+docker run --name mysql \
+ -p 3306:3306 \
+ -e MYSQL_ROOT_PASSWORD=secret \
+ -d mysql:8.0.30
+
+docker run -d \
+ --name wordpress-db \
+ --mount source=wordpress-db,target=/var/lib/mysql \
+    -e MYSQL_ROOT_PASSWORD=secret \
+    -e MYSQL_DATABASE=wordpress \
+    -e MYSQL_USER=manager \
+    -e MYSQL_PASSWORD=secret mariadb:10.3.9
+
+
+
+
+
+
+
+docker run \
+  --name wp \
+  -p 8080:8080 \
+  -e WORDPRESS_DB_HOST=127.0.0.1 \
+  -e WORDPRESS_DB_USER=root \
+  -e WORDPRESS_DB_PASSWORD=secret \
+  -e WORDPRESS_DB_NAME=wp_example \
+  -e WORDPRESS_TABLE_PREFIX=wp \
+  -d wordpress:latest
+
+docker exec -it wp bash
+
+echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+sudo /etc/init.d/apache2 reload
+
+sudo systemctl restart apache2
+
+
+```
+
+

@@ -29,6 +29,9 @@ git config --global difftool.meld.path "/usr/bin/tig"
 git config --global difftool.prompt false
 
 git config --global merge.conflictstyle diff3
+
+
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 ```
 
 

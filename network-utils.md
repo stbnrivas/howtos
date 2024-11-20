@@ -17,6 +17,7 @@
 
 
 	arp-scan --interface=wlp3s0 --localnet
+	sudo arp-scan 192.168.1.0/24
 
 # scan ports of IP
 
