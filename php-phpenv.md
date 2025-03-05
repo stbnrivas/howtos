@@ -1,7 +1,7 @@
 # phpenv installation
 
 ```bash
-sudo dnf install re2c curl lib-curl lib-curl-devel gcc-c++ libtidy libtidy-devel libzip libzip-devel
+sudo dnf install re2c curl lib-curl libcurl libcurl-devel lib-curl-devel gcc-c++ libtidy libtidy-devel libzip libzip-devel oniguruma oniguruma-devel libxslt libxslt-devel libzip libzip-devel
 
 sudo apt install build-essential autoconf libtool bison re2c pkg-config libbz2-dev libpng-dev libjpeg-dev libonig-dev libtidy-devel libzip-dev
 ```
@@ -107,7 +107,7 @@ Available commands:
 ```
 
 
-
+p
 
 
 ```
